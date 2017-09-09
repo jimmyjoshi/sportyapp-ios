@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MatchSmallCCell" customModule="SportsYap_" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MatchSmallCCell" reuseIdentifier="MatchSmallCCell" id="2Cq-op-Cj7" customClass="MatchSmallCCell" customModule="SportsYap_" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="153" height="86"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="153" height="86"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Game_image1_p" translatesAutoresizingMaskIntoConstraints="NO" id="03T-zS-BHh">
+                        <rect key="frame" x="0.0" y="0.0" width="153" height="86"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YC-NX-HDL">
+                        <rect key="frame" x="8" y="5" width="102" height="24"/>
+                        <string key="text">Georgia Dome
+1st 10:22 AM</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falcons" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9St-pM-nlM">
+                        <rect key="frame" x="8" y="37" width="88" height="19"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buccaneers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="938-hu-IZB">
+                        <rect key="frame" x="8" y="59" width="88" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="FXu-on-UeE"/>
+                            <constraint firstAttribute="width" constant="88" id="lhz-Zs-Ltt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="43" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Z3-vP-V86">
+                        <rect key="frame" x="112" y="37" width="33" height="19"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jl-w7-CfK">
+                        <rect key="frame" x="112" y="59" width="33" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="33" id="F0m-bU-mFs"/>
+                            <constraint firstAttribute="height" constant="19" id="jCA-vc-9zL"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="2YC-NX-HDL" firstAttribute="top" secondItem="2Cq-op-Cj7" secondAttribute="top" constant="5" id="1kK-ZH-G9s"/>
+                <constraint firstItem="7Z3-vP-V86" firstAttribute="height" secondItem="9Jl-w7-CfK" secondAttribute="height" id="3lv-6k-n1G"/>
+                <constraint firstItem="03T-zS-BHh" firstAttribute="top" secondItem="2Cq-op-Cj7" secondAttribute="top" id="4BR-Na-A2q"/>
+                <constraint firstItem="9St-pM-nlM" firstAttribute="width" secondItem="938-hu-IZB" secondAttribute="width" id="DDM-ZY-TAM"/>
+                <constraint firstItem="938-hu-IZB" firstAttribute="leading" secondItem="2Cq-op-Cj7" secondAttribute="leading" constant="8" id="GSD-gd-mY2"/>
+                <constraint firstAttribute="trailing" secondItem="9Jl-w7-CfK" secondAttribute="trailing" constant="8" id="L0R-s3-gI3"/>
+                <constraint firstItem="2YC-NX-HDL" firstAttribute="leading" secondItem="2Cq-op-Cj7" secondAttribute="leading" constant="8" id="OBJ-1I-Tv4"/>
+                <constraint firstItem="9Jl-w7-CfK" firstAttribute="top" secondItem="7Z3-vP-V86" secondAttribute="bottom" constant="3" id="ObH-9v-TPH"/>
+                <constraint firstAttribute="trailing" secondItem="2YC-NX-HDL" secondAttribute="trailing" constant="43" id="Sjd-PA-q4T"/>
+                <constraint firstAttribute="trailing" secondItem="03T-zS-BHh" secondAttribute="trailing" id="WOQ-qL-E7U"/>
+                <constraint firstItem="9St-pM-nlM" firstAttribute="height" secondItem="938-hu-IZB" secondAttribute="height" id="YmG-w4-ekI"/>
+                <constraint firstItem="938-hu-IZB" firstAttribute="top" secondItem="9St-pM-nlM" secondAttribute="bottom" constant="3" id="Z1Y-8y-EKW"/>
+                <constraint firstItem="03T-zS-BHh" firstAttribute="leading" secondItem="2Cq-op-Cj7" secondAttribute="leading" id="bWk-Es-f5O"/>
+                <constraint firstAttribute="bottom" secondItem="03T-zS-BHh" secondAttribute="bottom" id="d8g-Ft-oCg"/>
+                <constraint firstItem="7Z3-vP-V86" firstAttribute="width" secondItem="9Jl-w7-CfK" secondAttribute="width" id="fJa-zk-Cvu"/>
+                <constraint firstItem="9St-pM-nlM" firstAttribute="centerX" secondItem="938-hu-IZB" secondAttribute="centerX" id="q6w-zt-GUI"/>
+                <constraint firstAttribute="bottom" secondItem="938-hu-IZB" secondAttribute="bottom" constant="8" id="qmA-80-iab"/>
+                <constraint firstAttribute="bottom" secondItem="9Jl-w7-CfK" secondAttribute="bottom" constant="8" id="soo-Ro-We7"/>
+                <constraint firstItem="7Z3-vP-V86" firstAttribute="centerX" secondItem="9Jl-w7-CfK" secondAttribute="centerX" id="xGo-F6-QNO"/>
+            </constraints>
+            <size key="customSize" width="153" height="86"/>
+            <connections>
+                <outlet property="ivImage" destination="03T-zS-BHh" id="VMk-ec-IL7"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Game_image1_p" width="361" height="141"/>
+    </resources>
+</document>
