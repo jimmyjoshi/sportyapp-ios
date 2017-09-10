@@ -318,6 +318,10 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
             let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
             self.navigationController?.pushViewController(postVC, animated: true)*/
         }))
+        
+        uiAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { action in
+           
+        }))
         self.present(uiAlert, animated: true, completion: nil)
         
         /*

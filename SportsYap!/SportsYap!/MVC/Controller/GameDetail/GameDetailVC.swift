@@ -140,6 +140,13 @@ class GameDetailVC: UIViewController {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction private func btnEnterFieldClicked(_ : UIButton) {
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let objEnter: EnterFieldViewController = cameraStoryboard.instantiateViewController(withIdentifier: "EnterFieldViewController") as! EnterFieldViewController
+        objEnter.strTitle = "\(currentGameObject.strTeam1FirstName) Vs \(currentGameObject.strTeam2FirstName)"
+        self.navigationController?.pushViewController(objEnter, animated: true)
+    }
+    
     @IBAction private func btnNewsPress(_ : UIButton) {
         
         isFans = false
