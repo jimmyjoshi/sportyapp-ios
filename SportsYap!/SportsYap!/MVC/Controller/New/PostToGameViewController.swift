@@ -113,6 +113,9 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         goCoderBroadcastConfig.password = strPassword
         
         self.goCoder.config = goCoderBroadcastConfig
+        
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

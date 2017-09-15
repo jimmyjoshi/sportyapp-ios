@@ -37,7 +37,7 @@ class GameListingViewController: UIViewController {
         super.viewWillAppear(false)
         self.tblMatch.estimatedRowHeight = 82.0
         self.tblMatch.rowHeight = UITableViewAutomaticDimension
-        changeTab()
+        //changeTab()
     }
     
     func settingCurrentDate() {

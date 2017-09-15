@@ -29,6 +29,25 @@ func getHeaderData() -> Dictionary<String, String> {
 }
 
 
+func getWowzaHeader() -> Dictionary<String, String> {
+    
+    
+    
+    let strApiKey = String("VWoCyxlmOreQePaJEwsyVi20piZXv7QCrUsbNunP0rVrMAV3rhzfgK9c7rh83708")
+    let strAccessKey = String("6DLEcrOZpdPQAQFibiLY6zIIw8328Bq6imGBHjQ6IO5Kcntj4y2G68FaWk7Q304a")
+    let strContentType = String("application/json")
+    
+    
+    var dictHeader : [String:String]
+    dictHeader = ["wsc-api-key": strApiKey!,"wsc-access-key":strAccessKey!,"Content-Type": "application/json"]
+    
+    
+    
+    
+    
+    return dictHeader
+}
+
 class MainReqeustClass: NSObject {
 
     static let BaseRequestSharedInstance = MainReqeustClass()
@@ -77,6 +96,75 @@ class MainReqeustClass: NSObject {
         }
     }
     
+    
+    func postRequest(showLoader: Bool, url:String, parameter:[String : AnyObject]?,header:[String : AnyObject]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
+        
+        
+        if(isInternetConnection()) {
+            MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
+            
+            print("----------------------\n\n\n\nURL: \(url)")
+            print("I/P PARAMS: \(parameter)")
+            
+            
+            let check = [
+                "stream_source": [
+                    "backup_ip_address": "12.13.14.16",
+                    "ip_address": "12.13.14.16",
+                    "location": "us_west_california",
+                    "location_method": "region",
+                    "name": "My Stream Source"]]
+            
+            var strParm : [String:String]
+            
+            //var dict = JSON(check)
+            
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+                // here "jsonData" is the dictionary encoded in JSON data
+                
+                let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
+                // here "decoded" is of type `Any`, decoded from JSON data
+                
+                // you can now cast it with the right type
+                if let dictFromJSON = decoded as? [String:String] {
+                    // use dictFromJSON
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            Alamofire.request(url, method: .post, parameters: check, encoding: URLEncoding.default, headers: getWowzaHeader()).responseJSON { (response:DataResponse<Any>) in
+                
+                
+                MainReqeustClass.HideActivityIndicatorInStatusBar()
+                
+                switch(response.result) {
+                    
+                case .success(_):
+                    
+                    print("Response: \(response.result.value as AnyObject!)")
+                    
+                    var dict = JSON(response.result.value ?? "").dictionaryValue
+                    
+                    if(dict["code"]?.intValue == 500) {
+                        failed((dict["message"]?.stringValue)!)
+                    }
+                    else {
+                        success(dict as Dictionary<String, AnyObject>)
+                    }
+                    
+                    break
+                    
+                case .failure(_):
+                    print("Response: \(response.result.error as AnyObject!)")
+                    failed("The network connection was lost please try again.")
+                    break
+                    
+                }
+            }
+        }
+    }
     
     func GetRequset(showLoader: Bool, url:String, parameter:[String : AnyObject]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
         
