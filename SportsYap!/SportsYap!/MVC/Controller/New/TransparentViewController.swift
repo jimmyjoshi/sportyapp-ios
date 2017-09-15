@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class TransparentViewController: UIViewController {
 
@@ -106,54 +107,45 @@ class TransparentViewController: UIViewController {
         */
         
         
-        /*
+        
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: GameListingViewController = cameraStoryboard.instantiateViewController(withIdentifier: "GameListingViewController") as! GameListingViewController
         self.navigationController?.pushViewController(postVC, animated: true)
         
         self.removeFromParentViewController()
-        self.view.removeFromSuperview()*/
+        self.view.removeFromSuperview()
         
-        callWowzaApi()
+        //callWowzaApi()
     }
     
     
     func callWowzaApi() {
-        
-        var dictHeader : [String:AnyObject]
-        dictHeader = ["wsc-api-key": strApiKey as AnyObject,"wsc-access-key":strAccessKey as AnyObject,"Content-Type": "application/json" as AnyObject]
-        
-        
-        var params : [String:AnyObject]
-        params = ["backup_ip_address" : strBackUpAdd as AnyObject,
-        "ip_address": strIpAdd as AnyObject,
-        "location": strLocation as AnyObject,
-        "location_method": strLocationMethod as AnyObject,
-        "name" : "My Stream Source" as AnyObject]
-        
-        
-        var mainDict : [String:AnyObject]
-        mainDict = ["stream_source": params as AnyObject]
-        
-        
-           
-        
-    /*
-        
-        MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strWowzaUrl!, parameter: mainDict as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+
+        var dictparam = NSMutableDictionary()
+        dictparam.setValue("12.13.14.16", forKey: "backup_ip_address")
+        dictparam.setValue("12.13.14.16", forKey: "ip_address")
+        dictparam.setValue("us_west_california", forKey: "location")
+        dictparam.setValue("region", forKey: "location_method")
+        dictparam.setValue("My Stream Source", forKey: "name")
+        var dictMain = NSDictionary()
+        dictMain = [
+            "stream_source": dictparam]
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strWowzaUrl!, parameter: dictMain as! [String : AnyObject], header: nil, success: { (response:Dictionary<String, AnyObject>) in
             print("Response \(response as NSDictionary)")
-            
-        }) { (response:String!) in
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-        }
-        
-        */
-        
-        
-        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strWowzaUrl!, parameter: mainDict, header: dictHeader, success: { (response:Dictionary<String, AnyObject>) in
-            print("Response \(response as NSDictionary)")
-            
+            let dictResponse = response as NSDictionary
+            if let dictTempData = dictResponse.value(forKey: "stream_source") {
+                let dictData = ((response as NSDictionary).value(forKey: "stream_source") as! NSDictionary)
+                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let postVC: GameListingViewController = cameraStoryboard.instantiateViewController(withIdentifier: "GameListingViewController") as! GameListingViewController
+                postVC.dictStreamData = dictData
+                self.navigationController?.pushViewController(postVC, animated: true)
+                self.removeFromParentViewController()
+                self.view.removeFromSuperview()
+            }
+            else if let dictTmp = dictResponse.value(forKey: "meta") {
+                let strMessage : String = ((dictTmp as! NSDictionary).value(forKey: "message") as! String)
+                 showAlert(strMsg: strMessage, vc: self)
+            }
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")

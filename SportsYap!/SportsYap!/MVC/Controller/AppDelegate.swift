@@ -20,7 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var tabbar: KpTabBarController!
-
+        
+    var strStreamName = String("")
+    var strUsername = String("")
+    var strPassword = String("")
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
          IQKeyboardManager.sharedManager().enable = true

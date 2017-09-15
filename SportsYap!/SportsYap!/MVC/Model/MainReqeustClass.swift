@@ -30,21 +30,11 @@ func getHeaderData() -> Dictionary<String, String> {
 
 
 func getWowzaHeader() -> Dictionary<String, String> {
-    
-    
-    
     let strApiKey = String("VWoCyxlmOreQePaJEwsyVi20piZXv7QCrUsbNunP0rVrMAV3rhzfgK9c7rh83708")
     let strAccessKey = String("6DLEcrOZpdPQAQFibiLY6zIIw8328Bq6imGBHjQ6IO5Kcntj4y2G68FaWk7Q304a")
     let strContentType = String("application/json")
-    
-    
     var dictHeader : [String:String]
     dictHeader = ["wsc-api-key": strApiKey!,"wsc-access-key":strAccessKey!,"Content-Type": "application/json"]
-    
-    
-    
-    
-    
     return dictHeader
 }
 
@@ -101,40 +91,24 @@ class MainReqeustClass: NSObject {
         
         
         if(isInternetConnection()) {
-            MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
+        MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
             
             print("----------------------\n\n\n\nURL: \(url)")
             print("I/P PARAMS: \(parameter)")
             
+           /*
+            var dictparam = NSMutableDictionary()
+            dictparam.setValue("12.13.14.16", forKey: "backup_ip_address")
+            dictparam.setValue("12.13.14.16", forKey: "ip_address")
+            dictparam.setValue("us_west_california", forKey: "location")
+            dictparam.setValue("region", forKey: "location_method")
+            dictparam.setValue("My Stream Source", forKey: "name")
+            var check = NSDictionary()
+             check = [
+                "stream_source": dictparam]
+            */
             
-            let check = [
-                "stream_source": [
-                    "backup_ip_address": "12.13.14.16",
-                    "ip_address": "12.13.14.16",
-                    "location": "us_west_california",
-                    "location_method": "region",
-                    "name": "My Stream Source"]]
-            
-            var strParm : [String:String]
-            
-            //var dict = JSON(check)
-            
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
-                // here "jsonData" is the dictionary encoded in JSON data
-                
-                let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-                // here "decoded" is of type `Any`, decoded from JSON data
-                
-                // you can now cast it with the right type
-                if let dictFromJSON = decoded as? [String:String] {
-                    // use dictFromJSON
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            Alamofire.request(url, method: .post, parameters: check, encoding: URLEncoding.default, headers: getWowzaHeader()).responseJSON { (response:DataResponse<Any>) in
+            Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: getWowzaHeader()).responseJSON { (response:DataResponse<Any>) in
                 
                 
                 MainReqeustClass.HideActivityIndicatorInStatusBar()
@@ -151,7 +125,10 @@ class MainReqeustClass: NSObject {
                         failed((dict["message"]?.stringValue)!)
                     }
                     else {
-                        success(dict as Dictionary<String, AnyObject>)
+                        
+                        var dictData = response.result.value as! NSDictionary
+                        //success(dict as Dictionary<String, AnyObject>)
+                        success(dictData as! Dictionary<String, AnyObject>)
                     }
                     
                     break

@@ -14,18 +14,10 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     
     
     @IBOutlet weak var btnStartStreaming: UIButton!
+    
+    var dictStreamData = NSDictionary()
     var isStreaming : Bool = false
     var strLicenceKey = String("GSDK-0144-0000-04A2-EDC5-EC61")
-    /*
-    var strHostAdd = String("3456bc.entrypoint.cloud.wowza.com")
-    var intPortNumber : UInt = 1935
-    var strAppName = String("sportyApp")
-    var strStreamName = String("095fe02a")
-    var strUsername = String("client25020")
-    var strPassword = String("7dcb3420")
-    */
-    
-    
     var strHostAdd = String("5e64b8.entrypoint.cloud.wowza.com")
     var intPortNumber : UInt = 1935
     var strAppName = String("app-bf19")
@@ -47,12 +39,17 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
-        
-        configueLicenceKey()
+        settingValues()
+        //configueLicenceKey()
     }
 
+    func settingValues() {
+        strStreamName = appDelegate.strStreamName!
+        strUsername = appDelegate.strUsername!
+        strPassword = appDelegate.strPassword!
+        configueLicenceKey()
+    }
+    
     func configueLicenceKey() {
         //error = WowzaGoCoder.registerLicenseKey(strLicenceKey!)! as NSError
         if WowzaGoCoder.registerLicenseKey(strLicenceKey!) != nil {

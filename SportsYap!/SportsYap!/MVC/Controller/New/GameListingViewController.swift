@@ -12,11 +12,12 @@ class GameListingViewController: UIViewController {
     
     
     @IBOutlet weak var tblMatch: UITableView!
-    @IBOutlet weak var activity: UIActivityIndicatorView!
+    
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var btnPrevious: UIButton!
-    
+    var dictStreamData = NSDictionary()
+    var strWowzaUrl = String("https://api-sandbox.cloud.wowza.com/api/v1/stream_sources")
     @IBOutlet weak var btnTodayGame: UIButton!
     private var gameObj = GameClass()
     var arrList = Array<GameClass>()
@@ -30,6 +31,7 @@ class GameListingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        changeTab()
     }
     
     
@@ -37,8 +39,9 @@ class GameListingViewController: UIViewController {
         super.viewWillAppear(false)
         self.tblMatch.estimatedRowHeight = 82.0
         self.tblMatch.rowHeight = UITableViewAutomaticDimension
-        //changeTab()
     }
+    
+    
     
     func settingCurrentDate() {
         let dat = Date()
@@ -250,14 +253,14 @@ class GameListingViewController: UIViewController {
             }
             
             self.tblMatch.reloadData()
-            self.activity.isHidden = true
+            
             
             //            self.getSoccerGameData()
             
         }, failed: { (responser) in
             
             self.tblMatch.reloadData()
-            self.activity.isHidden = true
+            
             //            showAlert(strMsg: responser as String, vc: self)
             //            self.getSoccerGameData()
             
@@ -277,12 +280,12 @@ class GameListingViewController: UIViewController {
             }
             
             self.tblMatch.reloadData()
-            self.activity.isHidden = true
+            
             
         }, failed: { (responser) in
             
             self.tblMatch.reloadData()
-            self.activity.isHidden = true
+            
             //            showAlert(strMsg: responser as String, vc: self)
             
         })
@@ -313,10 +316,7 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
             
         }))
         uiAlert.addAction(UIAlertAction(title: "Live Streaming", style: .default, handler: { action in
-            /*
-            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
-            self.navigationController?.pushViewController(postVC, animated: true)*/
+            self.callWowzaApi()
         }))
         
         uiAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { action in
@@ -361,5 +361,37 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
             cell.ivImage.image = UIImage(named: "Game_image0")
         }
         return cell
+    }
+    
+    func callWowzaApi() {
+        var dictparam = NSMutableDictionary()
+        dictparam.setValue("12.13.14.16", forKey: "backup_ip_address")
+        dictparam.setValue("12.13.14.16", forKey: "ip_address")
+        dictparam.setValue("us_west_california", forKey: "location")
+        dictparam.setValue("region", forKey: "location_method")
+        dictparam.setValue("My Stream Source", forKey: "name")
+        var dictMain = NSDictionary()
+        dictMain = [
+            "stream_source": dictparam]
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strWowzaUrl!, parameter: dictMain as! [String : AnyObject], header: nil, success: { (response:Dictionary<String, AnyObject>) in
+            print("Response \(response as NSDictionary)")
+            let dictResponse = response as NSDictionary
+            if let dictTempData = dictResponse.value(forKey: "stream_source") {
+                let dictData = ((response as NSDictionary).value(forKey: "stream_source") as! NSDictionary)
+                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
+                postVC.dictStreamData = dictData
+                self.navigationController?.pushViewController(postVC, animated: true)
+                self.removeFromParentViewController()
+                self.view.removeFromSuperview()
+            }
+            else if let dictTmp = dictResponse.value(forKey: "meta") {
+                let strMessage : String = ((dictTmp as! NSDictionary).value(forKey: "message") as! String)
+                showAlert(strMsg: strMessage, vc: self)
+            }
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
     }
 }
