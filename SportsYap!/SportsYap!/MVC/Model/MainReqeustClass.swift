@@ -30,11 +30,17 @@ func getHeaderData() -> Dictionary<String, String> {
 
 
 func getWowzaHeader() -> Dictionary<String, String> {
+    /*
     let strApiKey = String("VWoCyxlmOreQePaJEwsyVi20piZXv7QCrUsbNunP0rVrMAV3rhzfgK9c7rh83708")
     let strAccessKey = String("6DLEcrOZpdPQAQFibiLY6zIIw8328Bq6imGBHjQ6IO5Kcntj4y2G68FaWk7Q304a")
+    let strContentType = String("application/json")*/
+    
+    let strApiKey = String("uxulIrwhO3APrrxr5mxd5MiWQW5u4RJI0ocwz7x6UwrjHzND6kWwvpplBVr8373f")
+    let strAccessKey = String("cYdLw5CzX1hM1ZYxY6Grgvt5K2O7yzzeuF4huAkdkqPx91JMv4IFISpL9Q8w340d")
     let strContentType = String("application/json")
     var dictHeader : [String:String]
-    dictHeader = ["wsc-api-key": strApiKey!,"wsc-access-key":strAccessKey!,"Content-Type": "application/json"]
+    //dictHeader = ["wsc-api-key": strApiKey!,"wsc-access-key":strAccessKey!,"Content-Type": "application/json"]
+    dictHeader = ["wsc-api-key": kWowzaApiKey,"wsc-access-key":kWowzaAccessKey,"Content-Type": "application/json"]
     return dictHeader
 }
 
@@ -85,49 +91,58 @@ class MainReqeustClass: NSObject {
             }
         }
     }
-    
-    
-    func postRequest(showLoader: Bool, url:String, parameter:[String : AnyObject]?,header:[String : AnyObject]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
-        
-        
+    //MARK:- Get Request
+    func getRequest(showLoader: Bool, url:String, parameter:[String : AnyObject]?,header:[String : String]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
         if(isInternetConnection()) {
-        MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
+            
+            MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
             
             print("----------------------\n\n\n\nURL: \(url)")
             print("I/P PARAMS: \(parameter)")
             
-           /*
-            var dictparam = NSMutableDictionary()
-            dictparam.setValue("12.13.14.16", forKey: "backup_ip_address")
-            dictparam.setValue("12.13.14.16", forKey: "ip_address")
-            dictparam.setValue("us_west_california", forKey: "location")
-            dictparam.setValue("region", forKey: "location_method")
-            dictparam.setValue("My Stream Source", forKey: "name")
-            var check = NSDictionary()
-             check = [
-                "stream_source": dictparam]
-            */
-            
-            Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: getWowzaHeader()).responseJSON { (response:DataResponse<Any>) in
-                
-                
+            Alamofire.request(url, method: .get, parameters: parameter, encoding: URLEncoding.default, headers: header).responseJSON { (response:DataResponse<Any>) in
                 MainReqeustClass.HideActivityIndicatorInStatusBar()
-                
                 switch(response.result) {
-                    
                 case .success(_):
-                    
                     print("Response: \(response.result.value as AnyObject!)")
-                    
                     var dict = JSON(response.result.value ?? "").dictionaryValue
                     
                     if(dict["code"]?.intValue == 500) {
                         failed((dict["message"]?.stringValue)!)
                     }
                     else {
-                        
+                        let dictData = response.result.value as! NSDictionary
+                        success(dictData as! Dictionary<String, AnyObject>)
+                    }
+                    
+                    break
+                    
+                case .failure(_):
+                    print("Response: \(response.result.error as AnyObject!)")
+                    failed("The network connection was lost please try again.")
+                    break
+                    
+                }
+            }
+        }
+    }
+    
+    
+    func postRequest(showLoader: Bool, url:String, parameter:[String : AnyObject]?,header:[String : String]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
+        
+        if(isInternetConnection()) {
+        MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
+            Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: getWowzaHeader()).responseJSON { (response:DataResponse<Any>) in
+                MainReqeustClass.HideActivityIndicatorInStatusBar()
+                switch(response.result) {
+                case .success(_):
+                    print("Response: \(response.result.value as AnyObject!)")
+                    var dict = JSON(response.result.value ?? "").dictionaryValue
+                    if(dict["code"]?.intValue == 500) {
+                        failed((dict["message"]?.stringValue)!)
+                    }
+                    else {
                         var dictData = response.result.value as! NSDictionary
-                        //success(dict as Dictionary<String, AnyObject>)
                         success(dictData as! Dictionary<String, AnyObject>)
                     }
                     
@@ -184,6 +199,9 @@ class MainReqeustClass: NSObject {
             }
         }
     }
+    
+    
+    
     
     func GetRequsetForGame(showLoader: Bool, url:String, parameter:[String : AnyObject]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
         

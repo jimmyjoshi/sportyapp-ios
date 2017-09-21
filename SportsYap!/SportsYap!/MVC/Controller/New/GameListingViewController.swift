@@ -17,11 +17,15 @@ class GameListingViewController: UIViewController {
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var btnPrevious: UIButton!
     var dictStreamData = NSDictionary()
-    var strWowzaUrl = String("https://api-sandbox.cloud.wowza.com/api/v1/stream_sources")
+    //var strWowzaUrl = String("https://api-sandbox.cloud.wowza.com/api/v1/stream_sources")
+    //Changed as suggested by Anuj 18-09-2017
+    var strWowzaUrl = String("https://cloud.wowza.com/api/v1/stream_sources")
     @IBOutlet weak var btnTodayGame: UIButton!
     private var gameObj = GameClass()
     var arrList = Array<GameClass>()
     var arrTimelineData = NSArray()
+    var arrLiveStream = NSArray()
+    var intStreamChecked : Int = 0
     var strDate = ""
     var date = Date()
     
@@ -132,7 +136,6 @@ class GameListingViewController: UIViewController {
     }
     
     private func getFootballGameData() {
-        
         self.arrList.removeAll()
         self.tblMatch.reloadData()
         let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/nfl-scores?date=\(strDate)&json=1"
@@ -309,14 +312,16 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let uiAlert = UIAlertController(title: AppName, message: "Select Option:", preferredStyle: UIAlertControllerStyle.alert)
+        /*
         uiAlert.addAction(UIAlertAction(title: "Image", style: .default, handler: { action in
             
         }))
         uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
             
-        }))
+        }))*/
         uiAlert.addAction(UIAlertAction(title: "Live Streaming", style: .default, handler: { action in
-            self.callWowzaApi()
+            //self.callWowzaApi()
+            self.getLiveStream()
         }))
         
         uiAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { action in
@@ -362,6 +367,102 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         }
         return cell
     }
+    func getLiveStream() {
+        
+        
+        
+        
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: "https://api.cloud.wowza.com/api/v1/live_streams", parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+            let dictData = (response as NSDictionary)
+            self.arrLiveStream = NSArray()
+            self.intStreamChecked = 0
+            self.arrLiveStream = dictData.value(forKey: "live_streams") as! NSArray
+            self.getStreamState()
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+        /*
+        let dictparam = NSMutableDictionary()
+        dictparam.setValue("cloud.wowza.com", forKey: "backup_ip_address")
+        dictparam.setValue("cloud.wowza.com", forKey: "ip_address")
+        dictparam.setValue("us_west_california", forKey: "location")
+        dictparam.setValue("region", forKey: "location_method")
+        dictparam.setValue("My Stream Source", forKey: "name")
+        var dictMain = NSDictionary()
+        dictMain = [
+            "stream_source": dictparam]
+        
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: "https://api.cloud.wowza.com/api/v1/live_streams", parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String, AnyObject>) in
+            print("Response \(response as NSDictionary)")
+            let dictResponse = response as NSDictionary
+            if let dictTempData = dictResponse.value(forKey: "stream_source") {
+                let dictData = (response as NSDictionary)
+                self.arrLiveStream = NSArray()
+                self.intStreamChecked = 0
+                self.arrLiveStream = dictData.value(forKey: "stream_source") as! NSArray
+                self.getStreamState()
+            }
+            else if let dictTmp = dictResponse.value(forKey: "meta") {
+                let strMessage : String = ((dictTmp as! NSDictionary).value(forKey: "message") as! String)
+                showAlert(strMsg: strMessage, vc: self)
+            }
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }*/
+    }
+    
+    func getStreamState() {
+        if intStreamChecked < arrLiveStream.count {
+            let dictLiveStream : NSDictionary = arrLiveStream[intStreamChecked] as! NSDictionary
+            let strId : String = "\(dictLiveStream.value(forKey: "id")!)"
+            let url : String = "https://cloud.wowza.com/api/v1/live_streams/\(strId)/state"
+            MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+                let dictData = (response as NSDictionary)
+                let strState : String = (dictData.value(forKey: "live_stream") as! NSDictionary).value(forKey: "state") as! String
+                if strState == "stopped" {
+                    //Call api
+                    self.getStreamInformation()
+                }
+                else
+                {
+                    self.intStreamChecked = self.intStreamChecked + 1
+                }
+                
+                
+            }) { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        
+        }
+        else
+        {
+            
+        }
+    }
+    func getStreamInformation() {
+        let dictLiveStream : NSDictionary = arrLiveStream[intStreamChecked] as! NSDictionary
+        let dictInfo : NSDictionary = dictLiveStream.value(forKey: "source_connection_information") as! NSDictionary
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
+        postVC.intPortNumber = dictInfo.value(forKey: "host_port") as! UInt
+        postVC.strUsername = "\(dictInfo.value(forKey: "username")!)"
+        postVC.strPassword = "\(dictInfo.value(forKey: "password")!)"
+        postVC.strStreamName = "\(dictInfo.value(forKey: "stream_name")!)"
+        postVC.strHostAdd = "\(dictInfo.value(forKey: "primary_server")!)"
+        postVC.strAppName = "\(dictInfo.value(forKey: "application")!)"
+        postVC.strStreamId = "\(dictLiveStream.value(forKey: "id")!)"
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
+    
+    func getWowzaHeader() -> Dictionary<String, String> {
+        var dictHeader : [String:String]
+        dictHeader = ["wsc-api-key": kWowzaApiKey,"wsc-access-key":kWowzaAccessKey,"Content-Type": "application/json"]
+        return dictHeader
+    }
     
     func callWowzaApi() {
         var dictparam = NSMutableDictionary()
@@ -373,17 +474,20 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         var dictMain = NSDictionary()
         dictMain = [
             "stream_source": dictparam]
+        
         MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strWowzaUrl!, parameter: dictMain as! [String : AnyObject], header: nil, success: { (response:Dictionary<String, AnyObject>) in
             print("Response \(response as NSDictionary)")
             let dictResponse = response as NSDictionary
             if let dictTempData = dictResponse.value(forKey: "stream_source") {
                 let dictData = ((response as NSDictionary).value(forKey: "stream_source") as! NSDictionary)
+                //Storing userfull variables
+                appDelegate.strStreamName =  "\(dictData.value(forKey: "stream_name")!)"
+                appDelegate.strUsername = "\(dictData.value(forKey: "username")!)"
+                appDelegate.strPassword = "\(dictData.value(forKey: "password")!)"
                 let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
-                postVC.dictStreamData = dictData
+               
                 self.navigationController?.pushViewController(postVC, animated: true)
-                self.removeFromParentViewController()
-                self.view.removeFromSuperview()
             }
             else if let dictTmp = dictResponse.value(forKey: "meta") {
                 let strMessage : String = ((dictTmp as! NSDictionary).value(forKey: "message") as! String)

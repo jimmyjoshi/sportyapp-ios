@@ -99,58 +99,11 @@ class TransparentViewController: UIViewController {
     }
     
     @IBAction func btnCreatePostToGameClicked(sender: UIButton) {
-        
-        /*
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
-        self.navigationController?.pushViewController(postVC, animated: true)
-        */
-        
-        
-        
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: GameListingViewController = cameraStoryboard.instantiateViewController(withIdentifier: "GameListingViewController") as! GameListingViewController
         self.navigationController?.pushViewController(postVC, animated: true)
         
         self.removeFromParentViewController()
         self.view.removeFromSuperview()
-        
-        //callWowzaApi()
     }
-    
-    
-    func callWowzaApi() {
-
-        var dictparam = NSMutableDictionary()
-        dictparam.setValue("12.13.14.16", forKey: "backup_ip_address")
-        dictparam.setValue("12.13.14.16", forKey: "ip_address")
-        dictparam.setValue("us_west_california", forKey: "location")
-        dictparam.setValue("region", forKey: "location_method")
-        dictparam.setValue("My Stream Source", forKey: "name")
-        var dictMain = NSDictionary()
-        dictMain = [
-            "stream_source": dictparam]
-        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strWowzaUrl!, parameter: dictMain as! [String : AnyObject], header: nil, success: { (response:Dictionary<String, AnyObject>) in
-            print("Response \(response as NSDictionary)")
-            let dictResponse = response as NSDictionary
-            if let dictTempData = dictResponse.value(forKey: "stream_source") {
-                let dictData = ((response as NSDictionary).value(forKey: "stream_source") as! NSDictionary)
-                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let postVC: GameListingViewController = cameraStoryboard.instantiateViewController(withIdentifier: "GameListingViewController") as! GameListingViewController
-                postVC.dictStreamData = dictData
-                self.navigationController?.pushViewController(postVC, animated: true)
-                self.removeFromParentViewController()
-                self.view.removeFromSuperview()
-            }
-            else if let dictTmp = dictResponse.value(forKey: "meta") {
-                let strMessage : String = ((dictTmp as! NSDictionary).value(forKey: "message") as! String)
-                 showAlert(strMsg: strMessage, vc: self)
-            }
-        }) { (response:String!) in
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-        }
-        
-    }
-    
 }
