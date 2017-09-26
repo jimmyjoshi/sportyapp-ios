@@ -19,7 +19,8 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     var strLicenceKey = String("GSDK-0144-0000-04A2-EDC5-EC61")
     var strHostAdd = String("5e64b8.entrypoint.cloud.wowza.com")!
     var intPortNumber : UInt = 1935
-    var strAppName = String("app-bf19")!
+    //var strAppName = String("app-bf19")!
+    var strAppName = String("app-d290")!
     var strStreamName = String("29664e65")!
     var strUsername = String("client25020")!
     var strPassword = String("c2a3db23")!
@@ -68,6 +69,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         goCoderBroadcastConfig.streamName = strStreamName
         goCoderBroadcastConfig.username = strUsername
         goCoderBroadcastConfig.password = strPassword
+        
         
         self.goCoder.config = goCoderBroadcastConfig
     }

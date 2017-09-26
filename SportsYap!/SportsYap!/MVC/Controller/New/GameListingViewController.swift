@@ -369,10 +369,10 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
     }
     func getLiveStream() {
         
+        //"https://api.cloud.wowza.com/api/v1/live_streams"
+         //"https://cloud.wowza.com/api/v1/live_streams/"
         
-        
-        
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: "https://api.cloud.wowza.com/api/v1/live_streams", parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: "https://cloud.wowza.com/api/v1/live_streams/", parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             self.arrLiveStream = NSArray()
             self.intStreamChecked = 0
@@ -453,7 +453,7 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         postVC.strPassword = "\(dictInfo.value(forKey: "password")!)"
         postVC.strStreamName = "\(dictInfo.value(forKey: "stream_name")!)"
         postVC.strHostAdd = "\(dictInfo.value(forKey: "primary_server")!)"
-        postVC.strAppName = "\(dictInfo.value(forKey: "application")!)"
+        //postVC.strAppName = "\(dictInfo.value(forKey: "application")!)"
         postVC.strStreamId = "\(dictLiveStream.value(forKey: "id")!)"
         self.navigationController?.pushViewController(postVC, animated: true)
     }
