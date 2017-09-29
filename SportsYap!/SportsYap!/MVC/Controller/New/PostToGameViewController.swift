@@ -17,6 +17,19 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     var strStreamId = String("")!
     var isStreaming : Bool = false
     var strLicenceKey = String("GSDK-0144-0000-04A2-EDC5-EC61")
+    var apiTimer = Timer()
+    
+    /*
+    var strHostAdd = String("5e64b8.entrypoint.cloud.wowza.com")!
+    var intPortNumber : UInt = 1935
+    //var strAppName = String("app-bf19")!
+    var strAppName = String("app-d290")!
+    var strStreamName = String("29664e65")!
+    var strUsername = String("client25020")!
+    var strPassword = String("c2a3db23")!
+    */
+    
+    
     var strHostAdd = String("5e64b8.entrypoint.cloud.wowza.com")!
     var intPortNumber : UInt = 1935
     //var strAppName = String("app-bf19")!
@@ -25,15 +38,32 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     var strUsername = String("client25020")!
     var strPassword = String("c2a3db23")!
     
-    
     //var error : Error = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        configueLicenceKey()
+        getStreamState()
+        //configueLicenceKey()
     }
 
+    
+    func startTimer() {
+        apiTimer = Timer.scheduledTimer(timeInterval: 15.0, target: self, selector: #selector(self.callWowzaStatusCheckApi), userInfo: self, repeats: true)
+    }
+    
+    
+    func callWowzaStatusCheckApi() {
+        print("check status")
+        apiTimer.invalidate()
+    }
+    
+    
+    func callWowzaStatusCheckWithDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+            self.callWowzaStatusCheckApi()
+        })
+    }
     func settingValues() {
         //strStreamName = appDelegate.strStreamName
         //strUsername = appDelegate.strUsername
@@ -69,9 +99,8 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         goCoderBroadcastConfig.streamName = strStreamName
         goCoderBroadcastConfig.username = strUsername
         goCoderBroadcastConfig.password = strPassword
-        
-        
         self.goCoder.config = goCoderBroadcastConfig
+    
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -109,7 +138,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     
     func endLiveStreaming() {
         self.goCoder.endStreaming(self)
-        self.callEndStreamingApi()
+        //self.callEndStreamingApi()
     }
     func startLiveStreaming() {
         if self.goCoder.config.validateForBroadcast() != nil {
@@ -123,13 +152,13 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         else if self.goCoder.status.state != .running {
             self.goCoder.startStreaming(self)
             
-            self.callStartStreamApi()
+            //self.callStartStreamApi()
         }
         else
         {
             self.goCoder.endStreaming(self)
             
-            self.callStartStreamApi()
+            //self.callStartStreamApi()
         }
     }
     
@@ -156,6 +185,31 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         }
     }
     
+    
+    func getStreamState() {
+        let url : String = "https://cloud.wowza.com/api/v1/live_streams/\(strStreamName)/state"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+            let dictData = (response as NSDictionary)
+            let strState : String = (dictData.value(forKey: "live_stream") as! NSDictionary).value(forKey: "state") as! String
+            if strState == "starting" {
+                //self.getStreamInformation()
+                print("Stream Starting")
+                
+                self.perform(#selector(self.getStreamState), with: nil, afterDelay: 0.8)
+                //self.getStreamState()
+            }
+            else if strState == "started" {
+                print("Stream started")
+                 self.perform(#selector(self.configueLicenceKey), with: nil, afterDelay: 1.2)
+            }
+            
+            
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
     
     
     func getWowzaHeader() -> Dictionary<String, String> {

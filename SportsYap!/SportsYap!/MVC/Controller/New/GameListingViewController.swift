@@ -448,6 +448,7 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         let dictInfo : NSDictionary = dictLiveStream.value(forKey: "source_connection_information") as! NSDictionary
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
+        
         postVC.intPortNumber = dictInfo.value(forKey: "host_port") as! UInt
         postVC.strUsername = "\(dictInfo.value(forKey: "username")!)"
         postVC.strPassword = "\(dictInfo.value(forKey: "password")!)"
