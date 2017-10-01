@@ -19,7 +19,10 @@ class GameListingViewController: UIViewController {
     var dictStreamData = NSDictionary()
     //var strWowzaUrl = String("https://api-sandbox.cloud.wowza.com/api/v1/stream_sources")
     //Changed as suggested by Anuj 18-09-2017
-    var strWowzaUrl = String("https://cloud.wowza.com/api/v1/stream_sources")
+//    var strWowzaUrl = String("https://cloud.wowza.com/api/v1/stream_sources")
+
+    var strWowzaUrl = String("https://api.cloud.wowza.com/api/v1/stream_sources")
+
     @IBOutlet weak var btnTodayGame: UIButton!
     private var gameObj = GameClass()
     var arrList = Array<GameClass>()
@@ -372,7 +375,7 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         //"https://api.cloud.wowza.com/api/v1/live_streams"
          //"https://cloud.wowza.com/api/v1/live_streams/"
         
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: "https://cloud.wowza.com/api/v1/live_streams/", parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: "https://api.cloud.wowza.com/api/v1/live_streams/", parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             self.arrLiveStream = NSArray()
             self.intStreamChecked = 0
@@ -418,7 +421,10 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         if intStreamChecked < arrLiveStream.count {
             let dictLiveStream : NSDictionary = arrLiveStream[intStreamChecked] as! NSDictionary
             let strId : String = "\(dictLiveStream.value(forKey: "id")!)"
-            let url : String = "https://cloud.wowza.com/api/v1/live_streams/\(strId)/state"
+//            let url : String = "https://cloud.wowza.com/api/v1/live_streams/\(strId)/state"
+            let url : String = "https://api.cloud.wowza.com/api/v1/live_streams/\(strId)/state"
+
+            
             MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
                 let dictData = (response as NSDictionary)
                 let strState : String = (dictData.value(forKey: "live_stream") as! NSDictionary).value(forKey: "state") as! String
@@ -454,7 +460,8 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         postVC.strPassword = "\(dictInfo.value(forKey: "password")!)"
         postVC.strStreamName = "\(dictInfo.value(forKey: "stream_name")!)"
         postVC.strHostAdd = "\(dictInfo.value(forKey: "primary_server")!)"
-        //postVC.strAppName = "\(dictInfo.value(forKey: "application")!)"
+        postVC.strAppName = "\(dictInfo.value(forKey: "application")!)"
+//        postVC.strAppName = "app-d290"
         postVC.strStreamId = "\(dictLiveStream.value(forKey: "id")!)"
         self.navigationController?.pushViewController(postVC, animated: true)
     }

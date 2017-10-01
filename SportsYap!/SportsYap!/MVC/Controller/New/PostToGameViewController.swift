@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostToGameViewController: UIViewController,WZStatusCallback {
+class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZVideoSink {
 
     @IBOutlet weak var goCoder: WowzaGoCoder!
     
@@ -38,15 +38,104 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     var strUsername = String("client25020")!
     var strPassword = String("c2a3db23")!
     
+    //30-09-2017
+    var goCoderConfig:WowzaConfig!
+    var goCoderRegistrationChecked = false
+    var receivedGoCoderEventCodes = Array<WZEvent>()
+    var blackAndWhiteVideoEffect = false
+
+    
     //var error : Error = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        getStreamState()
+        
+        WowzaGoCoder.setLogLevel(.default)
+        goCoderConfig = WowzaConfig()
+        goCoderConfig.videoEnabled = true
+        goCoderConfig.videoHeight = 640
+        goCoderConfig.videoWidth = 480
+        goCoderConfig.videoFrameRate = 30
+        goCoderConfig.videoKeyFrameInterval = 30
+        goCoderConfig.videoBitrate = 3750000
+        goCoderConfig.mirrorFrontCamera = false
+        goCoderConfig.audioEnabled = true
+        goCoderConfig.audioChannels = 2
+        goCoderConfig.audioSampleRate = 0
+        goCoderConfig.audioBitrate = 0
+        goCoderConfig.videoPreviewRotates = false
+        goCoderConfig.capturedVideoRotates = true
+        goCoderConfig.broadcastVideoOrientation = .sameAsDevice
+        goCoderConfig.broadcastScaleMode = .aspectFit
+        goCoderConfig.videoBitrateLowBandwidthScalingFactor = 0.75
+        goCoderConfig.videoFrameBufferSizeMultiplier = 4
+        goCoderConfig.videoFrameRateLowBandwidthSkipCount = 4
+        goCoderConfig.backgroundBroadcastEnabled = false
+        
+        // Log version and platform info
+        print("WowzaGoCoderSDK version =\n major: \(WZVersionInfo.majorVersion())\n minor: \(WZVersionInfo.minorVersion())\n revision: \(WZVersionInfo.revision())\n build: \(WZVersionInfo.buildNumber())\n string: \(WZVersionInfo.string())\n verbose string: \(WZVersionInfo.verboseString())")
+        
+        print("Platform Info:\n\(WZPlatformInfo.string())")
+        
+        if let goCoderLicensingError = WowzaGoCoder.registerLicenseKey(strLicenceKey!)
+        {
+            showAlert(strMsg: goCoderLicensingError.localizedDescription, vc: self)
+        }
+        
+        
+        self.callStartStreamApi()
+//        getStreamState()
         //configueLicenceKey()
     }
+    
+    //MARK: View Life Cycle
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        goCoder?.cameraPreview?.previewLayer?.frame = view.bounds
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !goCoderRegistrationChecked
+        {
+            goCoderRegistrationChecked = true
+            if let goCoderLicensingError = WowzaGoCoder.registerLicenseKey(strLicenceKey!)
+            {
+                showAlert(strMsg: goCoderLicensingError.localizedDescription, vc: self)
+            }
+            else
+            {
+                // Initialize the GoCoder SDK
+                if let goCoder = WowzaGoCoder.sharedInstance()
+                {
+                    self.goCoder = goCoder
+                    
+                    // Request camera and microphone permissions
+                    WowzaGoCoder.requestPermission(for: .camera, response: { (permission) in
+                        print("Camera permission is: \(permission == .authorized ? "authorized" : "denied")")
+                    })
+                    
+                    WowzaGoCoder.requestPermission(for: .microphone, response: { (permission) in
+                        print("Microphone permission is: \(permission == .authorized ? "authorized" : "denied")")
+                    })
+                    
+                    self.goCoder?.register(self as WZAudioSink)
+                    self.goCoder?.register(self as WZVideoSink)
+                    self.goCoder?.config = self.goCoderConfig
+                    
+                    // Specify the view in which to display the camera preview
+                    self.goCoder?.cameraView = self.view
+                    
+                    // Start the camera preview
+                    self.goCoder?.cameraPreview?.start()
+                }
+            }
+        }
+    }
 
+    
     
     func startTimer() {
         apiTimer = Timer.scheduledTimer(timeInterval: 15.0, target: self, selector: #selector(self.callWowzaStatusCheckApi), userInfo: self, repeats: true)
@@ -92,24 +181,27 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     func configuringWowzaCloud() {
         var goCoderBroadcastConfig = WowzaConfig()
         goCoderBroadcastConfig = self.goCoder.config
-        goCoderBroadcastConfig.load(WZFrameSizePreset.preset1280x720)
+//        goCoderBroadcastConfig.load(WZFrameSizePreset.preset1280x720)
         goCoderBroadcastConfig.hostAddress = strHostAdd
         goCoderBroadcastConfig.portNumber = intPortNumber
         goCoderBroadcastConfig.applicationName = strAppName
         goCoderBroadcastConfig.streamName = strStreamName
-        goCoderBroadcastConfig.username = strUsername
-        goCoderBroadcastConfig.password = strPassword
+//        goCoderBroadcastConfig.username = strUsername
+//        goCoderBroadcastConfig.password = strPassword
         self.goCoder.config = goCoderBroadcastConfig
     
+        //01-10-2017
+        self.perform(#selector(startstream), with: nil, afterDelay: 1)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btnClicked(sender:UIButton) {
-        
-        if isStreaming == false {
+    @IBAction func btnClicked(sender:UIButton)
+    {
+        if isStreaming == false
+        {
             isStreaming = true
             btnStartStreaming.setTitle("STOP STREAMING", for: .normal)
             self.startLiveStreaming()
@@ -118,30 +210,47 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         {
             isStreaming = false
             btnStartStreaming.setTitle("START STREAMING", for: .normal)
-            self.endLiveStreaming()
+            
+            if self.goCoder.status.state == .running
+            {
+                self.goCoder.endStreaming(self)
+                self.callEndStreamingApi()
+            }
         }
-        
+    }
+    
+    func startstream()
+    {
+        if isStreaming == false
+        {
+            isStreaming = true
+            btnStartStreaming.setTitle("STOP STREAMING", for: .normal)
+            self.startLiveStreaming()
+        }
     }
     
     
-    @IBAction func btnBackClicked(sender:UIButton) {
-        if isStreaming == false {
-            
-        }
-        else
+    @IBAction func btnBackClicked(sender:UIButton)
+    {
+        if self.goCoder.status.state == .running
         {
-            self.endLiveStreaming()
+            self.goCoder.endStreaming(self)
+            self.callEndStreamingApi()
         }
-        
+        self.goCoder?.cameraPreview?.stop()
         self.navigationController?.popViewController(animated: true)
     }
     
-    func endLiveStreaming() {
+    func endLiveStreaming()
+    {
         self.goCoder.endStreaming(self)
         //self.callEndStreamingApi()
     }
-    func startLiveStreaming() {
-        if self.goCoder.config.validateForBroadcast() != nil {
+    
+    func startLiveStreaming()
+    {
+        if self.goCoder.config.validateForBroadcast() != nil
+        {
             let uiAlert = UIAlertController(title: AppName, message: "\(self.goCoder.status.description)", preferredStyle: UIAlertControllerStyle.alert)
             uiAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                 
@@ -149,7 +258,10 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
             self.present(uiAlert, animated: true, completion: nil)
             print("\(self.goCoder.status.description)")
         }
-        else if self.goCoder.status.state != .running {
+        else if self.goCoder.status.state != .running
+        {
+            self.receivedGoCoderEventCodes.removeAll()
+            
             self.goCoder.startStreaming(self)
             
             //self.callStartStreamApi()
@@ -157,16 +269,27 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         else
         {
             self.goCoder.endStreaming(self)
-            
+    
             //self.callStartStreamApi()
         }
     }
     
     func callStartStreamApi() {
         let url : String = "https://api.cloud.wowza.com/api/v1/live_streams/\(strStreamId)/start"
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+//        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+//            let dictData = (response as NSDictionary)
+//            print("Dict Data \(dictData)")
+//        }) { (response:String!) in
+//            showAlert(strMsg: response, vc: self)
+//            print("Error is \(response)")
+//        }
+        MainReqeustClass.BaseRequestSharedInstance.putRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             print("Dict Data \(dictData)")
+            
+            self.getStreamState()
+
+            
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")
@@ -176,18 +299,24 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
     
     func callEndStreamingApi() {
         let url : String = "https://api.cloud.wowza.com/api/v1/live_streams/\(strStreamId)/stop"
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+        MainReqeustClass.BaseRequestSharedInstance.putRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             print("Dict Data \(dictData)")
+            
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")
         }
     }
     
+    //30-09-2017
     
     func getStreamState() {
-        let url : String = "https://cloud.wowza.com/api/v1/live_streams/\(strStreamName)/state"
+//        let url : String = "https://cloud.wowza.com/api/v1/live_streams/\(strStreamName)/state"
+
+        //"https://api.cloud.wowza.com/api/v1/live_streams/[live_stream_id]/stats"
+        let url : String = "https://api.cloud.wowza.com/api/v1/live_streams/\(strStreamId)/state"
+
         MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             let strState : String = (dictData.value(forKey: "live_stream") as! NSDictionary).value(forKey: "state") as! String
@@ -202,7 +331,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
                 print("Stream started")
                  self.perform(#selector(self.configueLicenceKey), with: nil, afterDelay: 1.2)
             }
-            
+
             
             
         }) { (response:String!) in
@@ -247,4 +376,55 @@ class PostToGameViewController: UIViewController,WZStatusCallback {
         
         self.view.makeToast("ERROR :- \(status.description)")
     }
+    
+    //30-09-2017
+    //MARK: - WZStatusCallback Protocol Instance Methods
+    
+    
+    func onWZEvent(_ status: WZStatus!) {
+        // If an event is reported by the GoCoder SDK, display an alert dialog describing the event,
+        // but only if we haven't already shown an alert for this event
+        
+        DispatchQueue.main.async
+            { () -> Void in
+            if !self.receivedGoCoderEventCodes.contains(status.event)
+            {
+                self.receivedGoCoderEventCodes.append(status.event)
+                self.view.makeToast("Live Streaming Event")
+            }
+            
+        }
+    }
+    
+    //MARK: - WZVideoSink Protocol Methods
+    func videoFrameWasCaptured(_ imageBuffer: CVImageBuffer, framePresentationTime: CMTime, frameDuration: CMTime)
+    {
+        if goCoder != nil && goCoder!.isStreaming && blackAndWhiteVideoEffect {
+            // convert frame to b/w using CoreImage tonal filter
+            var frameImage = CIImage(cvImageBuffer: imageBuffer)
+            if let grayFilter = CIFilter(name: "CIPhotoEffectTonal") {
+                grayFilter.setValue(frameImage, forKeyPath: "inputImage")
+                if let outImage = grayFilter.outputImage {
+                    frameImage = outImage
+                    
+                    let context = CIContext(options: nil)
+                    context.render(frameImage, to: imageBuffer)
+                }
+                
+            }
+        }
+    }
+    
+    func videoCaptureInterruptionStarted()
+    {
+        goCoder?.endStreaming(self)
+    }
+    
+    
+    //MARK: - WZAudioSink Protocol Methods
+    func audioLevelDidChange(_ level: Float)
+    {
+        //        print("Audio level did change: \(level)");
+    }
+    
 }
