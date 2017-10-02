@@ -463,6 +463,8 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
         postVC.strAppName = "\(dictInfo.value(forKey: "application")!)"
 //        postVC.strAppName = "app-d290"
         postVC.strStreamId = "\(dictLiveStream.value(forKey: "id")!)"
+        postVC.strhosted_page_url = "\(dictLiveStream.value(forKey: "hosted_page_url")!)"
+
         self.navigationController?.pushViewController(postVC, animated: true)
     }
     

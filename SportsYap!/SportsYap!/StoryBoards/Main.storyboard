@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xGg-7L-WPB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xGg-7L-WPB">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -1100,7 +1100,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MeTeamCell" reuseIdentifier="MeTeamCell" id="KZk-bc-TPG" customClass="MeTeamCell" customModule="SportsYap_" customModuleProvider="target">
-                                        <rect key="frame" x="17" y="12" width="82" height="25"/>
+                                        <rect key="frame" x="17" y="11.5" width="82" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="82" height="25"/>
@@ -2611,7 +2611,7 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L.A Memorial Coleisum" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGf-9E-MhF">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L.A Memorial Coleisum" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DGf-9E-MhF">
                                                     <rect key="frame" x="15" y="33" width="289" height="13"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <nil key="textColor"/>
@@ -2641,16 +2641,25 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <state key="normal" title="Comment"/>
                                                 </button>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="VyD-8c-RRV">
+                                                    <rect key="frame" x="10" y="33" width="294" height="13"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                                </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="pan-sa-8Ou" firstAttribute="leading" secondItem="V1e-7t-1Ld" secondAttribute="leading" constant="15" id="1NT-Xv-RCB"/>
                                                 <constraint firstItem="pan-sa-8Ou" firstAttribute="top" secondItem="aoq-N8-7nq" secondAttribute="bottom" constant="9" id="5lT-h0-FMQ"/>
                                                 <constraint firstItem="78W-01-hua" firstAttribute="leading" secondItem="V1e-7t-1Ld" secondAttribute="leading" id="8dS-Dn-KRI"/>
+                                                <constraint firstItem="VyD-8c-RRV" firstAttribute="leading" secondItem="DGf-9E-MhF" secondAttribute="leading" constant="-5" id="9Of-or-zz7"/>
                                                 <constraint firstAttribute="trailing" secondItem="aoq-N8-7nq" secondAttribute="trailing" id="Der-7l-wna"/>
                                                 <constraint firstItem="G2H-8Y-Dx0" firstAttribute="leading" secondItem="pan-sa-8Ou" secondAttribute="trailing" constant="10" id="Dvo-Wh-zOr"/>
                                                 <constraint firstItem="DGf-9E-MhF" firstAttribute="leading" secondItem="V1e-7t-1Ld" secondAttribute="leading" constant="15" id="FUb-0T-P1J"/>
                                                 <constraint firstItem="fuf-rZ-Ce6" firstAttribute="leading" secondItem="V1e-7t-1Ld" secondAttribute="leading" constant="15" id="KGZ-Wx-xDv"/>
+                                                <constraint firstItem="VyD-8c-RRV" firstAttribute="bottom" secondItem="DGf-9E-MhF" secondAttribute="bottom" id="L9V-dk-iZK"/>
                                                 <constraint firstAttribute="trailing" secondItem="DGf-9E-MhF" secondAttribute="trailing" constant="16" id="Lpc-jR-h1N"/>
                                                 <constraint firstAttribute="trailing" secondItem="fuf-rZ-Ce6" secondAttribute="trailing" constant="16" id="Lpv-WP-wIE"/>
                                                 <constraint firstItem="G2H-8Y-Dx0" firstAttribute="top" secondItem="aoq-N8-7nq" secondAttribute="bottom" constant="9" id="Uem-0M-nyg"/>
@@ -2659,8 +2668,10 @@
                                                 <constraint firstItem="fuf-rZ-Ce6" firstAttribute="top" secondItem="V1e-7t-1Ld" secondAttribute="top" constant="10" id="d0r-Ep-ILf"/>
                                                 <constraint firstAttribute="bottom" secondItem="pan-sa-8Ou" secondAttribute="bottom" constant="10" id="fBM-Pi-jtj"/>
                                                 <constraint firstItem="DGf-9E-MhF" firstAttribute="top" secondItem="fuf-rZ-Ce6" secondAttribute="bottom" constant="2" id="gHM-SX-cgo"/>
+                                                <constraint firstItem="VyD-8c-RRV" firstAttribute="trailing" secondItem="DGf-9E-MhF" secondAttribute="trailing" id="gYf-aY-Wt5"/>
                                                 <constraint firstAttribute="bottom" secondItem="G2H-8Y-Dx0" secondAttribute="bottom" constant="10" id="jCq-7Q-x9u"/>
                                                 <constraint firstItem="aoq-N8-7nq" firstAttribute="top" secondItem="DGf-9E-MhF" secondAttribute="bottom" constant="5" id="jr0-8g-Jc4"/>
+                                                <constraint firstItem="VyD-8c-RRV" firstAttribute="top" secondItem="DGf-9E-MhF" secondAttribute="top" id="kKW-gM-nLO"/>
                                                 <constraint firstItem="aoq-N8-7nq" firstAttribute="leading" secondItem="V1e-7t-1Ld" secondAttribute="leading" id="n3j-we-o1H"/>
                                                 <constraint firstAttribute="trailing" secondItem="78W-01-hua" secondAttribute="trailing" id="rVj-BI-HPH"/>
                                             </constraints>
@@ -2673,6 +2684,7 @@
                                             <outlet property="imgPost" destination="aoq-N8-7nq" id="tWg-8R-cmY"/>
                                             <outlet property="lblName" destination="fuf-rZ-Ce6" id="nh9-Vi-5bc"/>
                                             <outlet property="lblVenue" destination="DGf-9E-MhF" id="GUV-cH-Iyy"/>
+                                            <outlet property="txtVenue" destination="VyD-8c-RRV" id="fPc-El-ZU3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -3519,7 +3531,7 @@
                                         <rect key="frame" x="0.0" y="280" width="320" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uSR-gk-7Pe" id="TVY-aY-dnR">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tempUserProfile" translatesAutoresizingMaskIntoConstraints="NO" id="XWc-1Y-hUe">
@@ -3588,7 +3600,7 @@
                                         <rect key="frame" x="0.0" y="351" width="320" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BbM-Fs-NoG" id="WTK-Jc-th7">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tempUserProfile" translatesAutoresizingMaskIntoConstraints="NO" id="9ff-AO-iQK">
@@ -3915,7 +3927,7 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L.A Memorial Coleisum" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rkn-ny-NrF">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L.A Memorial Coleisum" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rkn-ny-NrF">
                                                     <rect key="frame" x="15" y="33" width="289" height="13"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <nil key="textColor"/>

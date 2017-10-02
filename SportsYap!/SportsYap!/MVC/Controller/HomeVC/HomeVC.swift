@@ -453,6 +453,9 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         cell.lblTime.text = dict.value(forKey: "created_at") as! String
         
         cell.lblVenue.text = dict.value(forKey: "description") as! String
+        cell.txtVenue?.text = dict.value(forKey: "description") as! String
+
+        
         let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
         let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
         //For Like
@@ -624,7 +627,11 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
 
                     //cell.lblName.text = "\(dictUser)"
                 }
-                cell.lblVenue.text = dict.value(forKey: "description") as! String
+                cell.lblVenue.text = dict.value(forKey: "description") as? String
+                cell.txtVenue?.text = dict.value(forKey: "description") as? String
+                cell.txtVenue?.sizeToFit()
+
+
                 let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
                 let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
                 //For Like
@@ -1100,6 +1107,9 @@ class timelineCell: UITableViewCell {
     @IBOutlet weak var vwPerson: UIView!
     @IBOutlet weak var imgPost: UIImageView!
     @IBOutlet weak var heightLayout: NSLayoutConstraint!
+    @IBOutlet weak var txtVenue: UITextView?
+
+    
     override func awakeFromNib() {
         btnLike.layer.cornerRadius = 5
         btnLike.layer.borderWidth = 1

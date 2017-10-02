@@ -38,6 +38,8 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
     var strUsername = String("client25020")!
     var strPassword = String("c2a3db23")!
     
+    var strhosted_page_url = String()
+    
     //30-09-2017
     var goCoderConfig:WowzaConfig!
     var goCoderRegistrationChecked = false
@@ -202,6 +204,16 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
     {
         if isStreaming == false
         {
+            let strUrl : String = "posts/create"
+            var params : [String:AnyObject]
+            params = ["description": strhosted_page_url as AnyObject]
+            
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+            }) { (response:String!) in
+                print("Error is \(response)")
+            }
+            
             isStreaming = true
             btnStartStreaming.setTitle("STOP STREAMING", for: .normal)
             self.startLiveStreaming()
@@ -223,6 +235,17 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
     {
         if isStreaming == false
         {
+            let strUrl : String = "posts/create"
+            var params : [String:AnyObject]
+            params = ["description": strhosted_page_url as AnyObject]
+            
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+            }) { (response:String!) in
+                print("Error is \(response)")
+            }
+            
+
             isStreaming = true
             btnStartStreaming.setTitle("STOP STREAMING", for: .normal)
             self.startLiveStreaming()

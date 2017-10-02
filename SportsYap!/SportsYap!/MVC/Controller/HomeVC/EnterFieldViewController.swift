@@ -124,6 +124,7 @@ extension EnterFieldViewController: UITableViewDataSource,UITableViewDelegate {
         cell.lblTime.text = dict.value(forKey: "created_at") as! String
         
         cell.lblVenue.text = dict.value(forKey: "description") as! String
+
         let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
         let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
         //For Like
@@ -214,6 +215,7 @@ extension EnterFieldViewController: UITableViewDataSource,UITableViewDelegate {
                 //cell.lblName.text = "\(dictUser)"
             }
             cell.lblVenue.text = dict.value(forKey: "description") as! String
+
             let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
             let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
             //For Like
