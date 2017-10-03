@@ -461,6 +461,104 @@ class MainReqeustClass: NSObject {
             }
         }*/
     }
+    
+    func POSTMultipartRequestVideo(showLoader: Bool, url:String, parameter:[String : AnyObject]?, data : Data?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String!) -> Void)
+    {
+        
+        MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
+        
+        print("----------------------\n\n\n\nURL: \(base_Url+url)")
+        print("I/P PARAMS: \(parameter)")
+        
+        
+        Alamofire.upload(multipartFormData:{ multipartFormData in
+            
+            if data != nil {
+                multipartFormData.append(data!, withName: "image", fileName: "video.mp4", mimeType: "video/quicktime")
+            }
+            
+            
+            
+            for (key, value) in parameter! {
+                multipartFormData.append(value.data(using: String.Encoding.utf8.rawValue)!, withName: key)
+            }
+        },
+                         usingThreshold:UInt64.init(),
+                         to:base_Url+url,
+                         method:.post,
+                         headers:getHeaderData(),
+                         encodingCompletion: { encodingResult in
+                            switch encodingResult {
+                                
+                            case .success(let upload, _, _):
+                                upload.responseJSON { response in
+                                    debugPrint(response)
+                                    
+                                    upload.responseJSON { response in
+                                        MainReqeustClass.HideActivityIndicatorInStatusBar()
+                                        print("Response: \(response.result.value as AnyObject!)")
+                                        
+                                        var dict = JSON(response.result.value ?? "").dictionaryValue
+                                        
+                                        if(dict["code"]?.intValue == 500) {
+                                            failed((dict["message"]?.stringValue)!)
+                                        }
+                                        else {
+                                            success(dict as Dictionary<String, AnyObject>)
+                                        }
+                                    }
+                                    
+                                }
+                            case .failure(let encodingError):
+                                print(encodingError)
+                                MainReqeustClass.HideActivityIndicatorInStatusBar()
+                                failed("The network connection was lost please try again.")
+                            }
+        })
+        
+        
+        
+        /*
+         
+         Alamofire.upload(multipartFormData: { (multipartFormData) in
+         
+         multipartFormData.append(UIImageJPEGRepresentation(img, 1)!, withName: "image", fileName: "image.jpeg", mimeType: "image/jpeg")
+         
+         for (key, value) in parameter! {
+         multipartFormData.append(value.data(using: String.Encoding.utf8.rawValue)!, withName: key)
+         }
+         
+         }, to:base_Url+url)
+         {
+         (result) in
+         switch result {
+         case .success(let upload, _, _):
+         
+         upload.uploadProgress(closure: { (progress) in
+         
+         })
+         
+         upload.responseJSON { response in
+         MainReqeustClass.HideActivityIndicatorInStatusBar()
+         print("Response: \(response.result.value as AnyObject!)")
+         
+         var dict = JSON(response.result.value ?? "").dictionaryValue
+         
+         if(dict["code"]?.intValue == 500) {
+         failed((dict["message"]?.stringValue)!)
+         }
+         else {
+         success(dict as Dictionary<String, AnyObject>)
+         }
+         }
+         
+         case .failure( _):
+         MainReqeustClass.HideActivityIndicatorInStatusBar()
+         failed("The network connection was lost please try again.")
+         }
+         }*/
+    }
+
 
     //MARK: - Progress HUD Methods
     

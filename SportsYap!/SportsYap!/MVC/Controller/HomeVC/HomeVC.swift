@@ -629,7 +629,6 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 }
                 cell.lblVenue.text = dict.value(forKey: "description") as? String
                 cell.txtVenue?.text = dict.value(forKey: "description") as? String
-                cell.txtVenue?.sizeToFit()
 
 
                 let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
@@ -667,6 +666,19 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                         cell.btnLike.setTitleColor(UIColor.white, for: .normal)
                     }
                 }
+                
+                let strvideo = dict.value(forKey: "video") as! String
+                if strvideo == "" {
+                }
+                else
+                {
+                    cell.lblVenue.text = (dict.value(forKey: "description") as? String)! + "\n\(strvideo)"
+                    cell.txtVenue?.text = (dict.value(forKey: "description") as? String)! + "\n\(strvideo)"
+                }
+                cell.txtVenue?.isScrollEnabled = false
+                cell.txtVenue?.sizeToFit()
+
+                
                 let strImg = dict.value(forKey: "image") as! String
                 if strImg == "" {
                     cell.heightLayout.constant = 0
@@ -1109,6 +1121,10 @@ class timelineCell: UITableViewCell {
     @IBOutlet weak var heightLayout: NSLayoutConstraint!
     @IBOutlet weak var txtVenue: UITextView?
 
+    @IBOutlet weak var wvheightLayout: NSLayoutConstraint?
+    @IBOutlet weak var webvwVideo: UIWebView?
+
+    
     
     override func awakeFromNib() {
         btnLike.layer.cornerRadius = 5

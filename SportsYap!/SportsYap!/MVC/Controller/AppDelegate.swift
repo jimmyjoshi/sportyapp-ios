@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var strPassword = String("")!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
-         IQKeyboardManager.sharedManager().enable = true
+        
+        IQKeyboardManager.sharedManager().enable = true
         
         GMSPlacesClient.provideAPIKey("AIzaSyA1QzteBViMZnOIHORGMMaCTYXrnOSbblo")
         return true

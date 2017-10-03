@@ -16,7 +16,11 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     @IBOutlet var htImg : NSLayoutConstraint!
     var imagePicker = UIImagePickerController()
     var isImageUploaded : Bool = false
-    override func viewDidLoad() {
+    var isVideoUploaded : Bool = false
+    var videoData = Data()
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -68,60 +72,105 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     func callPostApi() {
         let strUrl : String = "posts/create"
         var params : [String:AnyObject]
-        params = ["description": txtPost.text as AnyObject]
         
         
-        if isImageUploaded == false {
-        
-        MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
-            print("Response \(response as NSDictionary)")
-            var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+        if isImageUploaded == false
+        {
+            if isVideoUploaded == true
+            {
+                params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
+
+                MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequestVideo(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, data: videoData
+                    , success: { (response:Dictionary<String, AnyObject>) in
+                        
+                        print("video posted")
+                        var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                        
+                        showAlert(strMsg: strMes, vc: self)
+                        self.isImageUploaded = false
+                        self.htImg.constant = 0
+                        self.btnCancel.isHidden = true
+                        self.txtPost.text = ""
+                        //self.parsingLoginData(responseReq: response as NSDictionary)
+                        //success(response)
+                        
+                }) { (response:String!) in
+                    //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                    
+                    showAlert(strMsg: response, vc: self)
+                    //failed(response)
+                }
+            }
+            else
+            {
+                params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
+
+                MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                    print("Response \(response as NSDictionary)")
+                    var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                    
+                    showAlert(strMsg: strMes, vc: self)
+                    self.txtPost.text = ""
+                }) { (response:String!) in
+                    //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                    
+                    showAlert(strMsg: response, vc: self)
+                    print("Error is \(response)")
+                    //failed(response)
+                }
+            }
             
-            showAlert(strMsg: strMes, vc: self)
-            self.txtPost.text = ""            
-        }) { (response:String!) in
-            //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
-            
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-            //failed(response)
         }
-        
+        else
+        {
+            params = ["description": txtPost.text as AnyObject,"is_image" : 1 as AnyObject]
+
+            MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequest(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, img: imgPost.image
+                , success: { (response:Dictionary<String, AnyObject>) in
+                    
+                    print("image posted")
+                    var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                    
+                    showAlert(strMsg: strMes, vc: self)
+                    self.isImageUploaded = false
+                    self.htImg.constant = 0
+                    self.btnCancel.isHidden = true
+                    self.txtPost.text = ""
+                    //self.parsingLoginData(responseReq: response as NSDictionary)
+                    //success(response)
+                    
+            }) { (response:String!) in
+                //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                
+                showAlert(strMsg: response, vc: self)
+                //failed(response)
+            }
             
-        }
-        else {
-        MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequest(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, img: imgPost.image
-            , success: { (response:Dictionary<String, AnyObject>) in
-                
-                print("image posted")
-                var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
-                
-                showAlert(strMsg: strMes, vc: self)
-                self.isImageUploaded = false
-                self.htImg.constant = 0
-                self.btnCancel.isHidden = true
-                self.txtPost.text = ""
-                //self.parsingLoginData(responseReq: response as NSDictionary)
-                //success(response)
-                
-        }) { (response:String!) in
-            //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
-            
-            showAlert(strMsg: response, vc: self)
-            //failed(response)
-        }
-        
         }
     }
     
-    @IBAction func btnUploadPic(btnSender: UIButton) {
+    @IBAction func btnUploadPic(btnSender: UIButton)
+    {
         self.view.endEditing(true)
         let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
         self.present(uiAlert, animated: true, completion: nil)
-        
+        self.imagePicker.mediaTypes = ["public.image", "public.movie"]
+
         uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-            self.imagePicker.sourceType = .camera
-            self.present(self.imagePicker, animated: true, completion: nil)
+         
+            if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
+            {
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+                alert.addAction(ok)
+                self.present(alert, animated: true, completion: nil)
+            }
+
         }))
         
         uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
@@ -146,14 +195,34 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         self.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        isImageUploaded = true
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
-            imgPost.image = image
-            btnCancel.isHidden = false
-        } else
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    {
+        let mType: String? = (info[UIImagePickerControllerMediaType] as? String)
+        if (mType == "public.movie")
         {
-            print("Something went wrong")
+            let selectedVideoURL: URL? = (info["UIImagePickerControllerMediaURL"] as? URL)
+            
+            isVideoUploaded = true
+            
+            do {
+                videoData = try Data(contentsOf: selectedVideoURL!)
+                // do something with data
+                // if the call fails, the catch block is executed
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        else
+        {
+            isImageUploaded = true
+            if let image = info[UIImagePickerControllerEditedImage] as? UIImage
+            {
+                imgPost.image = image
+                btnCancel.isHidden = false
+            } else
+            {
+                print("Something went wrong")
+            }
         }
         htImg.constant = 105
         self.dismiss(animated:true, completion: nil)
