@@ -16,9 +16,6 @@ class FansCell: UITableViewCell {
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblTeam: UILabel!
     @IBOutlet weak var ivImage: UIImageView!
-    
-    
-    
     override func awakeFromNib() {
         setCornurRedius(idObject: ivImage, radius: ivImage.frame.size.height/2)
         ivImage.layer.borderWidth = 1.5
@@ -30,7 +27,9 @@ class FansCell: UITableViewCell {
 }
 
 class NewsCell: UITableViewCell {
-    
+    @IBOutlet var imgUser: UIImageView!
+    @IBOutlet var lblFollowTime: UILabel!
+    @IBOutlet var lblDescription: UILabel!
 }
 
 
@@ -41,7 +40,7 @@ class GameDetailVC: UIViewController {
     @IBOutlet private var btnFanmeter: UIButton!
     @IBOutlet fileprivate var btnNews: UIButton!
     @IBOutlet fileprivate var btnFans: UIButton!
-    @IBOutlet private var tblList: UITableView!
+    @IBOutlet public var tblList: UITableView!
     @IBOutlet private var slider: UISlider!
     @IBOutlet private var cntHeight: NSLayoutConstraint!
     
@@ -63,6 +62,9 @@ class GameDetailVC: UIViewController {
     
     var currentGameObject = GameClass()
     
+    var dictFan = NSMutableDictionary()
+    var arrNews = NSMutableArray()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -71,6 +73,7 @@ class GameDetailVC: UIViewController {
             cntHeight.constant = 100
         }
         
+
         isFans = true
         
         slider.setThumbImage(#imageLiteral(resourceName: "FaceSlider"), for: .normal)
@@ -117,6 +120,11 @@ class GameDetailVC: UIViewController {
         {
             imgGameType.image = UIImage(named: "Game_image0")
         }
+        
+        
+        callFanApi()
+        
+        //callNewsApi()
 
     }
 
@@ -133,7 +141,16 @@ class GameDetailVC: UIViewController {
         btnFans.setTitleColor(UIColor.black, for: .normal)
         btnNews.setTitleColor(UIColor.darkGray, for: .normal)
         
-        tblList.reloadData()
+        if dictFan.allKeys.count > 0
+        {
+            tblList.reloadData()
+        }
+        else
+        {
+            self.callFanApi()
+        }
+        
+        
     }
     
     @IBAction private func btnBackPress(_ : UIButton) {
@@ -154,7 +171,15 @@ class GameDetailVC: UIViewController {
         btnNews.setTitleColor(UIColor.black, for: .normal)
         btnFans.setTitleColor(UIColor.darkGray, for: .normal)
         
-        tblList.reloadData()
+        if arrNews.count > 0 {
+            tblList.reloadData()
+        }
+        else
+        {
+            self.callNewsApi()
+        }
+        
+        
     }
     
     @IBAction func btnMorePassPress(_ : UIButton) {
@@ -172,6 +197,7 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
         
         if(isFans == true) {
             return 2
+            //return 2
         }
         else {
             return 1
@@ -179,7 +205,34 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        //return 10
+        if isFans == true {
+            if section == 1 {
+                if dictFan.allKeys.count > 0 {
+                    var intCount = (dictFan.value(forKey: "celebrity") as! NSArray).count
+                    return intCount
+                }
+                else {
+                    return 0
+                }
+                
+            }
+            else
+            {
+                if dictFan.allKeys.count > 0 {
+                    var intCount = (dictFan.value(forKey: "normal") as! NSArray).count
+                    return intCount
+                }
+                else {
+                    return 0
+                }
+            }
+            //return arrFan.count
+        }
+        else
+        {
+            return arrNews.count
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -207,20 +260,86 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
             
             let cell: FansCell = tableView.dequeueReusableCell(withIdentifier: "FansCell") as! FansCell
             
+            var dictInfo = NSDictionary()
+            
             if(indexPath.section == 0) {
-                cell.ivVarify.isHidden = false
+                dictInfo = (dictFan.value(forKey: "celebrity") as! NSArray).object(at: indexPath.row) as! NSDictionary
+                //cell.ivVarify.isHidden = false
             }
             else {
-                cell.ivVarify.isHidden = true
+                dictInfo = (dictFan.value(forKey: "normal") as! NSArray).object(at: indexPath.row) as! NSDictionary
+                //cell.ivVarify.isHidden = true
+            }
+            
+            
+            if let name = dictInfo.value(forKey: "name") {
+                cell.lblName.text = "\(name)"
+            }
+            
+            if let team = dictInfo.value(forKey: "team") {
+                cell.lblTeam.text = "\(team)"
+            }
+            
+            if let followtime = dictInfo.value(forKey: "follow_time") {
+                cell.lblTime.text = "\(followtime)"
+            }
+            
+            if let isFollow = dictInfo.value(forKey: "is_follow") {
+                if "\(isFollow)" == "1" {
+                    cell.ivVarify.isHidden = false
+                }
+                else
+                {
+                    cell.ivVarify.isHidden = true
+                }
+            }
+            
+            if let img = dictInfo.value(forKey: "image") {
+                let strImg = dictInfo.value(forKey: "image") as! String
+                if strImg == "" {
+                    
+                }
+                else
+                {
+                    let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                    let url2 = URL(string: strURL)
+                    if url2 != nil {
+                        cell.ivImage.sd_setImage(with: url2, placeholderImage: nil)
+                    }
+                }
             }
             
             return cell
         }
         else {
             let cell: NewsCell = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as! NewsCell
+            var dictInfo = arrNews[indexPath.row] as! NSDictionary
+            
+            if let img = dictInfo.value(forKey: "image") {
+                //cell.imgUser.downloadImage(from: "\(img!)")
+                let strImg = dictInfo.value(forKey: "image") as! String
+                if strImg == "" {
+                    
+                }
+                else
+                {
+                    let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                    let url2 = URL(string: strURL)
+                    if url2 != nil {
+                        cell.imgUser.sd_setImage(with: url2, placeholderImage: nil)
+                    }
+                }
+            }
+            
+            if let desc = dictInfo.value(forKey: "description") {
+                cell.lblDescription.text = "\(desc)"
+            }
+            
+            if let time = dictInfo.value(forKey: "news_time") {
+                cell.lblFollowTime.text = "\(time)"
+            }
             return cell
         }
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -237,6 +356,36 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
 //        meVC.userDetail = userDetail
 //        self.navigationController?.pushViewController(meVC, animated: true)
         
+    }
+    
+    func callFanApi() {
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-fans"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            //let dictData = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            
+            self.dictFan = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            
+            self.tblList.reloadData()
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
+    
+    func callNewsApi() {
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-news"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            self.arrNews = NSMutableArray()
+            self.arrNews  = ((response as NSDictionary).value(forKey: "data") as! NSArray).mutableCopy() as! NSMutableArray
+            print("\(self.arrNews)")
+            self.tblList.reloadData()
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
     }
 }
 
