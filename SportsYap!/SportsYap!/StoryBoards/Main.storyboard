@@ -1100,7 +1100,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MeTeamCell" reuseIdentifier="MeTeamCell" id="KZk-bc-TPG" customClass="MeTeamCell" customModule="SportsYap_" customModuleProvider="target">
-                                        <rect key="frame" x="17" y="12" width="82" height="25"/>
+                                        <rect key="frame" x="17" y="11.5" width="82" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="82" height="25"/>
@@ -1861,6 +1861,7 @@
                     <connections>
                         <outlet property="btnAddTeams" destination="0G4-sf-WnA" id="A6h-5V-vJP"/>
                         <outlet property="btnProfile" destination="rog-T7-oMp" id="NUZ-oR-w4N"/>
+                        <outlet property="tblTeam" destination="sgz-vJ-cXS" id="hSM-0l-DMf"/>
                         <outlet property="txtEmail" destination="N6a-tN-D1F" id="Vpa-nR-zSK"/>
                         <outlet property="txtLocation" destination="50v-7B-BaV" id="j4T-IW-IH9"/>
                         <outlet property="txtName" destination="Nge-AJ-r4p" id="Tpi-qA-MnA"/>
@@ -3531,7 +3532,7 @@
                                         <rect key="frame" x="0.0" y="280" width="320" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uSR-gk-7Pe" id="TVY-aY-dnR">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tempUserProfile" translatesAutoresizingMaskIntoConstraints="NO" id="XWc-1Y-hUe">
@@ -3600,7 +3601,7 @@
                                         <rect key="frame" x="0.0" y="351" width="320" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BbM-Fs-NoG" id="WTK-Jc-th7">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tempUserProfile" translatesAutoresizingMaskIntoConstraints="NO" id="9ff-AO-iQK">

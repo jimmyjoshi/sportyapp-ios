@@ -168,7 +168,7 @@ class MainReqeustClass: NSObject {
         
         if(isInternetConnection()) {
         MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
-            Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: getWowzaHeader()).responseJSON { (response:DataResponse<Any>) in
+            Alamofire.request(url, method: .post, parameters: parameter, encoding: JSONEncoding.default, headers: header).responseJSON { (response:DataResponse<Any>) in
                 MainReqeustClass.HideActivityIndicatorInStatusBar()
                 switch(response.result) {
                 case .success(_):

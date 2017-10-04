@@ -39,10 +39,10 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
     @IBOutlet weak var txtLocation: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
-    
+    @IBOutlet weak var tblTeam: UITableView!
     
     var imagePicker = UIImagePickerController()
-    
+    var arrTeam = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +68,9 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
         txtLocation.text = UserClass.sharedInstance.strLocation
         txtPassword.text = UserClass.sharedInstance.strPassword
         txtEmail.text = UserClass.sharedInstance.strEmail
+        
+        
+        callGetTeam()
 
     }
 
@@ -83,11 +86,11 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
     }
     
     @IBAction func btnAddTeamClicked(sender: UIButton) {
-        /*
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let addVC: AddTeamVC = cameraStoryboard.instantiateViewController(withIdentifier: "AddTeamVC") as! CommentViewController
         
-        self.navigationController?.pushViewController(addVC, animated: true)*/
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let addVC: AddTeamVC = cameraStoryboard.instantiateViewController(withIdentifier: "AddTeamVC") as! AddTeamVC
+        
+        self.navigationController?.pushViewController(addVC, animated: true)
     }
     @IBAction private func btnSavePressed(_ : UIButton) {
         self.view.endEditing(true)
@@ -130,10 +133,36 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
         
     }
     
+    func callGetTeam() {
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-my-teams"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            var arrTmp = NSMutableArray()
+            arrTmp  = ((response as NSDictionary).value(forKey: "data") as! NSArray).mutableCopy() as! NSMutableArray
+            self.convertToMutable(arrMain: arrTmp)
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
+    
+    
+    func convertToMutable(arrMain: NSMutableArray) {
+        var arrTemp = NSMutableArray()
+        for arr in arrMain {
+            let dict : NSMutableDictionary = (arr as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            arrTemp.add(dict)
+        }
+        arrTeam = NSMutableArray()
+        arrTeam = arrTemp
+        self.tblTeam.reloadData()
+    }
     
     func getUserData() {
-        let strURL = "http://52.66.73.127/sportyapp/public/api/users/getdata"
-        MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strURL, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/getdata"
+        //let strURL = "http://52.66.73.127/sportyapp/public/api/users/getdata"
+        MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strUrl, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
             //self.strMatchTpe = strMatchType
             let responseReq = response as NSDictionary
             var dict = JSON(responseReq).dictionaryValue
@@ -188,6 +217,52 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
         
     }
     
+    
+    func btnFollowUnFollowClicked(sender: UIButton) {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tblTeam)
+        let ip = self.tblTeam.indexPathForRow(at: buttonPosition)
+        
+        print("Index path \(ip?.row)")
+        
+        let dictInfo = arrTeam[(ip?.row)!] as! NSDictionary
+        
+        var strUrl = String("")!
+        if let isFollow = dictInfo.value(forKey: "is_follow") {
+            if "\(isFollow)" == "1" {
+                strUrl = "\(base_Url)users/un-follow-team"
+            }
+            else
+            {
+                strUrl = "\(base_Url)users/follow-team"
+            }
+            var strTeamId : String = "\(dictInfo.value(forKey: "team_id")!)"
+            let dictParameter:[String:String] = ["team_id":strTeamId]
+            MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter as [String : AnyObject]?, header: getHeaderData(), success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+                let intCode : Int = (response as NSDictionary).value(forKey: "code")! as! Int
+                
+                let dicData : NSDictionary = (response as NSDictionary).value(forKey: "data")! as! NSDictionary
+                
+                if intCode == 200 {
+                    let dictTeam = self.arrTeam[(ip?.row)!] as! NSMutableDictionary
+                    let intIsFollow = dictTeam.value(forKey: "is_follow") as! Int
+                    dictTeam.setValue((intIsFollow
+                        == 0 ? 1 : 0), forKey: "is_follow")
+                    let indexPath = IndexPath(item: (ip?.row)!, section: 0)
+                    self.tblTeam.reloadRows(at: [indexPath], with: .automatic)
+                }
+                else
+                {
+                    let strMsg : String = dicData.value(forKey: "reason") as! String
+                     showAlert(strMsg: strMsg, vc: self)
+                }
+            }) { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+    }
+    
     //MARK:- UIImage picker delegate
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -212,12 +287,51 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
 extension EditProfileVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 50
+            return arrTeam.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: TeamCell = tableView.dequeueReusableCell(withIdentifier: "TeamCell") as! TeamCell
+        
+        var dictInfo = arrTeam[indexPath.row] as! NSDictionary
+        
+        if let img = dictInfo.value(forKey: "image") {
+            let strImg = dictInfo.value(forKey: "image") as! String
+            if strImg == "" {
+                
+            }
+            else
+            {
+                let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                let url2 = URL(string: strURL)
+                if url2 != nil {
+                    cell.ivImage.sd_setImage(with: url2, placeholderImage: nil)
+                }
+            }
+        }
+        
+        if let name = dictInfo.value(forKey: "name") {
+            cell.lblName.text = "\(name)"
+        }
+        
+        if let location = dictInfo.value(forKey: "location") {
+            cell.lblLocation.text = "\(location)"
+        }
+        
+        
+        if let isFollow = dictInfo.value(forKey: "is_follow") {
+            if "\(isFollow)" == "1" {
+                cell.btnFollow.setTitle("Unfollow", for: .normal)
+            }
+            else
+            {
+                 cell.btnFollow.setTitle("Follow", for: .normal)
+            }
+            cell.btnFollow.addTarget(self, action: #selector(self.btnFollowUnFollowClicked(sender:)), for: .touchUpInside)
+        }
+        
+        
         return cell
     }
     
