@@ -4696,10 +4696,6 @@
                                     <outlet property="delegate" destination="9vo-uv-yr5" id="PR7-j6-bR0"/>
                                 </connections>
                             </tableView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="vrc-0S-OMy">
-                                <rect key="frame" x="150" y="274" width="20" height="20"/>
-                                <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ae3-Tw-S2H">
                                 <rect key="frame" x="0.0" y="64" width="320" height="55"/>
                                 <subviews>
@@ -4727,8 +4723,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="1Vj-To-LDQ" secondAttribute="trailing" id="G5b-dj-cG3"/>
-                            <constraint firstItem="vrc-0S-OMy" firstAttribute="centerX" secondItem="kUA-Gl-Gzc" secondAttribute="centerX" id="G8Q-lP-g3a"/>
-                            <constraint firstItem="vrc-0S-OMy" firstAttribute="centerY" secondItem="kUA-Gl-Gzc" secondAttribute="centerY" id="HPj-CV-DMJ"/>
                             <constraint firstItem="Ae3-Tw-S2H" firstAttribute="top" secondItem="BA5-yp-WtK" secondAttribute="bottom" id="UIk-Bb-wzM"/>
                             <constraint firstAttribute="trailing" secondItem="Ae3-Tw-S2H" secondAttribute="trailing" id="WM2-9N-hae"/>
                             <constraint firstItem="BA5-yp-WtK" firstAttribute="top" secondItem="kUA-Gl-Gzc" secondAttribute="top" id="bth-gn-yY7"/>
@@ -4741,7 +4735,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activity" destination="vrc-0S-OMy" id="sRx-te-LaL"/>
                         <outlet property="searchBar" destination="wgG-9l-ww1" id="ayP-tQ-15x"/>
                         <outlet property="tblUserLost" destination="1Vj-To-LDQ" id="uI4-N3-h4K"/>
                     </connections>

@@ -70,10 +70,16 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
         txtEmail.text = UserClass.sharedInstance.strEmail
         
         
-        callGetTeam()
+        
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        
+        callGetTeam()
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -221,11 +227,8 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
     func btnFollowUnFollowClicked(sender: UIButton) {
         let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tblTeam)
         let ip = self.tblTeam.indexPathForRow(at: buttonPosition)
-        
         print("Index path \(ip?.row)")
-        
         let dictInfo = arrTeam[(ip?.row)!] as! NSDictionary
-        
         var strUrl = String("")!
         if let isFollow = dictInfo.value(forKey: "is_follow") {
             if "\(isFollow)" == "1" {
