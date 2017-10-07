@@ -26,7 +26,7 @@ class DiscoverVC: UIViewController {
     var intMaxComment : Int = 2
     @IBOutlet weak var tblPostList: UITableView!
     var arrTimelineData = NSArray()
-    var arrList = Array<GameClass>()
+    //var arrList = Array<GameClass>()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tblPostList.estimatedRowHeight = 82.0
@@ -90,7 +90,7 @@ class DiscoverVC: UIViewController {
     }
     
     func getFeedsList() {
-        self.arrList.removeAll()
+        //self.arrList.removeAll()
         self.tblPostList.reloadData()
         var strURL = String("")!
         strURL = "\(base_Url)posts/discover-posts"
