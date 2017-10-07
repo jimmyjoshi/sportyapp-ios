@@ -14,17 +14,13 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var tblComment: UITableView!
     @IBOutlet weak var vwBg: UIView!
     var objHomeVc : HomeVC?
+    var objDiscoverVc : DiscoverVC?
     var dictPost = NSDictionary()
     var arrComment = NSMutableArray()
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.vwTapped(sender:)))
         self.vwBg.addGestureRecognizer(gesture)
-        
-        
-        
         arrComment = NSMutableArray()
         arrComment = (dictPost.value(forKey: "postComments") as! NSArray).mutableCopy() as! NSMutableArray
         txtPost.delegate = self
@@ -67,11 +63,6 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
             (value: Bool) in
             
             self.dismiss(animated: true, completion: nil)
-            //self.removeFromParentViewController()
-            //self.view.removeFromSuperview()
-            
-            
-            
         })
     }
     
@@ -144,10 +135,15 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
             self.tblComment.reloadData()
             
             UIView.animate(withDuration: 0.3, animations: {
-                self.objHomeVc?.changeTab()
-                //self.view.alpha = 0
-                //var abc : HomeVC = self.parent as! HomeVC
-                //abc.changeTab()
+                if self.objHomeVc == nil
+                {
+                    self.objDiscoverVc?.getFeedsList()
+                }
+                else
+                {
+                    self.objHomeVc?.changeTab()
+                }
+                
             }, completion: {
                 (value: Bool) in
                 self.tblComment.isHidden = false

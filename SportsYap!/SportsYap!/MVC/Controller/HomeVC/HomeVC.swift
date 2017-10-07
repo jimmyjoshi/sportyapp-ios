@@ -279,7 +279,7 @@ class HomeVC: UIViewController {
     private func getFeedsList() {
         self.arrList.removeAll()
         self.tblMatch.reloadData()
-        
+
         let strURL = "http://52.66.73.127/sportyapp/public/api/posts/getlist"
         
         MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strURL, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
