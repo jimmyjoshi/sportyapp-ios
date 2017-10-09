@@ -16,6 +16,7 @@ class TransparentViewController: UIViewController {
     @IBOutlet weak var btnPostToGame: UIButton!
     @IBOutlet weak var btnClose: UIButton!
     @IBOutlet weak var vwBg: UIView!
+    @IBOutlet weak var vwPostView: UIView!
     
     
     //Wowza temporary details
@@ -39,6 +40,9 @@ class TransparentViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        
+        vwPostView.isHidden = true
+        
         btnCreateFanChallenge.setRoundedCorner(radius: nil)
         btnPostToGame.setRoundedCorner(radius: nil)
         btnPostToTimeLine.setRoundedCorner(radius: nil)
@@ -86,14 +90,58 @@ class TransparentViewController: UIViewController {
         
     }
     
-    @IBAction func btnCreatePostClicked(sender: UIButton) {
+    
+    @IBAction private func btnClosePostView(_ :UIButton) {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+            
+        }, completion: {
+            (value: Bool) in
+            
+            self.vwBg.isHidden = false
+            self.vwPostView.isHidden = true
+        })
+        
+    }
+    
+    @IBAction func btnCreatePostClicked(sender: UIButton)
+    {
+        view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        vwBg.isHidden = true
+        vwPostView.isHidden = false
+        /*
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
         self.navigationController?.pushViewController(postVC, animated: true)
         
         self.removeFromParentViewController()
+        self.view.removeFromSuperview()*/
+    }
+    
+    @IBAction func btnCreateImagePostClicked(sender: UIButton)
+    {
+        
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.isImageUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+        
+        self.removeFromParentViewController()
         self.view.removeFromSuperview()
     }
+    
+    @IBAction func btnCreateVideoPostClicked(sender: UIButton)
+    {
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.isVideoUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+        
+        self.removeFromParentViewController()
+        self.view.removeFromSuperview()
+    }
+    
     @IBAction func btnCreateFanChallengeClicked(sender: UIButton) {
         
     }

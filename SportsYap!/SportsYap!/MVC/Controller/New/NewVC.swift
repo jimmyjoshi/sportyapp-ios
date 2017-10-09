@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @IBOutlet var txtPost : UITextView!
@@ -161,6 +162,17 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
             {
                 self.imagePicker.sourceType = .camera
+
+                if self.isVideoUploaded == true
+                {
+                    self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
+                    self.imagePicker.allowsEditing = false
+                }
+                else
+                {
+                    self.imagePicker.mediaTypes = [kUTTypeImage as NSString as String]
+                    
+                }
                 self.present(self.imagePicker, animated: true, completion: nil)
             }
             else
@@ -174,7 +186,18 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         }))
         
         uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+            
             self.imagePicker.sourceType = .savedPhotosAlbum
+            if self.isVideoUploaded == true
+            {
+                self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
+                self.imagePicker.allowsEditing = false
+            }
+            else
+            {
+                self.imagePicker.mediaTypes = [kUTTypeImage as NSString as String]
+                
+            }
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
         
@@ -198,7 +221,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
         let mType: String? = (info[UIImagePickerControllerMediaType] as? String)
-        if (mType == "public.movie")
+        if (mType! == kUTTypeMovie as String)
         {
             let selectedVideoURL: URL? = (info["UIImagePickerControllerMediaURL"] as? URL)
             
