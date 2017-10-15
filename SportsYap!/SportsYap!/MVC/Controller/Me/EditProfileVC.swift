@@ -139,6 +139,11 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
         
     }
     
+    func getMatch(){
+        
+    }
+        
+    //MARK:- Getting Team of user
     func callGetTeam() {
         var strUrl = String("")!
         strUrl = "\(base_Url)users/get-my-teams"
