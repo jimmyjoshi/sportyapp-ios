@@ -5477,6 +5477,47 @@
                                     <outlet property="delegate" destination="e7N-Av-9nW" id="GLv-bF-tll"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHj-rq-7nl" userLabel="no game view">
+                                <rect key="frame" x="0.0" y="100" width="320" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zw3-99-6Ys">
+                                        <rect key="frame" x="60" y="225" width="200" height="150"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nogameIcon" translatesAutoresizingMaskIntoConstraints="NO" id="YUK-2E-luH">
+                                                <rect key="frame" x="25" y="0.0" width="150" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="150" id="1Kg-AJ-uLV"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There's no game today" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa9-9r-wmk">
+                                                <rect key="frame" x="0.0" y="42" width="200" height="66"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="66" id="9O8-EY-Oj4"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="YUK-2E-luH" firstAttribute="centerX" secondItem="Zw3-99-6Ys" secondAttribute="centerX" id="5dm-va-RGx"/>
+                                            <constraint firstAttribute="height" constant="150" id="6h4-kN-CHD"/>
+                                            <constraint firstAttribute="bottom" secondItem="YUK-2E-luH" secondAttribute="bottom" id="8BT-Cv-qc4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Xa9-9r-wmk" secondAttribute="trailing" id="JJ7-J4-5m8"/>
+                                            <constraint firstItem="Xa9-9r-wmk" firstAttribute="centerY" secondItem="Zw3-99-6Ys" secondAttribute="centerY" id="dpV-jp-Afx"/>
+                                            <constraint firstAttribute="width" constant="200" id="rf6-p2-KIi"/>
+                                            <constraint firstItem="YUK-2E-luH" firstAttribute="top" secondItem="Zw3-99-6Ys" secondAttribute="top" id="ugH-OW-WF7"/>
+                                            <constraint firstItem="Xa9-9r-wmk" firstAttribute="leading" secondItem="Zw3-99-6Ys" secondAttribute="leading" id="wZu-B6-mAd"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Zw3-99-6Ys" firstAttribute="centerY" secondItem="tHj-rq-7nl" secondAttribute="centerY" id="FmS-tI-jgi"/>
+                                    <constraint firstItem="Zw3-99-6Ys" firstAttribute="centerX" secondItem="tHj-rq-7nl" secondAttribute="centerX" id="VPX-WQ-RBl"/>
+                                </constraints>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UN6-rw-2ZD">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                                 <subviews>
@@ -5609,14 +5650,18 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="UN6-rw-2ZD" secondAttribute="trailing" id="7Jw-FI-YXu"/>
                             <constraint firstItem="UN6-rw-2ZD" firstAttribute="top" secondItem="dVo-bw-IEb" secondAttribute="top" id="7zb-2w-q8u"/>
+                            <constraint firstItem="IUz-2f-1FX" firstAttribute="top" secondItem="tHj-rq-7nl" secondAttribute="bottom" id="85K-IS-sJQ"/>
                             <constraint firstItem="0s0-qU-g6Q" firstAttribute="leading" secondItem="dVo-bw-IEb" secondAttribute="leading" id="Cvy-kF-HOw"/>
                             <constraint firstAttribute="trailing" secondItem="2Of-ae-v1L" secondAttribute="trailing" id="Fxo-b4-5aG"/>
                             <constraint firstItem="IUz-2f-1FX" firstAttribute="top" secondItem="EeI-kZ-kch" secondAttribute="bottom" id="JcG-bB-lR8"/>
+                            <constraint firstAttribute="trailing" secondItem="tHj-rq-7nl" secondAttribute="trailing" id="VbO-0C-owj"/>
                             <constraint firstItem="EeI-kZ-kch" firstAttribute="top" secondItem="0s0-qU-g6Q" secondAttribute="bottom" id="YR4-X3-U8X"/>
                             <constraint firstAttribute="trailing" secondItem="EeI-kZ-kch" secondAttribute="trailing" id="bdP-uH-Rzv"/>
                             <constraint firstAttribute="trailing" secondItem="0s0-qU-g6Q" secondAttribute="trailing" id="chu-N9-Meo"/>
                             <constraint firstItem="EeI-kZ-kch" firstAttribute="leading" secondItem="dVo-bw-IEb" secondAttribute="leading" id="ekb-9d-jSm"/>
                             <constraint firstItem="2Of-ae-v1L" firstAttribute="top" secondItem="dVo-bw-IEb" secondAttribute="top" id="kgc-am-knW"/>
+                            <constraint firstItem="tHj-rq-7nl" firstAttribute="top" secondItem="0s0-qU-g6Q" secondAttribute="bottom" id="l1q-a7-ZTf"/>
+                            <constraint firstItem="tHj-rq-7nl" firstAttribute="leading" secondItem="dVo-bw-IEb" secondAttribute="leading" id="lCf-CW-ueI"/>
                             <constraint firstItem="0s0-qU-g6Q" firstAttribute="top" secondItem="2Of-ae-v1L" secondAttribute="bottom" id="lym-8G-nIJ"/>
                             <constraint firstItem="UN6-rw-2ZD" firstAttribute="leading" secondItem="dVo-bw-IEb" secondAttribute="leading" id="qwE-Mm-jeK"/>
                             <constraint firstItem="IUz-2f-1FX" firstAttribute="top" secondItem="UN6-rw-2ZD" secondAttribute="bottom" id="tYr-bp-dgS"/>
@@ -5631,6 +5676,7 @@
                         <outlet property="btnTodayGame" destination="Zol-gU-tT4" id="waH-qt-wdm"/>
                         <outlet property="lblDate" destination="p9i-5p-UJa" id="nBS-Ya-GUK"/>
                         <outlet property="tblMatch" destination="EeI-kZ-kch" id="TMF-s7-RmR"/>
+                        <outlet property="vwNoGame" destination="tHj-rq-7nl" id="iDo-Ly-25S"/>
                         <outlet property="vwPostView" destination="UN6-rw-2ZD" id="VLP-xZ-Rhg"/>
                     </connections>
                 </viewController>

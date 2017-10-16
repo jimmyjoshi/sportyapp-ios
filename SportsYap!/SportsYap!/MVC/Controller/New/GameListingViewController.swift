@@ -16,6 +16,7 @@ class GameListingViewController: UIViewController {
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var btnNext: UIButton!
     @IBOutlet weak var btnPrevious: UIButton!
+    @IBOutlet weak var vwNoGame: UIView!
     var dictStreamData = NSDictionary()
     //var strWowzaUrl = String("https://api-sandbox.cloud.wowza.com/api/v1/stream_sources")
     //Changed as suggested by Anuj 18-09-2017
@@ -142,6 +143,7 @@ class GameListingViewController: UIViewController {
     }
     
     private func getFootballGameData() {
+        self.vwNoGame.isHidden = true
         self.arrList.removeAll()
         self.tblMatch.reloadData()
         let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/nfl-scores?date=\(strDate)&json=1"
@@ -261,13 +263,26 @@ class GameListingViewController: UIViewController {
                 self.arrList.append(response[i])
             }
             
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else {
+                self.vwNoGame.isHidden = true
+            }
+            
+            
             self.tblMatch.reloadData()
             
             
             //            self.getSoccerGameData()
             
         }, failed: { (responser) in
-            
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else {
+                self.vwNoGame.isHidden = true
+            }
             self.tblMatch.reloadData()
             
             //            showAlert(strMsg: responser as String, vc: self)

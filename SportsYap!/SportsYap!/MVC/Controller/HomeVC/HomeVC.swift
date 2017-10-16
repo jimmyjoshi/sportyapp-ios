@@ -280,6 +280,7 @@ class HomeVC: UIViewController {
     
     
     private func getFeedsList() {
+        self.vwNoGame.isHidden = true
         self.arrList.removeAll()
         self.tblMatch.reloadData()
 
