@@ -19,6 +19,12 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     var isImageUploaded : Bool = false
     var isVideoUploaded : Bool = false
     var videoData = Data()
+    @IBOutlet var htVideoView: NSLayoutConstraint!
+    @IBOutlet var vwVideo: UIView!
+    @IBOutlet var lblVideoText: UILabel!
+    @IBOutlet var btnRemoveVideo: UIButton!
+
+    
     
     override func viewDidLoad()
     {
@@ -40,6 +46,9 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         btnPost.layer.borderColor = #colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1).cgColor
         
         htImg.constant = 0
+        htVideoView.constant = 0
+        vwVideo.isHidden = true
+        
         btnCancel.isHidden = true
         txtPost.clipsToBounds = true
         txtPost.layer.cornerRadius = 10.0
@@ -207,11 +216,24 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     }
     
     
-    @IBAction func btnCancelClicked(btnSender: UIButton) {
+    @IBAction func btnCancelClicked(btnSender: UIButton)
+    {
         isImageUploaded = false
         htImg.constant = 0
         btnCancel.isHidden = true
+
+        htVideoView.constant = 0
+        vwVideo.isHidden = true
     }
+    
+    @IBAction func btnRemoveVideoClicked(btnSender: UIButton)
+    {
+        isVideoUploaded = false
+        videoData = Data()
+        htVideoView.constant = 0
+        vwVideo.isHidden = true
+    }
+    
     //MARK:- UIImage picker delegate
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -221,12 +243,18 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
     {
         let mType: String? = (info[UIImagePickerControllerMediaType] as? String)
+        vwVideo.isHidden = false
+        htVideoView.constant = 105
+        
         if (mType! == kUTTypeMovie as String)
         {
             let selectedVideoURL: URL? = (info["UIImagePickerControllerMediaURL"] as? URL)
             
             isVideoUploaded = true
-            
+            htImg.constant = 0
+            lblVideoText.isHidden = false
+            btnRemoveVideo.isHidden = false
+
             do {
                 videoData = try Data(contentsOf: selectedVideoURL!)
                 // do something with data
@@ -238,6 +266,10 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         else
         {
             isImageUploaded = true
+            htImg.constant = 105
+            lblVideoText.isHidden = true
+            btnRemoveVideo.isHidden = true
+            
             if let image = info[UIImagePickerControllerEditedImage] as? UIImage
             {
                 imgPost.image = image
@@ -247,7 +279,6 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                 print("Something went wrong")
             }
         }
-        htImg.constant = 105
         self.dismiss(animated:true, completion: nil)
     }
 }

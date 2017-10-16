@@ -36,6 +36,9 @@ class GameListingViewController: UIViewController {
     
     var intMaxComment : Int = 2
     
+    @IBOutlet weak var vwPostView: UIView!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         changeTab()
@@ -298,6 +301,41 @@ class GameListingViewController: UIViewController {
         
     }
     
+    //MARK: Button Actions
+    @IBAction func btnCreateImagePostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.isImageUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
+    
+    @IBAction func btnCreateVideoPostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.isVideoUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
+    @IBAction func btnCreateliveStreamingClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+        self.getLiveStream()
+    }
+    @IBAction private func btnClosePostView(_ :UIButton) {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+        }, completion: {
+            (value: Bool) in
+            
+            self.vwPostView.isHidden = true
+        })
+    }
+
+    
 }
 
 extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
@@ -311,35 +349,30 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let uiAlert = UIAlertController(title: AppName, message: "Select Option:", preferredStyle: UIAlertControllerStyle.alert)
-        /*
-        uiAlert.addAction(UIAlertAction(title: "Image", style: .default, handler: { action in
-            
-        }))
-        uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-            
-        }))*/
+        view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        vwPostView.isHidden = false
+
+       /* let uiAlert = UIAlertController(title: AppName, message: "Select Option:", preferredStyle: UIAlertControllerStyle.alert)
         uiAlert.addAction(UIAlertAction(title: "Live Streaming", style: .default, handler: { action in
             //self.callWowzaApi()
             self.getLiveStream()
         }))
         
         uiAlert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { action in
-           
+            
         }))
-        self.present(uiAlert, animated: true, completion: nil)
+        self.present(uiAlert, animated: true, completion: nil)*/
         
         /*
-        tableView.deselectRow(at: indexPath, animated: true)
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
-        tagDetailVC.arrList = arrList
-        self.navigationController?.pushViewController(tagDetailVC, animated: true)*/
-        
-        
+         tableView.deselectRow(at: indexPath, animated: true)
+         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+         let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
+         tagDetailVC.arrList = arrList
+         self.navigationController?.pushViewController(tagDetailVC, animated: true)*/
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
