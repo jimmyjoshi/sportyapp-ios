@@ -31,6 +31,8 @@ class HomeVC: UIViewController {
     @IBOutlet weak var btnTodayGame: UIButton!
     @IBOutlet weak var btnTimeline: UIButton!
     
+    @IBOutlet weak var vwNoGame: UIView!
+    
     private var gameObj = GameClass()
     
     var arrList = Array<GameClass>()
@@ -133,6 +135,7 @@ class HomeVC: UIViewController {
         print("Result3 \(result3)")
     }
     func changeTab() {
+        
         let dat = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
@@ -254,7 +257,7 @@ class HomeVC: UIViewController {
     }
     
     private func getFootballGameData() {
-        
+        vwNoGame.isHidden = true
         self.arrList.removeAll()
         self.tblMatch.reloadData()
         
@@ -379,13 +382,26 @@ class HomeVC: UIViewController {
                 self.arrList.append(response[i])
             }
 
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else
+            {
+                self.vwNoGame.isHidden = true
+            }
             self.tblMatch.reloadData()
             self.activity.isHidden = true
             
 //            self.getSoccerGameData()
             
         }, failed: { (responser) in
-            
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else
+            {
+                self.vwNoGame.isHidden = true
+            }
             self.tblMatch.reloadData()
             self.activity.isHidden = true
 //            showAlert(strMsg: responser as String, vc: self)

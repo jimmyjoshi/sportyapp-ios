@@ -57,6 +57,7 @@ class MeVC: UIViewController {
     
     
     @IBOutlet weak var tblMatch: UITableView!
+    @IBOutlet weak var vwNoMatch: UIView!
     
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var btnSettings: UIButton!
@@ -194,7 +195,7 @@ class MeVC: UIViewController {
         
     }
     private func getFootballGameData() {
-        
+        self.vwNoMatch.isHidden = true
         self.arrList.removeAll()
         self.tblMatch.reloadData()
         
@@ -245,8 +246,24 @@ class MeVC: UIViewController {
             for i in 0..<response.count {
                 self.arrList.append(response[i])
             }
+            
+            if self.arrList.count == 0 {
+                self.vwNoMatch.isHidden = false
+            }
+            else
+            {
+                self.vwNoMatch.isHidden = true
+            }
+            
             self.tblMatch.reloadData()
         }, failed: { (responser) in
+            if self.arrList.count == 0 {
+                self.vwNoMatch.isHidden = false
+            }
+            else
+            {
+                self.vwNoMatch.isHidden = true
+            }
             self.tblMatch.reloadData()
         })
     }
