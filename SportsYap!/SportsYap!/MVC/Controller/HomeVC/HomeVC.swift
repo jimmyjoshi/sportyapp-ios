@@ -646,7 +646,7 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 }
                 cell.lblVenue.text = dict.value(forKey: "description") as? String
                 cell.txtVenue?.text = dict.value(forKey: "description") as? String
-
+                cell.txtVenue?.sizeToFit()
 
                 let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
                 let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
@@ -683,7 +683,7 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                         cell.btnLike.setTitleColor(UIColor.white, for: .normal)
                     }
                 }
-                
+                /*
                 let strvideo = dict.value(forKey: "video") as! String
                 if strvideo == "" {
                 }
@@ -694,10 +694,11 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 }
                 cell.txtVenue?.isScrollEnabled = false
                 cell.txtVenue?.sizeToFit()
-
+                */
                 
                 let strImg = dict.value(forKey: "image") as! String
-                if strImg == "" {
+                let strvideo = dict.value(forKey: "video") as! String
+                if strImg == ""  && strvideo == "" {
                     cell.heightLayout.constant = 0
                 }
                 else
@@ -709,7 +710,23 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                     let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
                     cell.imgPost.addGestureRecognizer(gesture)
                     
-                    let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                    var strURL = String("")!
+                    //Video thumbnai is to be displayed
+                    if strImg == "" {
+                        let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
+                       strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
+                        /*let imgVw : UIImageView = UIImageView(frame: CGRect(x: (screenWidth - 50)/2, y: (screenWidth - 50)/2, width: 50, height: 50))
+                        imgVw.image = UIImage(named: "nogameIcon")
+ 
+                        cell.imgPost.addSubview(imgVw)*/
+                        
+                    }
+                    else
+                    {
+                        strURL = strImg.replacingOccurrences(of: " ", with: "%20")
+                    }
+                    
+                    //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
                     let url2 = URL(string: strURL)
                     if url2 != nil {
                         cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
@@ -1040,11 +1057,26 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let imgVw : UIImageView = sender.view as! UIImageView
         let dic : NSDictionary = arrTimelineData.object(at: imgVw.tag) as! NSDictionary
         let strImgLink : String = dic.value(forKey: "image") as! String
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
-        imageVC.strLink = strImgLink
-        self.view.addSubview(imageVC.view)
-        self.addChildViewController(imageVC)
+        
+        //This is video
+        if strImgLink == "" {
+            let strVideoLink : String = dic.value(forKey: "video") as! String
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+            
+            videoVC.strLink = strVideoLink
+            self.navigationController?.pushViewController(videoVC, animated: true)
+        }
+        else
+        {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
+            imageVC.strLink = strImgLink
+            self.view.addSubview(imageVC.view)
+            self.addChildViewController(imageVC)
+        }
+        
+        
         
     }
     

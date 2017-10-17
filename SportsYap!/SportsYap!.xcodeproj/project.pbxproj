@@ -28,6 +28,7 @@
 		D57A114A1F38F120006F79E0 /* ZoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */; };
 		D57E89981F5145BE009A9E72 /* WowzaGoCoderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */; };
 		D57E899A1F514662009A9E72 /* PostToGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E89991F514662009A9E72 /* PostToGameViewController.swift */; };
+		D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5832C431F96791C00B76DFF /* VideoViewController.swift */; };
 		D5849E5B1F55DFEB0009D063 /* WowzaGoCoderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */; };
 		D5849E5C1F55DFEB0009D063 /* WowzaGoCoderSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D58504B91F6505EC000647B0 /* EnterFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */; };
@@ -121,6 +122,7 @@
 		D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
 		D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WowzaGoCoderSDK.framework; sourceTree = "<group>"; };
 		D57E89991F514662009A9E72 /* PostToGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostToGameViewController.swift; sourceTree = "<group>"; };
+		D5832C431F96791C00B76DFF /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterFieldViewController.swift; sourceTree = "<group>"; };
 		D587442A1F5F1DF80074C2E6 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		D597B5D41F15516500EF086D /* TagGameCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameCellTableViewCell.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			children = (
 				F56DDD3A1ED4974C00D86300 /* Cell */,
 				F509027D1EAD294600404EC7 /* HomeVC.swift */,
+				D5832C431F96791C00B76DFF /* VideoViewController.swift */,
 				F5D364AA1ED05C2600142DDA /* TutorialVC.swift */,
 				D597B5D61F15533300EF086D /* TagGameVC.swift */,
 				D5A1AD1C1F358AB2005485E2 /* CommentViewController.swift */,
@@ -689,6 +692,7 @@
 				D57A11401F38E7B0006F79E0 /* IQTextView.swift in Sources */,
 				D57A11451F38E7B0006F79E0 /* IQUIView+Hierarchy.swift in Sources */,
 				D57A113F1F38E7B0006F79E0 /* IQPreviousNextView.swift in Sources */,
+				D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */,
 				F5C2918A1EA29BD9007FA995 /* AppDelegate.swift in Sources */,
 				D57A113C1F38E7B0006F79E0 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				F50BA66F1EBF04290044593E /* FacebookClass.swift in Sources */,
