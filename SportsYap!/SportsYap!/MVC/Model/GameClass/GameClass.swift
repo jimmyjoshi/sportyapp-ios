@@ -19,6 +19,10 @@ class GameClass: NSObject {
     var strTeam2Score = ""
     var strTime = ""
     var strMatchTpe = ""
+    
+    var strMatchId = ""
+    var strHomeMatchId = ""
+    var strAwayMatchId = ""
     func getGameListFor(showLoader:(Bool!), strFullURL:String ,strMatchType:String, strDate:String, success:@escaping (Array<GameClass>) -> Void, failed:@escaping (String!) -> Void) {
         
         if(isInternetConnection() == true) {
@@ -86,14 +90,18 @@ class GameClass: NSObject {
         
                 for dict in tempArray! {
                 let gameDetail = GameClass()
+                
                 let tempD1 = dict["awayteam"].dictionaryValue
+                gameDetail.strMatchId = dict["id"].stringValue
                 gameDetail.strTeam1Score = (tempD1["totalscore"]?.stringValue)!
+                gameDetail.strAwayMatchId = (tempD1["id"]?.stringValue)!
                 let strTemp1 = tempD1["name"]?.stringValue
                 gameDetail.strTeam1LastName = (strTemp1?.components(separatedBy: " ").last)!
                 let strMain1 = (tempD1["name"]?.stringValue)!.components(separatedBy: " ").dropLast().joined(separator: " ")
                 gameDetail.strTeam1FirstName = strMain1
                 let tempD2 = dict["hometeam"].dictionaryValue
                 gameDetail.strTeam2Score = (tempD2["totalscore"]?.stringValue)!
+                gameDetail.strHomeMatchId = (tempD2["id"]?.stringValue)!
                 let strTemp2 = tempD2["name"]?.stringValue
                 gameDetail.strTeam2LastName = (strTemp2?.components(separatedBy: " ").last)!
                 let strMain2 = (tempD2["name"]?.stringValue)!.components(separatedBy: " ").dropLast().joined(separator: " ")

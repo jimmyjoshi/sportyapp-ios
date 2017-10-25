@@ -387,6 +387,21 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
             print("Error is \(response)")
         }
     }
+    
+    func getFanMeter() {
+        var dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject,"homeTeamId": currentGameObject.strHomeMatchId as AnyObject, "awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
+        
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-news"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            
+            var dictFanMeter : NSDictionary  = (response as NSDictionary)
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
 }
 
 
