@@ -48,7 +48,7 @@ class TagGameVC: UIViewController {
         gameDetailVC.isCurrentMatch = false
         
         
-        var gameObject : GameClass = arrList[intSelectedValue.1] as! GameClass
+        var gameObject : GameClass = arrList[intSelectedValue.0] as! GameClass
         
         gameDetailVC.currentGameObject = gameObject
         

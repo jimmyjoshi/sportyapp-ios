@@ -2,7 +2,7 @@
 //  VideoViewController.swift
 //  SportsYap!
 //
-//  Created by Sagar Jagajeev on 17/10/17.
+//  Created by Ravi Panicker on 17/10/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 

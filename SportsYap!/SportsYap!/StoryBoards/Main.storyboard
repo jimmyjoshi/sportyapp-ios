@@ -3743,7 +3743,7 @@
                                                         <constraint firstAttribute="height" constant="9" id="hcx-6k-JXq"/>
                                                     </constraints>
                                                 </imageView>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3x1-sm-wsZ">
+                                                <slider opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="3x1-sm-wsZ">
                                                     <rect key="frame" x="10" y="120" width="286" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="C4J-0M-uuc"/>

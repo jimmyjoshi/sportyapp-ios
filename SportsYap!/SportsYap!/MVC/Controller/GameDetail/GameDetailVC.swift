@@ -158,10 +158,13 @@ class GameDetailVC: UIViewController {
     }
     
     @IBAction private func btnEnterFieldClicked(_ : UIButton) {
+        
+        self.openActionSheet()
+        /*
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let objEnter: EnterFieldViewController = cameraStoryboard.instantiateViewController(withIdentifier: "EnterFieldViewController") as! EnterFieldViewController
         objEnter.strTitle = "\(currentGameObject.strTeam1FirstName) Vs \(currentGameObject.strTeam2FirstName)"
-        self.navigationController?.pushViewController(objEnter, animated: true)
+        self.navigationController?.pushViewController(objEnter, animated: true)*/
     }
     
     @IBAction private func btnNewsPress(_ : UIButton) {
@@ -188,6 +191,52 @@ class GameDetailVC: UIViewController {
         let moreVC = storyboard?.instantiateViewController(withIdentifier: "MoreVC") as! MoreVC
         view.addSubview(moreVC.view)
         addChildViewController(moreVC)
+    }
+    
+    func setFanSlider(intHomeCount: Int, intAwayCount: Int) {
+        
+        var intPercent : Int = 0
+        
+        if intHomeCount == 0 && intAwayCount == 0 {
+            intPercent = 50
+        }
+        else if intHomeCount == 0 {
+            intPercent = 0
+        }
+        else if intAwayCount == 0 {
+            intPercent = 100
+        }
+        else
+        {
+            intPercent = ((intHomeCount*100)/(intAwayCount+intHomeCount))
+        }
+        
+        //let intPercent : Int = ((intHomeCount*100)/(intAwayCount+intHomeCount))
+        slider.value = Float(intPercent)
+        
+        print("Percent is \(intPercent)")
+        
+    }
+    
+    func openActionSheet() {
+        let uiAlert = UIAlertController(title: AppName, message: "Select Team to follow", preferredStyle: UIAlertControllerStyle.actionSheet)
+        self.present(uiAlert, animated: true, completion: nil)
+        
+        
+        uiAlert.addAction(UIAlertAction(title: currentGameObject.strTeam1FirstName, style: .default, handler: { action in
+            //First away
+            
+            self.callAddTeamRatio(strFollowTeam: self.currentGameObject.strHomeMatchId)
+        }))
+        
+        uiAlert.addAction(UIAlertAction(title: currentGameObject.strTeam2FirstName, style: .default, handler: { action in
+            //Second Home
+            self.callAddTeamRatio(strFollowTeam: self.currentGameObject.strAwayMatchId)
+        }))
+        
+        uiAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            
+        }))
     }
 }
 
@@ -367,9 +416,14 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
             self.dictFan = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
             
             self.tblList.reloadData()
+            
+            self.getFanMeter()
+            
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")
+            
+            self.getFanMeter()
         }
     }
     
@@ -389,19 +443,45 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func getFanMeter() {
-        var dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject,"homeTeamId": currentGameObject.strHomeMatchId as AnyObject, "awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
-        
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject]
         var strUrl = String("")!
-        strUrl = "\(base_Url)users/get-news"
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+        strUrl = "\(base_Url)sporty-fans/get-team-ratio"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
             
-            var dictFanMeter : NSDictionary  = (response as NSDictionary)
+            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
+            
+            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
+            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            
+            self.setFanSlider(intHomeCount: intHomeCount, intAwayCount: intAwayCount)
             
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")
         }
     }
+    //
+    func callAddTeamRatio(strFollowTeam: String) {
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject,"homeTeamId": currentGameObject.strHomeMatchId as AnyObject,"awayTeamId": currentGameObject.strAwayMatchId as AnyObject,"followTeam": strFollowTeam as AnyObject]
+        var strUrl = String("")!
+        strUrl = "\(base_Url)sporty-fans/add-team-ratio"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            
+            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
+            
+            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
+            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            
+            self.setFanSlider(intHomeCount: intHomeCount, intAwayCount: intAwayCount)
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
+    
+    
+    
 }
 
 
