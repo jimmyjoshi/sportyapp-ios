@@ -172,7 +172,6 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
     func getUserData() {
         var strUrl = String("")!
         strUrl = "\(base_Url)users/getdata"
-        //let strURL = "http://52.66.73.127/sportyapp/public/api/users/getdata"
         MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strUrl, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
             //self.strMatchTpe = strMatchType
             let responseReq = response as NSDictionary

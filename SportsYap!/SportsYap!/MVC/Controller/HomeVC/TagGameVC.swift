@@ -45,7 +45,7 @@ class TagGameVC: UIViewController {
        
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let gameDetailVC: GameDetailVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameDetailVC") as! GameDetailVC
-        gameDetailVC.isCurrentMatch = false
+        gameDetailVC.isCurrentMatch = true
         
         
         var gameObject : GameClass = arrList[intSelectedValue.0] as! GameClass

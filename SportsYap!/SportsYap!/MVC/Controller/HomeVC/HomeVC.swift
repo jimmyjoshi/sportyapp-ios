@@ -263,6 +263,8 @@ class HomeVC: UIViewController {
         
         let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/nfl-scores?date=\(strDate)&json=1"
         
+        //let strURL = "http://69.64.77.92/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/nfl-scores?json=1"
+        
         //let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/nfl-scores?date=15.01.2017&json=1"
         
         
@@ -284,8 +286,8 @@ class HomeVC: UIViewController {
         self.arrList.removeAll()
         self.tblMatch.reloadData()
 
-        let strURL = "http://52.66.73.127/sportyapp/public/api/posts/getlist"
-        
+        var strURL = String("")!
+        strURL = "\(base_Url)posts/getlist"
         MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strURL, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
             //self.strMatchTpe = strMatchType
             let arrData = response as NSDictionary
@@ -1129,6 +1131,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let tagDetailVC: CommentViewController = cameraStoryboard.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
         tagDetailVC.dictPost = arrTimelineData.object(at: intRow) as! NSDictionary
         tagDetailVC.modalPresentationStyle = .overCurrentContext
+        tagDetailVC.strFromScreen = "1"
         tagDetailVC.objHomeVc = self
         self.present(tagDetailVC, animated: true, completion: nil)
         //self.view.addSubview(tagDetailVC.view)

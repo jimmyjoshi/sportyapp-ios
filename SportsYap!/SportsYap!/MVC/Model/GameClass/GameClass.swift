@@ -92,7 +92,8 @@ class GameClass: NSObject {
                 let gameDetail = GameClass()
                 
                 let tempD1 = dict["awayteam"].dictionaryValue
-                gameDetail.strMatchId = dict["id"].stringValue
+                //gameDetail.strMatchId = dict["id"].stringValue
+                gameDetail.strMatchId = dict["contestID"].stringValue
                 gameDetail.strTeam1Score = (tempD1["totalscore"]?.stringValue)!
                 gameDetail.strAwayMatchId = (tempD1["id"]?.stringValue)!
                 let strTemp1 = tempD1["name"]?.stringValue

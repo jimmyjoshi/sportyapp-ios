@@ -32,7 +32,8 @@ class EnterFieldViewController: UIViewController {
     }
     func getFeedsList() {
         self.tblMatch.reloadData()
-        let strURL = "http://52.66.73.127/sportyapp/public/api/posts/getlist"
+        var strURL = String("")!
+        strURL = "\(base_Url)posts/getlist"
         MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strURL, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
             //self.strMatchTpe = strMatchType
             let arrData = response as NSDictionary

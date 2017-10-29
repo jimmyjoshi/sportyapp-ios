@@ -144,6 +144,11 @@ class TransparentViewController: UIViewController {
     
     @IBAction func btnCreateFanChallengeClicked(sender: UIButton) {
         
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: FanChallengeGameListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "FanChallengeGameListViewController") as! FanChallengeGameListViewController
+        self.navigationController?.pushViewController(postVC, animated: true)
+        self.removeFromParentViewController()
+        self.view.removeFromSuperview()
     }
     
     @IBAction func btnCreatePostToGameClicked(sender: UIButton) {

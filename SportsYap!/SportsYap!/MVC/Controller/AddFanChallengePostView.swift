@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class AddFanChallengePostView: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @IBOutlet var txtPost : UITextView!
     @IBOutlet var btnPost : UIButton!
     @IBOutlet var btnCancel : UIButton!
@@ -18,14 +18,12 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     var imagePicker = UIImagePickerController()
     var isImageUploaded : Bool = false
     var isVideoUploaded : Bool = false
-    var isCreateFanChallengeScreen : Bool = false
-    var selectedGame = GameClass()
     var videoData = Data()
     @IBOutlet var htVideoView: NSLayoutConstraint!
     @IBOutlet var vwVideo: UIView!
     @IBOutlet var lblVideoText: UILabel!
     @IBOutlet var btnRemoveVideo: UIButton!
-
+    
     
     
     override func viewDidLoad()
@@ -36,7 +34,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         setRoundedCorner()
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -74,7 +72,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     func isValid()->Bool {
         txtPost.text = txtPost.text.trimmingCharacters(in: .whitespacesAndNewlines)
         if txtPost.text.characters.count == 0 {
-           
+            
             showAlert(strMsg: "Please enter post.", vc: self)
             return false
         }
@@ -82,31 +80,15 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     }
     
     func callPostApi() {
-        var strUrl = String("")!
+        let strUrl : String = "posts/create"
         var params : [String:AnyObject]
-        if isCreateFanChallengeScreen {
-            strUrl = "sporty-fans-challenge/create-post"
-        }
-        else {
-            strUrl = "post/create"
-        }
-        //let strUrl : String = "posts/create"
-        
-        
         
         if isImageUploaded == false
         {
             if isVideoUploaded == true
             {
-                if isCreateFanChallengeScreen {
-                   params = ["description": txtPost.text as AnyObject,"is_image" : "0" as AnyObject,"gameId": selectedGame.strMatchId as AnyObject, "homeTeamId": selectedGame.strHomeMatchId as AnyObject, "awayTeamId":selectedGame.strAwayMatchId as AnyObject]
-                }
-                else
-                {
-                    params = ["description": txtPost.text as AnyObject,"is_image" : "0" as AnyObject]
-                }
-                //params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
-
+                params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
+                
                 MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequestVideo(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, data: videoData
                     , success: { (response:Dictionary<String, AnyObject>) in
                         
@@ -130,16 +112,8 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             }
             else
             {
-                if isCreateFanChallengeScreen {
-                    params = ["description": txtPost.text as AnyObject,"is_image" : "0" as AnyObject,"gameId": selectedGame.strMatchId as AnyObject, "homeTeamId": selectedGame.strHomeMatchId as AnyObject, "awayTeamId":selectedGame.strAwayMatchId as AnyObject]
-                }
-                else
-                {
-                    params = ["description": txtPost.text as AnyObject,"is_image" : "0" as AnyObject]
-                }
+                params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
                 
-                //params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
-
                 MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
                     print("Response \(response as NSDictionary)")
                     var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
@@ -158,13 +132,8 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         }
         else
         {
-            if isCreateFanChallengeScreen {
-                params = ["description": txtPost.text as AnyObject,"is_image" : "1" as AnyObject,"gameId": selectedGame.strMatchId as AnyObject, "homeTeamId": selectedGame.strHomeMatchId as AnyObject, "awayTeamId":selectedGame.strAwayMatchId as AnyObject]
-            }
-            else
-            {
-                params = ["description": txtPost.text as AnyObject,"is_image" : "1" as AnyObject]
-            }
+            params = ["description": txtPost.text as AnyObject,"is_image" : 1 as AnyObject]
+            
             MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequest(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, img: imgPost.image
                 , success: { (response:Dictionary<String, AnyObject>) in
                     
@@ -176,6 +145,9 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                     self.htImg.constant = 0
                     self.btnCancel.isHidden = true
                     self.txtPost.text = ""
+                    //self.parsingLoginData(responseReq: response as NSDictionary)
+                    //success(response)
+                    
             }) { (response:String!) in
                 //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
                 
@@ -192,13 +164,13 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
         self.present(uiAlert, animated: true, completion: nil)
         self.imagePicker.mediaTypes = ["public.image", "public.movie"]
-
+        
         uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-         
+            
             if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
             {
                 self.imagePicker.sourceType = .camera
-
+                
                 if self.isVideoUploaded == true
                 {
                     self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
@@ -218,7 +190,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                 alert.addAction(ok)
                 self.present(alert, animated: true, completion: nil)
             }
-
+            
         }))
         
         uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
@@ -248,7 +220,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         isImageUploaded = false
         htImg.constant = 0
         btnCancel.isHidden = true
-
+        
         htVideoView.constant = 0
         vwVideo.isHidden = true
     }
@@ -281,7 +253,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             htImg.constant = 0
             lblVideoText.isHidden = false
             btnRemoveVideo.isHidden = false
-
+            
             do {
                 videoData = try Data(contentsOf: selectedVideoURL!)
                 // do something with data

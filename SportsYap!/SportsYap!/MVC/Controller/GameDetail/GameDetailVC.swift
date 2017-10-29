@@ -69,11 +69,13 @@ class GameDetailVC: UIViewController {
         
         super.viewDidLoad()
         
+        /*
         if(isCurrentMatch == true) {
             cntHeight.constant = 100
-        }
+        }*/
         
-
+        cntHeight.constant = 0
+        
         isFans = true
         
         slider.setThumbImage(#imageLiteral(resourceName: "FaceSlider"), for: .normal)
@@ -187,8 +189,8 @@ class GameDetailVC: UIViewController {
     
     @IBAction func btnMorePassPress(_ : UIButton) {
         self.view.endEditing(true)
-        
         let moreVC = storyboard?.instantiateViewController(withIdentifier: "MoreVC") as! MoreVC
+        moreVC.currentGame = currentGameObject
         view.addSubview(moreVC.view)
         addChildViewController(moreVC)
     }
@@ -238,6 +240,107 @@ class GameDetailVC: UIViewController {
             
         }))
     }
+    //MARK:- API Call & Return Methods
+    func callFanApi() {
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-fans"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            //let dictData = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            
+            self.dictFan = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            
+            self.tblList.reloadData()
+            
+            self.getFanMeter()
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+            
+            self.getFanMeter()
+        }
+    }
+    
+    func callNewsApi() {
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-news"
+        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            self.arrNews = NSMutableArray()
+            self.arrNews  = ((response as NSDictionary).value(forKey: "data") as! NSArray).mutableCopy() as! NSMutableArray
+            print("\(self.arrNews)")
+            self.tblList.reloadData()
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
+    
+    func getFanMeter() {
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject]
+        var strUrl = String("")!
+        strUrl = "\(base_Url)sporty-fans/get-team-ratio"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            
+            let dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
+            let intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
+            let intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            self.setFanSlider(intHomeCount: intHomeCount, intAwayCount: intAwayCount)
+            
+            self.callCheckFanChallenge()
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+            self.callCheckFanChallenge()
+        }
+    }
+    //
+    func callAddTeamRatio(strFollowTeam: String) {
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject,"homeTeamId": currentGameObject.strHomeMatchId as AnyObject,"awayTeamId": currentGameObject.strAwayMatchId as AnyObject,"followTeam": strFollowTeam as AnyObject]
+        var strUrl = String("")!
+        strUrl = "\(base_Url)sporty-fans/add-team-ratio"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            
+            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
+            
+            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
+            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            
+            self.setFanSlider(intHomeCount: intHomeCount, intAwayCount: intAwayCount)
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
+    
+    func callCheckFanChallenge() {
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject, "homeTeamId": currentGameObject.strHomeMatchId as AnyObject, "awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
+        var strUrl = String("")!
+        strUrl = "\(base_Url)sporty-fans-challenge/check"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            let dicData : NSDictionary = (response as NSDictionary).value(forKey: "data")! as! NSDictionary
+            var intFanFound : Int = dicData.value(forKey: "fanFound")! as! Int
+            //Check if fan challenge has been created previously
+            if intFanFound == 1 {
+                //Showing alert that fan challenge has been created would you like to post
+                self.cntHeight.constant = 100
+            }
+                //NO fan challenge has been created
+            else
+            {
+                self.cntHeight.constant = 0
+                //Call function to create fan challenge
+                
+            }
+            print("\(dicData)")
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            self.cntHeight.constant = 0
+            print("Error is \(response)")
+        }
+        }
 }
 
 extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
@@ -407,78 +510,7 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    func callFanApi() {
-        var strUrl = String("")!
-        strUrl = "\(base_Url)users/get-fans"
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
-            //let dictData = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
-            
-            self.dictFan = ((response as NSDictionary).value(forKey: "data") as! NSDictionary).mutableCopy() as! NSMutableDictionary
-            
-            self.tblList.reloadData()
-            
-            self.getFanMeter()
-            
-        }) { (response:String!) in
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-            
-            self.getFanMeter()
-        }
-    }
     
-    func callNewsApi() {
-        var strUrl = String("")!
-        strUrl = "\(base_Url)users/get-news"
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
-            self.arrNews = NSMutableArray()
-            self.arrNews  = ((response as NSDictionary).value(forKey: "data") as! NSArray).mutableCopy() as! NSMutableArray
-            print("\(self.arrNews)")
-            self.tblList.reloadData()
-            
-        }) { (response:String!) in
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-        }
-    }
-    
-    func getFanMeter() {
-        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject]
-        var strUrl = String("")!
-        strUrl = "\(base_Url)sporty-fans/get-team-ratio"
-        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
-            
-            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
-            
-            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
-            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
-            
-            self.setFanSlider(intHomeCount: intHomeCount, intAwayCount: intAwayCount)
-            
-        }) { (response:String!) in
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-        }
-    }
-    //
-    func callAddTeamRatio(strFollowTeam: String) {
-        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject,"homeTeamId": currentGameObject.strHomeMatchId as AnyObject,"awayTeamId": currentGameObject.strAwayMatchId as AnyObject,"followTeam": strFollowTeam as AnyObject]
-        var strUrl = String("")!
-        strUrl = "\(base_Url)sporty-fans/add-team-ratio"
-        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
-            
-            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
-            
-            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
-            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
-            
-            self.setFanSlider(intHomeCount: intHomeCount, intAwayCount: intAwayCount)
-            
-        }) { (response:String!) in
-            showAlert(strMsg: response, vc: self)
-            print("Error is \(response)")
-        }
-    }
     
     
     

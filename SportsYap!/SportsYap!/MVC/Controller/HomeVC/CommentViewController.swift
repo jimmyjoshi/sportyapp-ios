@@ -15,6 +15,9 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var vwBg: UIView!
     var objHomeVc : HomeVC?
     var objDiscoverVc : DiscoverVC?
+    var objChallengeVc : ChallengePostListViewController?
+    
+    var strFromScreen = String("")!
     var dictPost = NSDictionary()
     var arrComment = NSMutableArray()
     override func viewDidLoad() {
@@ -135,14 +138,29 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
             self.tblComment.reloadData()
             
             UIView.animate(withDuration: 0.3, animations: {
+                
+                if self.strFromScreen == "1"
+                {
+                    self.objHomeVc?.changeTab()
+                }
+                else if self.strFromScreen == "2" {
+                    self.objDiscoverVc?.getFeedsList()
+                }
+                else if self.strFromScreen == "3" {
+                    self.objChallengeVc?.getFeedsList()
+                }
+                /*
                 if self.objHomeVc == nil
                 {
                     self.objDiscoverVc?.getFeedsList()
                 }
-                else
-                {
+                else if self.objChallengeVc == nil {
                     self.objHomeVc?.changeTab()
                 }
+                else
+                {
+                    self.objChallengeVc?.getFeedsList()
+                }*/
                 
             }, completion: {
                 (value: Bool) in

@@ -26,6 +26,8 @@
 		D57A11471F38E7B0006F79E0 /* IQUIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11361F38E7B0006F79E0 /* IQUIViewController+Additions.swift */; };
 		D57A11481F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11371F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift */; };
 		D57A114A1F38F120006F79E0 /* ZoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */; };
+		D57E4B151FA48E6D001C46A7 /* FanChallengeGameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E4B141FA48E6D001C46A7 /* FanChallengeGameListViewController.swift */; };
+		D57E4B171FA49856001C46A7 /* AddFanChallengePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E4B161FA49856001C46A7 /* AddFanChallengePostView.swift */; };
 		D57E89981F5145BE009A9E72 /* WowzaGoCoderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */; };
 		D57E899A1F514662009A9E72 /* PostToGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E89991F514662009A9E72 /* PostToGameViewController.swift */; };
 		D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5832C431F96791C00B76DFF /* VideoViewController.swift */; };
@@ -33,6 +35,7 @@
 		D5849E5C1F55DFEB0009D063 /* WowzaGoCoderSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D58504B91F6505EC000647B0 /* EnterFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */; };
 		D587442B1F5F1DF80074C2E6 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587442A1F5F1DF80074C2E6 /* Toast.swift */; };
+		D5920EE11FA61CF200A980CB /* ChallengePostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5920EE01FA61CF200A980CB /* ChallengePostListViewController.swift */; };
 		D597B5D51F15516500EF086D /* TagGameCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D597B5D41F15516500EF086D /* TagGameCellTableViewCell.swift */; };
 		D597B5D71F15533300EF086D /* TagGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D597B5D61F15533300EF086D /* TagGameVC.swift */; };
 		D599BC221F58777400056046 /* GameListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D599BC211F58777400056046 /* GameListingViewController.swift */; };
@@ -120,11 +123,14 @@
 		D57A11361F38E7B0006F79E0 /* IQUIViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIViewController+Additions.swift"; sourceTree = "<group>"; };
 		D57A11371F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIWindow+Hierarchy.swift"; sourceTree = "<group>"; };
 		D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
+		D57E4B141FA48E6D001C46A7 /* FanChallengeGameListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FanChallengeGameListViewController.swift; sourceTree = "<group>"; };
+		D57E4B161FA49856001C46A7 /* AddFanChallengePostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFanChallengePostView.swift; sourceTree = "<group>"; };
 		D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WowzaGoCoderSDK.framework; sourceTree = "<group>"; };
 		D57E89991F514662009A9E72 /* PostToGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostToGameViewController.swift; sourceTree = "<group>"; };
 		D5832C431F96791C00B76DFF /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterFieldViewController.swift; sourceTree = "<group>"; };
 		D587442A1F5F1DF80074C2E6 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		D5920EE01FA61CF200A980CB /* ChallengePostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengePostListViewController.swift; sourceTree = "<group>"; };
 		D597B5D41F15516500EF086D /* TagGameCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameCellTableViewCell.swift; sourceTree = "<group>"; };
 		D597B5D61F15533300EF086D /* TagGameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameVC.swift; sourceTree = "<group>"; };
 		D599BC211F58777400056046 /* GameListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListingViewController.swift; sourceTree = "<group>"; };
@@ -237,6 +243,16 @@
 				D57A11371F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift */,
 			);
 			path = IQKeyboard;
+			sourceTree = "<group>";
+		};
+		D57E4B131FA48A5F001C46A7 /* Fan Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				D57E4B141FA48E6D001C46A7 /* FanChallengeGameListViewController.swift */,
+				D57E4B161FA49856001C46A7 /* AddFanChallengePostView.swift */,
+				D5920EE01FA61CF200A980CB /* ChallengePostListViewController.swift */,
+			);
+			name = "Fan Challenge";
 			sourceTree = "<group>";
 		};
 		D57E89961F5145AD009A9E72 /* Wowza Framwork */ = {
@@ -403,6 +419,7 @@
 		F5C2917A1EA29BD9007FA995 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D57E4B131FA48A5F001C46A7 /* Fan Challenge */,
 				F5C2917B1EA29BD9007FA995 /* AppDelegate.swift */,
 				F5C2917C1EA29BD9007FA995 /* UserModule */,
 				F509027C1EAD293500404EC7 /* HomeVC */,
@@ -695,6 +712,7 @@
 				D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */,
 				F5C2918A1EA29BD9007FA995 /* AppDelegate.swift in Sources */,
 				D57A113C1F38E7B0006F79E0 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
+				D57E4B171FA49856001C46A7 /* AddFanChallengePostView.swift in Sources */,
 				F50BA66F1EBF04290044593E /* FacebookClass.swift in Sources */,
 				F5E07E931EAE6489000E46F8 /* KpTabBarBadge.m in Sources */,
 				F5C291931EA29C18007FA995 /* LoginOptionVC.swift in Sources */,
@@ -711,6 +729,8 @@
 				D57A11381F38E7B0006F79E0 /* IQBarButtonItem.swift in Sources */,
 				D57A11431F38E7B0006F79E0 /* IQUIScrollView+Additions.swift in Sources */,
 				F505223E1EDE60BA005507F5 /* MoreVC.swift in Sources */,
+				D57E4B151FA48E6D001C46A7 /* FanChallengeGameListViewController.swift in Sources */,
+				D5920EE11FA61CF200A980CB /* ChallengePostListViewController.swift in Sources */,
 				F5BF178C1EAEF1F70084C5C4 /* DiscoverUserVC.swift in Sources */,
 				D57A113A1F38E7B0006F79E0 /* IQKeyboardManager.swift in Sources */,
 				F566CB6D1EA375F5007E0A2E /* TeamVC.swift in Sources */,
