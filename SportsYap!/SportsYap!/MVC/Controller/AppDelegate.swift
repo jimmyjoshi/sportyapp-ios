@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var strStreamName = String("")!
     var strUsername = String("")!
     var strPassword = String("")!
-    
+    var arrGameList = Array<GameClass>()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         IQKeyboardManager.sharedManager().enable = true

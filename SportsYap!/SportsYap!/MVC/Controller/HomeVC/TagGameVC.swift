@@ -44,23 +44,18 @@ class TagGameVC: UIViewController {
     @IBAction func btnActionAddTagClicked(sender : UIButton) {
        
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let gameDetailVC: GameDetailVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameDetailVC") as! GameDetailVC
-        gameDetailVC.isCurrentMatch = true
-        
-        
-        var gameObject : GameClass = arrList[intSelectedValue.0] as! GameClass
-        
-        gameDetailVC.currentGameObject = gameObject
-        
+        let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+        postVC.currentGameObject = arrList[intSelectedValue.0]
+        //postVC.strMatchId = self.currentGame.strMatchId
+        self.navigationController?.pushViewController(postVC, animated: true)
         
         /*
-        if(indexPath.row == 0) {
-            gameDetailVC.isCurrentMatch = true
-        }
-        else {
-            gameDetailVC.isCurrentMatch = false
-        }*/
-        self.navigationController?.pushViewController(gameDetailVC, animated: true)
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let gameDetailVC: GameDetailVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameDetailVC") as! GameDetailVC
+        gameDetailVC.isCurrentMatch = true
+        var gameObject : GameClass = arrList[intSelectedValue.0] as! GameClass
+        gameDetailVC.currentGameObject = gameObject
+        self.navigationController?.pushViewController(gameDetailVC, animated: true)*/
         
     }
     
