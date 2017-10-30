@@ -88,12 +88,8 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             strUrl = "sporty-fans-challenge/create-post"
         }
         else {
-            strUrl = "post/create"
+            strUrl = "posts/create"
         }
-        //let strUrl : String = "posts/create"
-        
-        
-        
         if isImageUploaded == false
         {
             if isVideoUploaded == true

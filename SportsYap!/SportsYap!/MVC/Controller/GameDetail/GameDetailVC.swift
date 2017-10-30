@@ -187,12 +187,16 @@ class GameDetailVC: UIViewController {
         
     }
     
-    @IBAction func btnMorePassPress(_ : UIButton) {
+    @IBAction func btnFanChallengeClicked(sender: UIButton){
         self.view.endEditing(true)
         let moreVC = storyboard?.instantiateViewController(withIdentifier: "MoreVC") as! MoreVC
         moreVC.currentGame = currentGameObject
         view.addSubview(moreVC.view)
         addChildViewController(moreVC)
+    }
+    
+    @IBAction func btnMorePassPress(_ : UIButton) {
+        
     }
     
     func setFanSlider(intHomeCount: Int, intAwayCount: Int) {

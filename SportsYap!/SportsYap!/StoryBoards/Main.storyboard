@@ -3575,21 +3575,28 @@
                                         <state key="normal" title="Learn more">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pOJ-MP-JtF">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                         <connections>
-                                            <action selector="btnMorePassPress:" destination="vuU-ye-Ug5" eventType="touchUpInside" id="MzA-KQ-m5M"/>
+                                            <action selector="btnFanChallengeClickedWithSender:" destination="vuU-ye-Ug5" eventType="touchUpInside" id="1sG-oQ-TXv"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="t4J-hj-cQM" firstAttribute="leading" secondItem="LdR-Yf-OJJ" secondAttribute="leading" id="2eP-Bg-dwG"/>
+                                    <constraint firstAttribute="bottom" secondItem="pOJ-MP-JtF" secondAttribute="bottom" id="7RS-Ms-xhc"/>
                                     <constraint firstAttribute="trailing" secondItem="t4J-hj-cQM" secondAttribute="trailing" id="ClH-b0-Gjg"/>
                                     <constraint firstAttribute="height" constant="100" id="Dmd-b3-cMX"/>
                                     <constraint firstItem="SXU-Pu-FSu" firstAttribute="top" secondItem="LdR-Yf-OJJ" secondAttribute="top" constant="19" id="Ez4-sK-G0t"/>
+                                    <constraint firstItem="pOJ-MP-JtF" firstAttribute="top" secondItem="LdR-Yf-OJJ" secondAttribute="top" id="MA3-T3-f0r"/>
                                     <constraint firstItem="SXU-Pu-FSu" firstAttribute="centerX" secondItem="LdR-Yf-OJJ" secondAttribute="centerX" id="P6u-9w-WR4"/>
                                     <constraint firstItem="t4J-hj-cQM" firstAttribute="top" secondItem="LdR-Yf-OJJ" secondAttribute="top" id="QnC-xw-G6Q"/>
                                     <constraint firstItem="9Tj-sv-G3L" firstAttribute="centerX" secondItem="SXU-Pu-FSu" secondAttribute="centerX" id="Ye5-eJ-XtC"/>
                                     <constraint firstItem="9Tj-sv-G3L" firstAttribute="top" secondItem="SXU-Pu-FSu" secondAttribute="bottom" constant="7.5" id="hMY-45-lVT"/>
+                                    <constraint firstAttribute="trailing" secondItem="pOJ-MP-JtF" secondAttribute="trailing" id="lD7-bA-Tyn"/>
+                                    <constraint firstItem="pOJ-MP-JtF" firstAttribute="leading" secondItem="LdR-Yf-OJJ" secondAttribute="leading" id="pyP-Rr-vfh"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="71" sectionHeaderHeight="25" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="RX0-vZ-Ux2">
@@ -4050,7 +4057,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cHM-6A-EzU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2363" y="2073"/>
+            <point key="canvasLocation" x="2362.5" y="2071.4788732394368"/>
         </scene>
         <!--MoreVC-->
         <scene sceneID="vmK-PV-evV">
@@ -4330,7 +4337,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Od2-Fz-0bG" id="wcs-8i-PCg">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DGd-2G-hOi">

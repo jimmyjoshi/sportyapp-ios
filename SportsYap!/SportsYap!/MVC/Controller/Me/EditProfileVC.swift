@@ -257,11 +257,15 @@ class EditProfileVC: UIViewController, UINavigationControllerDelegate, UIImagePi
                         == 0 ? 1 : 0), forKey: "is_follow")
                     let indexPath = IndexPath(item: (ip?.row)!, section: 0)
                     self.tblTeam.reloadRows(at: [indexPath], with: .automatic)
+                    
+                    self.callGetTeam()
                 }
                 else
                 {
-                    let strMsg : String = dicData.value(forKey: "reason") as! String
+                    let strMsg : String = dicData.value(forKey: "message") as! String
                      showAlert(strMsg: strMsg, vc: self)
+                    
+                    self.callGetTeam()
                 }
             }) { (response:String!) in
                 showAlert(strMsg: response, vc: self)
