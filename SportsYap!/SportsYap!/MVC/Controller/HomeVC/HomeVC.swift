@@ -549,11 +549,20 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if intSelectedTab == 1 {
+        if intSelectedTab == 1 {/*
             let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
             tagDetailVC.arrList = arrList
-            self.navigationController?.pushViewController(tagDetailVC, animated: true)
+            self.navigationController?.pushViewController(tagDetailVC, animated: true)*/
+            appDelegate.arrGameList = arrList
+            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let gameDetailVC: GameDetailVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameDetailVC") as! GameDetailVC
+            gameDetailVC.isCurrentMatch = true
+            var gameObject : GameClass = arrList[indexPath.row] as! GameClass
+            gameDetailVC.currentGameObject = gameObject
+            self.navigationController?.pushViewController(gameDetailVC, animated: true)
+            
+            
         }
         else
         {

@@ -161,7 +161,12 @@ class GameDetailVC: UIViewController {
     
     @IBAction private func btnEnterFieldClicked(_ : UIButton) {
         
-        self.openActionSheet()
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
+        tagDetailVC.arrList = appDelegate.arrGameList
+        self.navigationController?.pushViewController(tagDetailVC, animated: true)
+        
+        //self.openActionSheet()
         /*
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let objEnter: EnterFieldViewController = cameraStoryboard.instantiateViewController(withIdentifier: "EnterFieldViewController") as! EnterFieldViewController
@@ -193,10 +198,6 @@ class GameDetailVC: UIViewController {
         moreVC.currentGame = currentGameObject
         view.addSubview(moreVC.view)
         addChildViewController(moreVC)
-    }
-    
-    @IBAction func btnMorePassPress(_ : UIButton) {
-        
     }
     
     func setFanSlider(intHomeCount: Int, intAwayCount: Int) {
