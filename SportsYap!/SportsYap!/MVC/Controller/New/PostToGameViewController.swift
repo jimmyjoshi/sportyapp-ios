@@ -206,7 +206,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
         {
             let strUrl : String = "posts/create"
             var params : [String:AnyObject]
-            params = ["description": strhosted_page_url as AnyObject]
+            params = ["description": strhosted_page_url as AnyObject,"is_wowza":"1" as AnyObject]
             
             MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
                 print("Response \(response as NSDictionary)")
@@ -237,7 +237,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
         {
             let strUrl : String = "posts/create"
             var params : [String:AnyObject]
-            params = ["description": strhosted_page_url as AnyObject]
+            params = ["description": strhosted_page_url as AnyObject,"is_wowza":"1" as AnyObject]
             
             MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
                 print("Response \(response as NSDictionary)")

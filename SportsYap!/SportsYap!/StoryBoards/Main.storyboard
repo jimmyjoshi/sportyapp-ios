@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xGg-7L-WPB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xGg-7L-WPB">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -2786,6 +2786,10 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                                 </textView>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nCC-we-VLj">
+                                                    <rect key="frame" x="139" y="147" width="42" height="42"/>
+                                                    <state key="normal" image="icon_play"/>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -2803,6 +2807,7 @@
                                                 <constraint firstItem="G2H-8Y-Dx0" firstAttribute="top" secondItem="aoq-N8-7nq" secondAttribute="bottom" constant="9" id="Uem-0M-nyg"/>
                                                 <constraint firstItem="78W-01-hua" firstAttribute="top" secondItem="V1e-7t-1Ld" secondAttribute="top" id="VRv-aL-SEb"/>
                                                 <constraint firstItem="aoq-N8-7nq" firstAttribute="top" secondItem="DGf-9E-MhF" secondAttribute="bottom" constant="5" id="YmK-en-EmF"/>
+                                                <constraint firstItem="nCC-we-VLj" firstAttribute="centerX" secondItem="aoq-N8-7nq" secondAttribute="centerX" id="cdw-Ro-hEC"/>
                                                 <constraint firstItem="fuf-rZ-Ce6" firstAttribute="top" secondItem="V1e-7t-1Ld" secondAttribute="top" constant="10" id="d0r-Ep-ILf"/>
                                                 <constraint firstAttribute="bottom" secondItem="pan-sa-8Ou" secondAttribute="bottom" constant="10" id="fBM-Pi-jtj"/>
                                                 <constraint firstItem="DGf-9E-MhF" firstAttribute="top" secondItem="fuf-rZ-Ce6" secondAttribute="bottom" constant="2" id="gHM-SX-cgo"/>
@@ -2812,12 +2817,14 @@
                                                 <constraint firstItem="VyD-8c-RRV" firstAttribute="top" secondItem="DGf-9E-MhF" secondAttribute="top" id="kKW-gM-nLO"/>
                                                 <constraint firstItem="aoq-N8-7nq" firstAttribute="leading" secondItem="V1e-7t-1Ld" secondAttribute="leading" id="n3j-we-o1H"/>
                                                 <constraint firstAttribute="trailing" secondItem="78W-01-hua" secondAttribute="trailing" id="rVj-BI-HPH"/>
+                                                <constraint firstItem="nCC-we-VLj" firstAttribute="centerY" secondItem="aoq-N8-7nq" secondAttribute="centerY" id="vD2-fj-GuN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="btnComment" destination="G2H-8Y-Dx0" id="58H-V8-dzF"/>
                                             <outlet property="btnLike" destination="pan-sa-8Ou" id="9hc-uZ-i9y"/>
+                                            <outlet property="btnPlay" destination="nCC-we-VLj" id="MG0-9Y-gYn"/>
                                             <outlet property="heightLayout" destination="eaW-FS-DAE" id="aet-2X-NfT"/>
                                             <outlet property="imgPost" destination="aoq-N8-7nq" id="tWg-8R-cmY"/>
                                             <outlet property="lblName" destination="fuf-rZ-Ce6" id="nh9-Vi-5bc"/>
@@ -6643,6 +6650,7 @@
         <image name="icon_LiveStreamAdd" width="50" height="50"/>
         <image name="icon_VideoAdd" width="50" height="50"/>
         <image name="icon_imagAdd" width="50" height="50"/>
+        <image name="icon_play" width="42" height="42"/>
         <image name="loginOptionBG" width="375" height="667"/>
         <image name="nogameIcon" width="200" height="200"/>
         <image name="profile_image" width="100" height="100"/>

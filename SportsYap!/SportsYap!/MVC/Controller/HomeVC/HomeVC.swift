@@ -698,13 +698,26 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 cell.txtVenue?.sizeToFit()
                 */
                 
-                let strImg = dict.value(forKey: "image") as! String
+                let strImg = dict.value(forKey: "image") as! NSString
                 let strvideo = dict.value(forKey: "video") as! String
-                if strImg == ""  && strvideo == "" {
+                let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
+
+                if strImg == ""  && strvideo == "" && strVideoThumbUrl == ""
+                {
                     cell.heightLayout.constant = 0
+                    cell.btnPlay?.isHidden = true
                 }
                 else
                 {
+                    if strImg.length > 0
+                    {
+                        cell.btnPlay?.isHidden = true
+                    }
+                    else
+                    {
+                        cell.btnPlay?.isHidden = false
+                    }
+                    
                     cell.heightLayout.constant = screenWidth
                     //cell.imgPost.layer.cornerRadius = 10.0
                     //cell.imgPost.clipsToBounds = true
@@ -712,10 +725,15 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                     let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
                     cell.imgPost.addGestureRecognizer(gesture)
                     
+                    cell.btnPlay?.tag = indexPath.section
+                    cell.btnPlay?.addTarget(self, action: #selector(self.btnPlayClicked(sender:)), for: .touchUpInside)
+                    
+
+                    
                     var strURL = String("")!
                     //Video thumbnai is to be displayed
-                    if strImg == "" {
-                        let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
+                    if strImg == ""
+                    {
                        strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
                         /*let imgVw : UIImageView = UIImageView(frame: CGRect(x: (screenWidth - 50)/2, y: (screenWidth - 50)/2, width: 50, height: 50))
                         imgVw.image = UIImage(named: "nogameIcon")
@@ -1141,6 +1159,19 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
     }
     
+    //MARK: Play Clicked
+    func btnPlayClicked(sender:UIButton)
+    {
+        let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
+        //This is video
+        let strVideoLink : String = dic.value(forKey: "video") as! String
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+        
+        videoVC.strLink = strVideoLink
+        self.navigationController?.pushViewController(videoVC, animated: true)
+    }
+    
     //MARK:- Creating function that will add custom button to the tab
     func addBtnToTab() {
         let flHt : CGFloat = 50
@@ -1175,7 +1206,7 @@ class timelineCell: UITableViewCell {
 
     @IBOutlet weak var wvheightLayout: NSLayoutConstraint?
     @IBOutlet weak var webvwVideo: UIWebView?
-
+    @IBOutlet weak var btnPlay: UIButton?
     
     
     override func awakeFromNib() {
