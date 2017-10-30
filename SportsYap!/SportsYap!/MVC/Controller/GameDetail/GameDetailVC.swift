@@ -160,13 +160,13 @@ class GameDetailVC: UIViewController {
     }
     
     @IBAction private func btnEnterFieldClicked(_ : UIButton) {
-        
+        /*
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
         tagDetailVC.arrList = appDelegate.arrGameList
         self.navigationController?.pushViewController(tagDetailVC, animated: true)
-        
-        //self.openActionSheet()
+        */
+        self.openActionSheet()
         /*
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let objEnter: EnterFieldViewController = cameraStoryboard.instantiateViewController(withIdentifier: "EnterFieldViewController") as! EnterFieldViewController
@@ -208,14 +208,16 @@ class GameDetailVC: UIViewController {
             intPercent = 50
         }
         else if intHomeCount == 0 {
-            intPercent = 0
+            intPercent = 100
         }
         else if intAwayCount == 0 {
-            intPercent = 100
+            intPercent = 0
         }
         else
         {
             intPercent = ((intHomeCount*100)/(intAwayCount+intHomeCount))
+            
+            intPercent = 100 - intPercent
         }
         
         //let intPercent : Int = ((intHomeCount*100)/(intAwayCount+intHomeCount))
@@ -282,7 +284,10 @@ class GameDetailVC: UIViewController {
     }
     
     func getFanMeter() {
-        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject]
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject,"homeTeamId": currentGameObject.strHomeMatchId as AnyObject,"awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
+        
+        /*
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject]*/
         var strUrl = String("")!
         strUrl = "\(base_Url)sporty-fans/get-team-ratio"
         MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in

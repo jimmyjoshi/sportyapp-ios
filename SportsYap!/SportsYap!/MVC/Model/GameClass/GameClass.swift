@@ -94,6 +94,15 @@ class GameClass: NSObject {
                 let tempD1 = dict["awayteam"].dictionaryValue
                 //gameDetail.strMatchId = dict["id"].stringValue
                 gameDetail.strMatchId = dict["contestID"].stringValue
+                    
+                
+                
+                if gameDetail.strMatchId == "" {
+                     gameDetail.strMatchId = dict["id"].stringValue
+                }
+                else if gameDetail.strMatchId == "" {
+                    gameDetail.strMatchId = "0"
+                }
                 gameDetail.strTeam1Score = (tempD1["totalscore"]?.stringValue)!
                 gameDetail.strAwayMatchId = (tempD1["id"]?.stringValue)!
                 let strTemp1 = tempD1["name"]?.stringValue
