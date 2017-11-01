@@ -408,7 +408,7 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
                 return "     FRONT ROW"
             }
             else {
-                return "     FRIENDS AT THE GAME"
+                return "     BUDDIES AT THE GAME"
             }
         }
         else {

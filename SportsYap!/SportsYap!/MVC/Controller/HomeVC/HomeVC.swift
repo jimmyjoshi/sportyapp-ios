@@ -440,6 +440,18 @@ class HomeVC: UIViewController {
         
     }
     
+    //MARK:- Function to set Image
+    func setImage(img: UIImageView,strUrl: String){
+        if strUrl != "" {
+            var strURL = String("")!
+            strURL = strUrl.replacingOccurrences(of: " ", with: "%20")
+            let url2 = URL(string: strURL)
+            if url2 != nil {
+                img.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
+            }
+        }
+    }
+    
 }
 
 extension HomeVC: UITableViewDataSource,UITableViewDelegate {
@@ -652,8 +664,10 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 
                 if let dictUser = dict.value(forKey: "postCreator") {
                     cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "name") as! String?
-
-                    //cell.lblName.text = "\(dictUser)"
+                    if let userImage = (dictUser as! NSDictionary).value(forKey: "image")
+                    {
+                        setImage(img: cell.imgUser, strUrl: "\(userImage)")
+                    }
                 }
                 cell.lblVenue.text = dict.value(forKey: "description") as? String
                 cell.txtVenue?.text = dict.value(forKey: "description") as? String
@@ -808,7 +822,6 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
         }
     return mainCell
     }
-    
 }
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     //Collection view delegare
@@ -1202,6 +1215,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 class timelineCell: UITableViewCell {
+    @IBOutlet weak var imgUser: UIImageView!
     @IBOutlet weak var imgGameType: UIImageView!
     @IBOutlet weak var lblTime: UILabel!
     @IBOutlet weak var lblName: UILabel!

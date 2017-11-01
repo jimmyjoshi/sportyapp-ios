@@ -108,6 +108,18 @@ class ChallengePostListViewController: UIViewController {
     @IBAction func btnBackClicked(sender: UIButton){
         _=self.navigationController?.popViewController(animated: true)
     }
+    
+    //MARK:- Function to set Image
+    func setImage(img: UIImageView,strUrl: String){
+        if strUrl != "" {
+            var strURL = String("")!
+            strURL = strUrl.replacingOccurrences(of: " ", with: "%20")
+            let url2 = URL(string: strURL)
+            if url2 != nil {
+                img.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
+            }
+        }
+    }
 }
 
 extension ChallengePostListViewController: UITableViewDataSource,UITableViewDelegate {
@@ -217,6 +229,10 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                 cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "name") as! String?
                 
                 //cell.lblName.text = "\(dictUser)"
+                if let userImage = (dictUser as! NSDictionary).value(forKey: "image")
+                {
+                    setImage(img: cell.imgUser, strUrl: "\(userImage)")
+                }
             }
             cell.lblVenue.text = dict.value(forKey: "description") as? String
             cell.txtVenue?.text = dict.value(forKey: "description") as? String
