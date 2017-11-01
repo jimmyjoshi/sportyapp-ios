@@ -170,9 +170,6 @@ extension AddTeamVC: UISearchBarDelegate {
             dictInfo = arrSearchList[(ip?.row)!] as! NSDictionary
         }
         
-        
-        
-        
         //let dictInfo = arrTeam[(ip?.row)!] as! NSDictionary
         var strUrl = String("")!
         if let isFollow = dictInfo.value(forKey: "is_follow") {
@@ -243,6 +240,7 @@ extension AddTeamVC: UITableViewDelegate, UITableViewDataSource {
         if(isSearching) {
             dictInfo = arrSearchList[indexPath.row] as! NSDictionary
         }
+    
     
         if let img = dictInfo.value(forKey: "image") {
             let strImg = dictInfo.value(forKey: "image") as! String
