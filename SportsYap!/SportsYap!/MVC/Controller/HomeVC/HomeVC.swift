@@ -214,6 +214,11 @@ class HomeVC: UIViewController {
         changeTab()
     }
     
+    @IBAction func btnBuddiesClicked(sender: UIButton){
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tagDetailVC: BuddiesViewController = cameraStoryboard.instantiateViewController(withIdentifier: "BuddiesViewController") as! BuddiesViewController
+        self.navigationController?.pushViewController(tagDetailVC, animated: true)
+    }
     @IBAction func getNextDate(btnSender: UIButton) {
         self.getDate(isNext: true, isPrevious: false)
         self.getFootballGameData()

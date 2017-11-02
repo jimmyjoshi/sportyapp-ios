@@ -160,18 +160,7 @@ class GameDetailVC: UIViewController {
     }
     
     @IBAction private func btnEnterFieldClicked(_ : UIButton) {
-        /*
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
-        tagDetailVC.arrList = appDelegate.arrGameList
-        self.navigationController?.pushViewController(tagDetailVC, animated: true)
-        */
-        self.openActionSheet()
-        /*
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let objEnter: EnterFieldViewController = cameraStoryboard.instantiateViewController(withIdentifier: "EnterFieldViewController") as! EnterFieldViewController
-        objEnter.strTitle = "\(currentGameObject.strTeam1FirstName) Vs \(currentGameObject.strTeam2FirstName)"
-        self.navigationController?.pushViewController(objEnter, animated: true)*/
+        callIsTeamRatioAdded()
     }
     
     @IBAction private func btnNewsPress(_ : UIButton) {
@@ -350,7 +339,39 @@ class GameDetailVC: UIViewController {
             self.cntHeight.constant = 0
             print("Error is \(response)")
         }
+    }
+    func callIsTeamRatioAdded() {
+        let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject, "homeTeamId": currentGameObject.strHomeMatchId as AnyObject, "awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
+        var strUrl = String("")!
+        strUrl = "\(base_Url)sporty-fans-challenge/check"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            let dicData : NSDictionary = (response as NSDictionary).value(forKey: "data")! as! NSDictionary
+            var intFanFound : Int = dicData.value(forKey: "fanFound")! as! Int
+            //Check if fan challenge has been created previously
+            if intFanFound == 1 {
+                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+                postVC.currentGameObject = self.currentGameObject
+                self.navigationController?.pushViewController(postVC, animated: true)
+            }
+            else
+            {
+                var arrGameList = Array<GameClass>()
+                arrGameList.append(self.currentGameObject)
+                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
+                tagDetailVC.arrList = arrGameList
+                self.navigationController?.pushViewController(tagDetailVC, animated: true)
+            }
+            
+            print("\(dicData)")
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            
+            print("Error is \(response)")
         }
+    }
+    
 }
 
 extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {

@@ -42,23 +42,35 @@ class TagGameVC: UIViewController {
     }
 
     @IBAction func btnActionAddTagClicked(sender : UIButton) {
-       
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
-        postVC.currentGameObject = arrList[intSelectedValue.0]
-        //postVC.strMatchId = self.currentGame.strMatchId
-        self.navigationController?.pushViewController(postVC, animated: true)
-        
-        /*
-        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let gameDetailVC: GameDetailVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameDetailVC") as! GameDetailVC
-        gameDetailVC.isCurrentMatch = true
-        var gameObject : GameClass = arrList[intSelectedValue.0] as! GameClass
-        gameDetailVC.currentGameObject = gameObject
-        self.navigationController?.pushViewController(gameDetailVC, animated: true)*/
-        
+        var gameDetail : GameClass = arrList[intSelectedValue.0]
+        var strTeamName = String("")
+        if intSelectedValue.1 == 0 {
+            strTeamName = gameDetail.strAwayMatchId
+        }
+        else if intSelectedValue.1 == 1 {
+            strTeamName = gameDetail.strHomeMatchId
+        }
+        callAddTeamRatio(strFollowTeam: strTeamName!)
     }
     
+    func callAddTeamRatio(strFollowTeam: String) {
+        let dictParameter : [String:AnyObject]  = ["gameId": self.arrList[0].strMatchId as AnyObject,"homeTeamId": self.arrList[0].strHomeMatchId as AnyObject,"awayTeamId": self.arrList[0].strAwayMatchId as AnyObject,"followTeam": strFollowTeam as AnyObject]
+        var strUrl = String("")!
+        strUrl = "\(base_Url)sporty-fans/add-team-ratio"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
+            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
+            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+            postVC.currentGameObject = self.arrList[0]
+            self.navigationController?.pushViewController(postVC, animated: true)
+            
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+        }
+    }
     @IBAction func btnActionBackClicked(sender : UIButton) {
          _ = self.navigationController?.popViewController(animated: true)
     }

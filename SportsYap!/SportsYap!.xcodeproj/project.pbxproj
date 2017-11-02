@@ -36,6 +36,7 @@
 		D58504B91F6505EC000647B0 /* EnterFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */; };
 		D587442B1F5F1DF80074C2E6 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = D587442A1F5F1DF80074C2E6 /* Toast.swift */; };
 		D5920EE11FA61CF200A980CB /* ChallengePostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5920EE01FA61CF200A980CB /* ChallengePostListViewController.swift */; };
+		D5976ECD1FAB980700B248B2 /* BuddiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5976ECC1FAB980700B248B2 /* BuddiesViewController.swift */; };
 		D597B5D51F15516500EF086D /* TagGameCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D597B5D41F15516500EF086D /* TagGameCellTableViewCell.swift */; };
 		D597B5D71F15533300EF086D /* TagGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D597B5D61F15533300EF086D /* TagGameVC.swift */; };
 		D599BC221F58777400056046 /* GameListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D599BC211F58777400056046 /* GameListingViewController.swift */; };
@@ -131,6 +132,7 @@
 		D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterFieldViewController.swift; sourceTree = "<group>"; };
 		D587442A1F5F1DF80074C2E6 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		D5920EE01FA61CF200A980CB /* ChallengePostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengePostListViewController.swift; sourceTree = "<group>"; };
+		D5976ECC1FAB980700B248B2 /* BuddiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuddiesViewController.swift; sourceTree = "<group>"; };
 		D597B5D41F15516500EF086D /* TagGameCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameCellTableViewCell.swift; sourceTree = "<group>"; };
 		D597B5D61F15533300EF086D /* TagGameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameVC.swift; sourceTree = "<group>"; };
 		D599BC211F58777400056046 /* GameListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListingViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				D5A1AD1C1F358AB2005485E2 /* CommentViewController.swift */,
 				D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */,
 				D58504B81F6505EC000647B0 /* EnterFieldViewController.swift */,
+				D5976ECC1FAB980700B248B2 /* BuddiesViewController.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				D599BC221F58777400056046 /* GameListingViewController.swift in Sources */,
 				F5C2918E1EA29BD9007FA995 /* Constant.swift in Sources */,
 				F509027E1EAD294600404EC7 /* HomeVC.swift in Sources */,
+				D5976ECD1FAB980700B248B2 /* BuddiesViewController.swift in Sources */,
 				D57A113B1F38E7B0006F79E0 /* IQKeyboardManagerConstants.swift in Sources */,
 				D57A11481F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift in Sources */,
 				D5C970B81F38399B00729AAA /* TransparentViewController.swift in Sources */,
