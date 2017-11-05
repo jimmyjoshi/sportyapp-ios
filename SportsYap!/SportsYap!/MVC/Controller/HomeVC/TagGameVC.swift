@@ -58,9 +58,9 @@ class TagGameVC: UIViewController {
         var strUrl = String("")!
         strUrl = "\(base_Url)sporty-fans/add-team-ratio"
         MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
-            var dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
-            var intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
-            var intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            let dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
+            let intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
+            let intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
             let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
             postVC.currentGameObject = self.arrList[0]

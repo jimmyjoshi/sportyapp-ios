@@ -11,6 +11,7 @@ import UIKit
 class ZoomImageViewController: UIViewController,UIScrollViewDelegate {
     //@IBOutlet weak var imgVw: UIImageView!
     
+    @IBOutlet weak var webVw: UIWebView!
     var imgVw = UIImageView()
     @IBOutlet weak var vwBg: UIView!
     @IBOutlet weak var scrollvw: UIScrollView!
@@ -18,11 +19,12 @@ class ZoomImageViewController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        webVw.loadRequest(URLRequest(url: URL(string: strLink)!))
         // Do any additional setup after loading the view.
         //let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.vwTapped(sender:)))
         //self.vwBg.addGestureRecognizer(gesture)
         
+        /*
         let vWidth = self.view.frame.width
         let vHeight = self.view.frame.height
         
@@ -53,7 +55,7 @@ class ZoomImageViewController: UIViewController,UIScrollViewDelegate {
         let url2 = URL(string: strURL)
         if url2 != nil {
             imgVw.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
-        }
+        }*/
     }
     
     

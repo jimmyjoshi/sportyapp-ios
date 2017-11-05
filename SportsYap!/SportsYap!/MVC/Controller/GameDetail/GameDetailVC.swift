@@ -124,12 +124,15 @@ class GameDetailVC: UIViewController {
         }
         
         
-        callFanApi()
+        //callFanApi()
         
         //callNewsApi()
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        callFanApi()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -343,10 +346,10 @@ class GameDetailVC: UIViewController {
     func callIsTeamRatioAdded() {
         let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject, "homeTeamId": currentGameObject.strHomeMatchId as AnyObject, "awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
         var strUrl = String("")!
-        strUrl = "\(base_Url)sporty-fans-challenge/check"
+        strUrl = "\(base_Url)sporty-fans/check"
         MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
             let dicData : NSDictionary = (response as NSDictionary).value(forKey: "data")! as! NSDictionary
-            var intFanFound : Int = dicData.value(forKey: "fanFound")! as! Int
+            var intFanFound : Int = dicData.value(forKey: "fanMeterFound")! as! Int
             //Check if fan challenge has been created previously
             if intFanFound == 1 {
                 let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)

@@ -123,18 +123,18 @@ class MeVC: UIViewController {
             else {
                 btnFollow.isSelected = true
             }
+            self.getOtherUserProfile()
         }
         else {
-            
             btnFollowHeight.constant = 0
-            
             //lblUserName.text = UserClass.sharedInstance.strUserName
             lblUserName.text = UserClass.sharedInstance.strName
             btnProfile.sd_setImage(with: UserClass.sharedInstance.urlProfile, for: .normal)
             lblName.text = UserClass.sharedInstance.strName
             lblLocation.text = UserClass.sharedInstance.strLocation
+            self.getProfile()
         }
-        self.getProfile()
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -148,9 +148,6 @@ class MeVC: UIViewController {
         MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
             
             var dictData : NSDictionary = (response as! NSDictionary).value(forKey: "data") as! NSDictionary
-            
-            
-            
             self.lblFollowersCount.text = "\(dictData.value(forKey: "followers_count")!)"
             self.lblFollowingCount.text = "\(dictData.value(forKey: "following_count")!)"
             self.lblShotsCount.text = "\(dictData.value(forKey: "total_shots")!)"
@@ -165,6 +162,51 @@ class MeVC: UIViewController {
         
     }
     
+    func getOtherUserProfile() {
+        let dictParameter : [String:AnyObject]  = ["user_id": userDetail.strUserId as AnyObject]
+       
+        var strUrl = String("")!
+        strUrl = "\(base_Url)users/get-user-profile"
+        MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+            let dictData : NSDictionary = (response as! NSDictionary).value(forKey: "data") as! NSDictionary
+            
+
+            if let cntFollower = dictData.value(forKey: "followers_count")
+            {
+                self.lblFollowersCount.text = "\(cntFollower)"
+            }
+            else
+            {
+                self.lblFollowersCount.text = "0"
+            }
+            
+            if let cntFollower = dictData.value(forKey: "following_count") {
+                self.lblFollowingCount.text = "\(cntFollower)"
+            }
+            else
+            {
+                self.lblFollowingCount.text = "0"
+            }
+            
+            if let shots = dictData.value(forKey: "total_shots") {
+                self.lblShotsCount.text = "\(shots)"
+            }
+            else
+            {
+                self.lblShotsCount.text = "0"
+            }
+            /*
+            self.lblFollowersCount.text = "\(dictData.value(forKey: "followers_count")!)"
+            self.lblFollowingCount.text = "\(dictData.value(forKey: "following_count")!)"
+            self.lblShotsCount.text = "\(dictData.value(forKey: "total_shots")!)"
+            */
+            self.callGetMatchApi()
+        }) { (response:String!) in
+            showAlert(strMsg: response, vc: self)
+            print("Error is \(response)")
+            self.callGetMatchApi()
+        }
+    }
     //MARK:- Match related api call and response
     func callGetMatchApi() {
         

@@ -2,7 +2,7 @@
 //  BuddiesViewController.swift
 //  SportsYap!
 //
-//  Created by Sagar Jagajeev on 02/11/17.
+//  Created by Ravi Panicker on 02/11/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 
@@ -27,22 +27,19 @@ class BuddiesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.WSCall()
-        self.callGetAllTeam()
+        //self.callGetAllTeam()
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.callGetFollowers()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    //MARK: - WS Calls
-    private func WSCall() {
-        
-    }
-    
-    
-    func callGetAllTeam() {
+    func callGetFollowers() {
         var strUrl = String("")!
-        strUrl = "\(base_Url)users/get-all-teams"
+        strUrl = "\(base_Url)users/user-followers"
         MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: strUrl, parameter: nil, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
             var arrTmp = NSMutableArray()
             arrTmp  = ((response as NSDictionary).value(forKey: "data") as! NSArray).mutableCopy() as! NSMutableArray
@@ -75,56 +72,26 @@ class BuddiesViewController: UIViewController {
         let ip = self.tblUserLost.indexPathForRow(at: buttonPosition)
         print("Index path \(ip?.row)")
         
-        var dictInfo = NSDictionary()
-        dictInfo = arrList[(ip?.row)!] as! NSDictionary
+        var dict = NSDictionary()
+        dict = arrList[(ip?.row)!] as! NSDictionary
+        let usr = DiscoverClass()
+        usr.strUserId = "\(dict.value(forKey: "id")!)"
+        usr.strEmail = dict.value(forKey: "email") as! String
+        usr.urlProfile =  URL(fileURLWithPath: "\(dict.value(forKey: "image")!)")//dict.value(forKey: "image") as! URL!
+        usr.strLocation = dict.value(forKey: "location") as! String
+        usr.strName = dict.value(forKey: "name") as! String
+        usr.strUserName = dict.value(forKey: "username") as! String
+        usr.isFollow = dict.value(forKey: "is_follow") as! Bool!
         
-        if(isSearching) {
-            dictInfo = arrSearchList[(ip?.row)!] as! NSDictionary
-        }
+        //Unfollow User call
+        usr.unfollowUser(showLoader: true, success: { (response) in
+            self.callGetFollowers()
+        }, failed: { (response) in
+            showAlert(strMsg: response as String, vc: self)
+            self.callGetFollowers()
+        })
         
-        //let dictInfo = arrTeam[(ip?.row)!] as! NSDictionary
-        var strUrl = String("")!
-        if let isFollow = dictInfo.value(forKey: "is_follow") {
-            if "\(isFollow)" == "1" {
-                strUrl = "\(base_Url)users/un-follow-team"
-            }
-            else
-            {
-                strUrl = "\(base_Url)users/follow-team"
-            }
-            var strTeamId : String = "\(dictInfo.value(forKey: "team_id")!)"
-            let dictParameter:[String:String] = ["team_id":strTeamId]
-            MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter as [String : AnyObject]?, header: getHeaderData(), success: { (response:Dictionary<String, AnyObject>) in
-                print("Response \(response as NSDictionary)")
-                let intCode : Int = (response as NSDictionary).value(forKey: "code")! as! Int
-                
-                let dicData : NSDictionary = (response as NSDictionary).value(forKey: "data")! as! NSDictionary
-                
-                if intCode == 200 {
-                    var dictTeam = NSMutableDictionary()
-                    dictTeam = self.arrList[(ip?.row)!] as! NSMutableDictionary
-                    
-                    if(self.isSearching) {
-                        dictTeam = self.arrSearchList[(ip?.row)!] as! NSMutableDictionary
-                    }
-                    //let dictTeam = self.arrTeam[(ip?.row)!] as! NSMutableDictionary
-                    let intIsFollow = dictTeam.value(forKey: "is_follow") as! Int
-                    dictTeam.setValue((intIsFollow
-                        == 0 ? 1 : 0), forKey: "is_follow")
-                    let indexPath = IndexPath(item: (ip?.row)!, section: 0)
-                    self.tblUserLost.reloadRows(at: [indexPath], with: .automatic)
-                }
-                else
-                {
-                    let strMsg : String = dicData.value(forKey: "reason") as! String
-                    showAlert(strMsg: strMsg, vc: self)
-                }
-            }) { (response:String!) in
-                showAlert(strMsg: response, vc: self)
-                print("Error is \(response)")
-            }
         }
-    }
 }
 
 extension BuddiesViewController: UITableViewDelegate, UITableViewDataSource {
@@ -191,6 +158,24 @@ extension BuddiesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let dict : NSDictionary = arrList[indexPath.row] as! NSDictionary
+        let usr = DiscoverClass()
+        usr.strUserId = "\(dict.value(forKey: "id")!)"
+        usr.strEmail = dict.value(forKey: "email") as! String
+        usr.urlProfile =  URL(fileURLWithPath: "\(dict.value(forKey: "image")!)")//dict.value(forKey: "image") as! URL!
+        usr.strLocation = dict.value(forKey: "location") as! String
+        usr.strName = dict.value(forKey: "name") as! String
+        usr.strUserName = dict.value(forKey: "username") as! String
+        usr.isFollow = dict.value(forKey: "is_follow") as! Bool!
+        
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        let homeStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let meVC = homeStoryboard.instantiateViewController(withIdentifier: "MeVC") as! MeVC
+        meVC.isOtherProfile = true
+        meVC.userDetail = usr
+        self.navigationController?.pushViewController(meVC, animated: true)
         
     }
 }
