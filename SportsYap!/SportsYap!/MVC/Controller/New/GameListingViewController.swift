@@ -320,10 +320,22 @@ class GameListingViewController: UIViewController {
     @IBAction func btnCreateImagePostClicked(sender: UIButton)
     {
         vwPostView.isHidden = true
+        /*
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
         postVC.isImageUploaded = true
-        self.navigationController?.pushViewController(postVC, animated: true)
+        self.navigationController?.pushViewController(postVC, animated: true)*/
+        
+        
+        if #available(iOS 10.0, *) {
+            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let postVC: CameraViewController = cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
+            self.navigationController?.pushViewController(postVC, animated: true)
+        } else {
+            // Fallback on earlier versions
+        }
+        //postVC.isImageUploaded = true
+        
     }
     
     @IBAction func btnCreateVideoPostClicked(sender: UIButton)

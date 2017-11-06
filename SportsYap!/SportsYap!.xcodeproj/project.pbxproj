@@ -41,6 +41,7 @@
 		D597B5D71F15533300EF086D /* TagGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D597B5D61F15533300EF086D /* TagGameVC.swift */; };
 		D599BC221F58777400056046 /* GameListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D599BC211F58777400056046 /* GameListingViewController.swift */; };
 		D5A1AD1D1F358AB2005485E2 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A1AD1C1F358AB2005485E2 /* CommentViewController.swift */; };
+		D5C0F3F71FB0CF28002B7A8F /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */; };
 		D5C84E731F3246B900029EF6 /* UIImageView+DownloadImageURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C84E721F3246B900029EF6 /* UIImageView+DownloadImageURL.swift */; };
 		D5C970B81F38399B00729AAA /* TransparentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C970B71F38399B00729AAA /* TransparentViewController.swift */; };
 		D5D351E51F23369A001C6F84 /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5D351E41F23369A001C6F84 /* TimelineCell.xib */; };
@@ -137,6 +138,7 @@
 		D597B5D61F15533300EF086D /* TagGameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameVC.swift; sourceTree = "<group>"; };
 		D599BC211F58777400056046 /* GameListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListingViewController.swift; sourceTree = "<group>"; };
 		D5A1AD1C1F358AB2005485E2 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D5C84E721F3246B900029EF6 /* UIImageView+DownloadImageURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImageURL.swift"; sourceTree = "<group>"; };
 		D5C970B71F38399B00729AAA /* TransparentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentViewController.swift; sourceTree = "<group>"; };
 		D5D351E41F23369A001C6F84 /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineCell.xib; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				F5E07E9D1EAE67EB000E46F8 /* MeVC.swift */,
 				F55BA2341ED7D0F300886877 /* EditProfileVC.swift */,
 				F55BA2361ED7DA0900886877 /* AddTeamVC.swift */,
+				D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				F50BA66F1EBF04290044593E /* FacebookClass.swift in Sources */,
 				F5E07E931EAE6489000E46F8 /* KpTabBarBadge.m in Sources */,
 				F5C291931EA29C18007FA995 /* LoginOptionVC.swift in Sources */,
+				D5C0F3F71FB0CF28002B7A8F /* CameraViewController.swift in Sources */,
 				F5E07E9E1EAE67EB000E46F8 /* MeVC.swift in Sources */,
 				F5F0CD581EDD08B2009E95B0 /* GameDetailVC.swift in Sources */,
 				F50BA6631EBEF7370044593E /* Validation.swift in Sources */,
