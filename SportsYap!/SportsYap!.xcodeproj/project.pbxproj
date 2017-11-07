@@ -832,8 +832,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: tamara latta (42C43UCKDN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: tamara latta (42C43UCKDN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
 				DEVELOPMENT_TEAM = 6NCD3R96G3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -844,8 +844,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SportsYap.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b77918bf-e211-4b0a-9e95-dffb42d03e65";
-				PROVISIONING_PROFILE_SPECIFIER = SportyDev;
+				PROVISIONING_PROFILE = "56ddbbb2-ea9d-4613-847d-0f78e5e9b6ba";
+				PROVISIONING_PROFILE_SPECIFIER = "Dist SportsYap";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/SportsYap!-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -956,8 +956,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: tamara latta (42C43UCKDN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: tamara latta (42C43UCKDN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
 				DEVELOPMENT_TEAM = 6NCD3R96G3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -968,8 +968,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SportsYap.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b77918bf-e211-4b0a-9e95-dffb42d03e65";
-				PROVISIONING_PROFILE_SPECIFIER = SportyDev;
+				PROVISIONING_PROFILE = "56ddbbb2-ea9d-4613-847d-0f78e5e9b6ba";
+				PROVISIONING_PROFILE_SPECIFIER = "Dist SportsYap";
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/SportsYap!-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -981,7 +981,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: tamara latta (42C43UCKDN)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
 				DEVELOPMENT_TEAM = 6NCD3R96G3;
 				FRAMEWORK_SEARCH_PATHS = (
