@@ -352,9 +352,9 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
             }
             else if strState == "started" {
                 print("Stream started")
-                 self.perform(#selector(self.configueLicenceKey), with: nil, afterDelay: 1.2)
+                self.perform(#selector(self.configueLicenceKey), with: nil, afterDelay: 1.2)
             }
-
+            
             
             
         }) { (response:String!) in

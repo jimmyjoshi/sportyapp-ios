@@ -480,6 +480,30 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             
             let strComment : String = dictComment.value(forKey: "commentText") as! String
             
+            //GIF Integration
+            if let iImageGIF = dictComment.value(forKey: "is_image")
+            {
+                if iImageGIF as! Int == 1
+                {
+                    cell.imgGIFheightLayout?.constant = 60
+                    let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
+                    let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
+                    let url2 = URL(string: strURL)
+                    if url2 != nil {
+                        cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+                    }
+                }
+                else
+                {
+                    cell.imgGIFheightLayout?.constant = 0
+                }
+            }
+            else
+            {
+                cell.imgGIFheightLayout?.constant = 0
+            }
+
+            
             let usernameFont = UIFont.boldSystemFont(ofSize:  17.0)
             var attrUserNameString = NSMutableAttributedString(
                 string: strUserName + ": ",
@@ -510,19 +534,18 @@ extension ChallengePostListViewController: UICollectionViewDelegate, UICollectio
 {
     //Collection view delegare
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
             return arrEmojiGIFData.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-        
-        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    {
             return CGSize(width: 75, height: 75)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         var mainCell = UICollectionViewCell()
         let identifier = "cell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier,for:indexPath) as! EmojiCell

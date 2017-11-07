@@ -854,7 +854,7 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 
                 let strUserName : String = dictComment.value(forKey: "name") as! String
                 
-                
+                //GIF Integration
                 if let iImageGIF = dictComment.value(forKey: "is_image")
                 {
                     if iImageGIF as! Int == 1

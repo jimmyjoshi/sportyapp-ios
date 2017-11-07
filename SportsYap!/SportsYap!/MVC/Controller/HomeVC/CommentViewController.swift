@@ -199,6 +199,30 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             attributes: [NSFontAttributeName:commentFont])
         attrUserNameString.append(attrCommentString)
         
+        //Added GIF Support
+        if let iImageGIF = dictComment.value(forKey: "is_image")
+        {
+            if iImageGIF as! Int == 1
+            {
+                cell.imgGIFheightLayout?.constant = 60
+                let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
+                let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
+                let url2 = URL(string: strURL)
+                if url2 != nil {
+                    cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+                }
+            }
+            else
+            {
+                cell.imgGIFheightLayout?.constant = 0
+            }
+        }
+        else
+        {
+            cell.imgGIFheightLayout?.constant = 0
+        }
+
+        
         //cell.lblUserName.text = dictComment.value(forKey: "name") as! String
         //cell.lblComment.attributedText = attrUserNameString
         
