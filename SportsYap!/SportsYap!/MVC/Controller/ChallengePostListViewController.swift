@@ -32,12 +32,13 @@ class ChallengePostListViewController: UIViewController {
     var bfromGameTimeline = Bool()
     @IBOutlet weak var lblScreenTitle: UILabel!
 
+    @IBOutlet weak var vwPostView: UIView!
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         lblScreenTitle.text =  "\(currentGameObject.strTeam1FirstName) \(currentGameObject.strTeam1LastName) vs \(currentGameObject.strTeam2FirstName) \(currentGameObject.strTeam2LastName)"
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -253,6 +254,87 @@ class ChallengePostListViewController: UIViewController {
         self.present(alertView, animated: true, completion: nil)
     }
 
+    //MARK:- Delete Comment
+    func btnDeleteComment(sender: UIButton){
+        let iDeleteId : Int = sender.tag
+        let alertView = UIAlertController(title: AppName, message: "Are you sure want to delete comment?", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Yes", style: .default)
+        { (action) in
+            
+            var strUrl = String()
+            strUrl = "posts/delete-comment"
+            var params : [String:AnyObject]
+            
+            params = ["comment_id": "\(iDeleteId)" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+                self.getFeedsList()
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+        alertView.addAction(OKAction)
+        let CancelAction = UIAlertAction(title: "No", style: .default)
+        {
+            (action) in
+        }
+        alertView.addAction(CancelAction)
+        self.present(alertView, animated: true, completion: nil)
+    }
+
+    //MARK: Button Actions
+    @IBAction func btnCreateImagePostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+        /*
+         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+         let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+         postVC.isImageUploaded = true
+         self.navigationController?.pushViewController(postVC, animated: true)*/
+        
+        
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
+        postVC.selectedGame = currentGameObject
+        postVC.isImageUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+        //postVC.isImageUploaded = true
+    }
+    
+    @IBAction func btnCreateVideoPostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+        //        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        //        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        //        postVC.isVideoUploaded = true
+        //        self.navigationController?.pushViewController(postVC, animated: true)
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
+        postVC.selectedGame = currentGameObject
+        postVC.isVideoUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+        
+    }
+
+    @IBAction func btnClosePostView(_ :UIButton)
+    {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+        }, completion: {
+            (value: Bool) in
+            
+            self.vwPostView.isHidden = true
+        })
+    }
+
+    @IBAction func btnCreateNewPostClicked(sender: UIButton)
+    {
+        self.view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        self.vwPostView.isHidden = false
+    }
 }
 
 extension ChallengePostListViewController: UITableViewDataSource,UITableViewDelegate {
@@ -492,6 +574,20 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             let strUserName : String = dictComment.value(forKey: "name") as! String
             
             let strComment : String = dictComment.value(forKey: "commentText") as! String
+            
+            
+            //Delete Comment
+            if let canD = dictComment.value(forKey: "can_delete") {
+                
+                if "\(canD)" == "0" {
+                    cell.btnDelete?.isHidden = true
+                }
+                else {
+                    cell.btnDelete?.isHidden = false
+                    cell.btnDelete?.tag = Int("\(dictComment.value(forKey: "commentId")!)")!
+                    cell.btnDelete?.addTarget(self, action: #selector(self.btnDeleteComment(sender:)), for: .touchUpInside)
+                }
+            }
             
             //GIF Integration
             if let iImageGIF = dictComment.value(forKey: "is_image")

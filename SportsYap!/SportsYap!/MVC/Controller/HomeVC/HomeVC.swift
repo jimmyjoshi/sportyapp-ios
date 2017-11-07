@@ -854,6 +854,19 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 
                 let strUserName : String = dictComment.value(forKey: "name") as! String
                 
+                //Delete Comment
+                if let canD = dictComment.value(forKey: "can_delete") {
+                    
+                    if "\(canD)" == "0" {
+                        cell.btnDelete?.isHidden = true
+                    }
+                    else {
+                        cell.btnDelete?.isHidden = false
+                        cell.btnDelete?.tag = Int("\(dictComment.value(forKey: "commentId")!)")!
+                        cell.btnDelete?.addTarget(self, action: #selector(self.btnDeleteComment(sender:)), for: .touchUpInside)
+                    }
+                }
+
                 //GIF Integration
                 if let iImageGIF = dictComment.value(forKey: "is_image")
                 {
@@ -1397,7 +1410,36 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             showAlert(strMsg: "Please select Emoji", vc: self)
         }
     }
-    
+    //MARK:- Delete Comment
+    func btnDeleteComment(sender: UIButton){
+        let iDeleteId : Int = sender.tag
+        let alertView = UIAlertController(title: AppName, message: "Are you sure want to delete comment?", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Yes", style: .default)
+        { (action) in
+            
+            var strUrl = String()
+            strUrl = "posts/delete-comment"
+            var params : [String:AnyObject]
+            
+            params = ["comment_id": "\(iDeleteId)" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+                self.changeTab()
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+        alertView.addAction(OKAction)
+        let CancelAction = UIAlertAction(title: "No", style: .default)
+        {
+            (action) in
+        }
+        alertView.addAction(CancelAction)
+        self.present(alertView, animated: true, completion: nil)
+    }
+
     //MARK: Delete Post
     func btnDeleteAction(sender:UIButton)
     {
