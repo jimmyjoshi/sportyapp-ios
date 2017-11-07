@@ -22,6 +22,15 @@ class ChallengePostListViewController: UIViewController {
     var strMatchId = String("")!
     var intMaxComment : Int = 2
     
+    //Emoji Configuration
+    @IBOutlet weak var vwEmojiView: UIView!
+    @IBOutlet weak var cvEmojiCollection: UICollectionView!
+    var arrEmojiGIFData = NSArray()
+    var arrSelectedEmoji = NSMutableArray()
+    @IBOutlet weak var btnPostEmoji: UIButton!
+    var EmojiPostID = Int()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -120,6 +129,117 @@ class ChallengePostListViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: Emoji Selection
+    func btnEmojiAction(sender:UIButton)
+    {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tblMatch)
+        let indexPath = self.tblMatch.indexPathForRow(at: buttonPosition)
+        let intRow = sender.tag
+        EmojiPostID = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "id") as! Int
+        
+        
+        var strURL = String("")!
+        strURL = "\(base_Url)sporty-gifs"
+        MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strURL, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
+            //self.strMatchTpe = strMatchType
+            let arrData = response as NSDictionary
+            print("Data is \(arrData)")
+            
+            self.vwEmojiView.isHidden = false
+            
+            self.arrEmojiGIFData = NSArray()
+            self.arrSelectedEmoji = NSMutableArray()
+            self.arrEmojiGIFData =  arrData.value(forKey: "data") as! NSArray
+            self.cvEmojiCollection.reloadData()
+            
+        }) { (response:String!) in
+            print("Response is not proper")
+        }
+    }
+    
+    @IBAction func btnCheckUnCheck(sender: UIButton)
+    {
+        let interestdata =  self.arrEmojiGIFData[sender.tag] as! NSDictionary
+        
+        if !self.arrSelectedEmoji.contains(interestdata.value(forKey: "gif_Id")!)
+        {
+            self.arrSelectedEmoji = NSMutableArray()
+            self.arrSelectedEmoji.add(interestdata.value(forKey: "gif_Id")!)
+        }
+        else
+        {
+            self.arrSelectedEmoji.remove(interestdata.value(forKey: "gif_Id")!)
+        }
+        self.cvEmojiCollection.reloadData()
+    }
+    @IBAction func btnCloseEmojiAction(sender:UIButton)
+    {
+        vwEmojiView.isHidden = true
+    }
+    
+    @IBAction func btnPostEmojiAction(_ sender: UIButton)
+    {
+        var strUrl = String()
+        strUrl = "posts/add-comment"
+        var params : [String:AnyObject]
+        
+        if arrSelectedEmoji.count > 0
+        {
+            params = ["post_id": "\(EmojiPostID)" as AnyObject , "gif_id": "\(arrSelectedEmoji[0])" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                
+                self.vwEmojiView.isHidden = true
+                print("Response \(response as NSDictionary)")
+                let strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                self.getFeedsList()
+
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+        else
+        {
+            showAlert(strMsg: "Please select Emoji", vc: self)
+        }
+    }
+    
+    //MARK: Delete Post
+    func btnDeleteAction(sender:UIButton)
+    {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tblMatch)
+        let intRow = sender.tag
+        let iDeleteId : Int = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "id") as! Int
+        
+        let alertView = UIAlertController(title: AppName, message: "Are you sure want to delete post?", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Yes", style: .default)
+        { (action) in
+            
+            var strUrl = String()
+            strUrl = "posts/delete"
+            var params : [String:AnyObject]
+            
+            params = ["post_id": "\(iDeleteId)" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+                self.getFeedsList()
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+        alertView.addAction(OKAction)
+        let CancelAction = UIAlertAction(title: "No", style: .default)
+        {
+            (action) in
+        }
+        alertView.addAction(CancelAction)
+        self.present(alertView, animated: true, completion: nil)
+    }
+
 }
 
 extension ChallengePostListViewController: UITableViewDataSource,UITableViewDelegate {
@@ -137,7 +257,8 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
         return count
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
         let cell : timelineCell = tableView.dequeueReusableCell(withIdentifier: "timelineCell") as! timelineCell
         let dict : NSDictionary = arrTimelineData.object(at: section) as! NSDictionary
         cell.lblTime.text = dict.value(forKey: "created_at") as! String
@@ -217,7 +338,8 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
         self.present(tagDetailVC, animated: true, completion: nil)*/
         
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         var mainCell = UITableViewCell()
         if indexPath.row == 0 {
             let cell : timelineCell = tableView.dequeueReusableCell(withIdentifier: "timelineCell") as! timelineCell
@@ -261,6 +383,31 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             cell.btnComment.tag = indexPath.section
             cell.btnComment.addTarget(self, action: #selector(self.btnCommentClicked(sender:)), for: .touchUpInside)
             //cell.imgGameType.image = UIImage(named: "sball0")
+            
+            cell.btnEmoji?.tag = indexPath.section
+            cell.btnEmoji?.addTarget(self, action: #selector(self.btnEmojiAction(sender:)), for: .touchUpInside)
+            
+            
+            if let iImageGIF = dict.value(forKey: "can_delete")
+            {
+                if iImageGIF as! Int == 1
+                {
+                    cell.btnDeleteWidthLayout?.constant = 46
+                }
+                else
+                {
+                    cell.btnDeleteWidthLayout?.constant = 0
+                }
+            }
+            else
+            {
+                cell.btnDeleteWidthLayout?.constant = 0
+            }
+            
+            cell.btnDelete?.tag = indexPath.section
+            cell.btnDelete?.addTarget(self, action: #selector(self.btnDeleteAction(sender:)), for: .touchUpInside)
+
+            
             
             if let intIsLiked = dict.value(forKey: "is_liked") {
                 if "\(intIsLiked)" == "0" {
@@ -358,4 +505,60 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
         return mainCell
     }
     
+}
+extension ChallengePostListViewController: UICollectionViewDelegate, UICollectionViewDataSource
+{
+    //Collection view delegare
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+            return arrEmojiGIFData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
+        
+        
+            return CGSize(width: 75, height: 75)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        var mainCell = UICollectionViewCell()
+        let identifier = "cell"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier,for:indexPath) as! EmojiCell
+        let interestdata =  self.arrEmojiGIFData[indexPath.row] as! NSDictionary
+        
+        cell.imgview.layer.cornerRadius = 5.0
+        cell.imgview.layer.masksToBounds = true
+        if self.arrSelectedEmoji.count > 0
+        {
+            if self.arrSelectedEmoji.contains(interestdata.value(forKey: "gif_Id")!)
+            {
+                cell.btnCheck.isSelected = true
+            }
+            else
+            {
+                cell.btnCheck.isSelected = false
+            }
+        }
+        else
+        {
+            cell.btnCheck.isSelected = false
+        }
+        
+        cell.btnCheck.tag = indexPath.row
+        cell.btnCheck.addTarget(self, action: #selector(btnCheckUnCheck(sender:)), for: .touchUpInside)
+        
+        if let url = interestdata["gif_Image"]
+        {
+            cell.imgview.sd_setImage(with:URL(string: url as! String), placeholderImage:nil)
+        }
+        else
+        {
+            cell.imgview.image = UIImage(named: "")
+        }
+        
+        mainCell = cell
+        return mainCell
+    }
 }

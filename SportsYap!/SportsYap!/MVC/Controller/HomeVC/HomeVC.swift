@@ -33,6 +33,13 @@ class HomeVC: UIViewController {
     
     @IBOutlet weak var vwNoGame: UIView!
     
+    @IBOutlet weak var vwEmojiView: UIView!
+    @IBOutlet weak var cvEmojiCollection: UICollectionView!
+    var arrEmojiGIFData = NSArray()
+    var arrSelectedEmoji = NSMutableArray()
+    @IBOutlet weak var btnPostEmoji: UIButton!
+    var EmojiPostID = Int()
+
     private var gameObj = GameClass()
     
     var arrList = Array<GameClass>()
@@ -177,6 +184,7 @@ class HomeVC: UIViewController {
             
             getFeedsList()
             
+            
             //cvMatchList.reloadData()
         }
         else if intSelectedTab == 1 {
@@ -301,6 +309,9 @@ class HomeVC: UIViewController {
             self.arrTimelineData = NSArray()
             self.arrTimelineData =  arrData.value(forKey: "data") as! NSArray
             self.tblMatch.reloadData()
+            
+            self.callLocationUpdateMethod()
+          
             /*
             var dict = JSON(response).dictionaryValue
             let tempArray = dict["data"]?.arrayValue
@@ -329,10 +340,30 @@ class HomeVC: UIViewController {
         
         }) { (response:String!) in
             print("Response is not proper")
+            self.callLocationUpdateMethod()
+
+        }
+    }
+    
+    func callLocationUpdateMethod()
+    {
+        if(AppUserDefaults.getValueForKey(key: "AUTOLOGIN") == "TRUE")
+        {
+            let strUrl : String = "sporty-lat-long"
+            let parameters = [
+                "lat" : "\(appDelegate.userLocation.coordinate.latitude)",
+                "long" : "\(appDelegate.userLocation.coordinate.longitude)"
+            ]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: parameters as [String : AnyObject]
+                , success: { (response:Dictionary<String, AnyObject>) in
+                    
+            }) { (response:String!) in
+                //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+            }
         }
         
-    
     }
+    
     private func getBaseballGameData() {
         
         let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/baseball/usa?date=\(strDate)&json=1"
@@ -657,11 +688,10 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
             mainCell = cell
             
         }
-        else if intSelectedTab == 0 {
-            
-            
-            
-            if indexPath.row == 0 {
+        else if intSelectedTab == 0
+        {
+            if indexPath.row == 0
+            {
                 let cell : timelineCell = tableView.dequeueReusableCell(withIdentifier: "timelineCell") as! timelineCell
                 
                 let dict : NSDictionary = arrTimelineData.object(at: indexPath.section) as! NSDictionary
@@ -677,7 +707,7 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 cell.lblVenue.text = dict.value(forKey: "description") as? String
                 cell.txtVenue?.text = dict.value(forKey: "description") as? String
                 cell.txtVenue?.sizeToFit()
-
+                
                 let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
                 let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
                 //For Like
@@ -689,6 +719,30 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                 }
                 cell.btnLike.tag = indexPath.section
                 cell.btnLike.addTarget(self, action: #selector(self.btnLikeClicked(sender:)), for: .touchUpInside)
+                
+                cell.btnEmoji?.tag = indexPath.section
+                cell.btnEmoji?.addTarget(self, action: #selector(self.btnEmojiAction(sender:)), for: .touchUpInside)
+                
+                
+                if let iImageGIF = dict.value(forKey: "can_delete")
+                {
+                    if iImageGIF as! Int == 1
+                    {
+                        cell.btnDeleteWidthLayout?.constant = 46
+                    }
+                    else
+                    {
+                        cell.btnDeleteWidthLayout?.constant = 0
+                    }
+                }
+                else
+                {
+                    cell.btnDeleteWidthLayout?.constant = 0
+                }
+
+                cell.btnDelete?.tag = indexPath.section
+                cell.btnDelete?.addTarget(self, action: #selector(self.btnDeleteAction(sender:)), for: .touchUpInside)
+
                 
                 //For Comment
                 if intCommentCount > 0 {
@@ -714,22 +768,22 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                     }
                 }
                 /*
-                let strvideo = dict.value(forKey: "video") as! String
-                if strvideo == "" {
-                }
-                else
-                {
-                    cell.lblVenue.text = (dict.value(forKey: "description") as? String)! + "\n\(strvideo)"
-                    cell.txtVenue?.text = (dict.value(forKey: "description") as? String)! + "\n\(strvideo)"
-                }
-                cell.txtVenue?.isScrollEnabled = false
-                cell.txtVenue?.sizeToFit()
-                */
+                 let strvideo = dict.value(forKey: "video") as! String
+                 if strvideo == "" {
+                 }
+                 else
+                 {
+                 cell.lblVenue.text = (dict.value(forKey: "description") as? String)! + "\n\(strvideo)"
+                 cell.txtVenue?.text = (dict.value(forKey: "description") as? String)! + "\n\(strvideo)"
+                 }
+                 cell.txtVenue?.isScrollEnabled = false
+                 cell.txtVenue?.sizeToFit()
+                 */
                 
                 let strImg = dict.value(forKey: "image") as! NSString
                 let strvideo = dict.value(forKey: "video") as! String
                 let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
-
+                
                 if strImg == ""  && strvideo == "" && strVideoThumbUrl == ""
                 {
                     cell.heightLayout.constant = 0
@@ -756,17 +810,17 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                     cell.btnPlay?.tag = indexPath.section
                     cell.btnPlay?.addTarget(self, action: #selector(self.btnPlayClicked(sender:)), for: .touchUpInside)
                     
-
+                    
                     
                     var strURL = String("")!
                     //Video thumbnai is to be displayed
                     if strImg == ""
                     {
-                       strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
+                        strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
                         /*let imgVw : UIImageView = UIImageView(frame: CGRect(x: (screenWidth - 50)/2, y: (screenWidth - 50)/2, width: 50, height: 50))
-                        imgVw.image = UIImage(named: "nogameIcon")
- 
-                        cell.imgPost.addSubview(imgVw)*/
+                         imgVw.image = UIImage(named: "nogameIcon")
+                         
+                         cell.imgPost.addSubview(imgVw)*/
                         
                     }
                     else
@@ -784,44 +838,68 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
             }
             else
             {
-            let cell: commentCell = tableView.dequeueReusableCell(withIdentifier: "commentCell") as! commentCell
-            let mainDict : NSDictionary = arrTimelineData.object(at: indexPath.section) as! NSDictionary
-            let arrComment : NSArray = mainDict.value(forKey: "postComments") as! NSArray
-            
-            var total : Int = arrComment.count
-        
-            total = (total > intMaxComment) ? (total - intMaxComment) + indexPath.row : indexPath.row
-            
-            total = total - 1
-            //total = (total - 2) + indexPath.row
-            
-            //let arrComment : NSArray = mainDict.value(forKey: "postComments") as! NSArray
-            let dictComment : NSDictionary = arrComment.object(at: total) as! NSDictionary
+                let cell: commentCell = tableView.dequeueReusableCell(withIdentifier: "commentCell") as! commentCell
+                let mainDict : NSDictionary = arrTimelineData.object(at: indexPath.section) as! NSDictionary
+                let arrComment : NSArray = mainDict.value(forKey: "postComments") as! NSArray
                 
-            let strUserName : String = dictComment.value(forKey: "name") as! String
+                var total : Int = arrComment.count
                 
-            let strComment : String = dictComment.value(forKey: "commentText") as! String
-            
-            let usernameFont = UIFont.boldSystemFont(ofSize:  17.0)
-            var attrUserNameString = NSMutableAttributedString(
+                total = (total > intMaxComment) ? (total - intMaxComment) + indexPath.row : indexPath.row
+                
+                total = total - 1
+                //total = (total - 2) + indexPath.row
+                
+                //let arrComment : NSArray = mainDict.value(forKey: "postComments") as! NSArray
+                let dictComment : NSDictionary = arrComment.object(at: total) as! NSDictionary
+                
+                let strUserName : String = dictComment.value(forKey: "name") as! String
+                
+                
+                if let iImageGIF = dictComment.value(forKey: "is_image")
+                {
+                    if iImageGIF as! Int == 1
+                    {
+                        cell.imgGIFheightLayout?.constant = 60
+                        let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
+                        let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
+                        let url2 = URL(string: strURL)
+                        if url2 != nil {
+                            cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+                        }
+                    }
+                    else
+                    {
+                        cell.imgGIFheightLayout?.constant = 0
+                    }
+                }
+                else
+                {
+                    cell.imgGIFheightLayout?.constant = 0
+                }
+                
+                
+                let strComment : String = dictComment.value(forKey: "commentText") as! String
+                
+                let usernameFont = UIFont.boldSystemFont(ofSize:  17.0)
+                let attrUserNameString = NSMutableAttributedString(
                     string: strUserName + ": ",
                     attributes: [NSFontAttributeName:usernameFont,NSForegroundColorAttributeName:UIColor.black])
-            let commentFont = UIFont.systemFont(ofSize: 17.0)
-            let attrCommentString = NSMutableAttributedString(
+                let commentFont = UIFont.systemFont(ofSize: 17.0)
+                let attrCommentString = NSMutableAttributedString(
                     string: strComment,
                     attributes: [NSFontAttributeName:commentFont])
-            attrUserNameString.append(attrCommentString)
+                attrUserNameString.append(attrCommentString)
                 
-            //cell.lblUserName.text = dictComment.value(forKey: "name") as! String
-            cell.lblComment.attributedText = attrUserNameString//strUserName + ": " + strComment//dictComment.value(forKey: "commentText") as! String
-            cell.lblTime.text = dictComment.value(forKey: "commentCreatedAt") as! String
-            var strImgLink : String = "\(dictComment.value(forKey: "image")!)"
-            let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
-            let url2 = URL(string: strURL)
-            if url2 != nil {
-                cell.imgUser.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
-            }
-            mainCell = cell
+                //cell.lblUserName.text = dictComment.value(forKey: "name") as! String
+                cell.lblComment.attributedText = attrUserNameString//strUserName + ": " + strComment//dictComment.value(forKey: "commentText") as! String
+                cell.lblTime.text = dictComment.value(forKey: "commentCreatedAt") as! String
+                var strImgLink : String = "\(dictComment.value(forKey: "image")!)"
+                let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
+                let url2 = URL(string: strURL)
+                if url2 != nil {
+                    cell.imgUser.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+                }
+                mainCell = cell
                 
             }
         }
@@ -833,235 +911,290 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if intSelectedTab == 0 {
-            return arrTimelineData.count
+        if collectionView == cvEmojiCollection
+        {
+            return arrEmojiGIFData.count
         }
-        return arrList.count
+        else
+        {
+            if intSelectedTab == 0
+            {
+                return arrTimelineData.count
+            }
+            return arrList.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
         
         //return CGSize(width: (screenWidth*304)/320, height: (screenHeight*130)/568)
         
-        if intSelectedTab == 1 {
-            return CGSize(width: (screenWidth*304)/320, height: 125)
-        }
-        else if intSelectedTab == 0 {
-            let dict : NSDictionary = arrTimelineData.object(at: indexPath.row) as! NSDictionary
-            var strImg = dict.value(forKey: "image") as! String
-            
-            if strImg == "" {
+        if collectionView != cvEmojiCollection
+        {
+            if intSelectedTab == 1 {
                 return CGSize(width: (screenWidth*304)/320, height: 125)
             }
-            else
-            {
-                return CGSize(width: (screenWidth*304)/320, height: 250)
+            else if intSelectedTab == 0 {
+                let dict : NSDictionary = arrTimelineData.object(at: indexPath.row) as! NSDictionary
+                var strImg = dict.value(forKey: "image") as! String
+                
+                if strImg == "" {
+                    return CGSize(width: (screenWidth*304)/320, height: 125)
+                }
+                else
+                {
+                    return CGSize(width: (screenWidth*304)/320, height: 250)
+                }
+                
             }
-            
+            return CGSize(width: (screenWidth*304)/320, height: 250)
         }
-        return CGSize(width: (screenWidth*304)/320, height: 250)
+        else
+        {
+            return CGSize(width: 75, height: 75)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var mainCell = UICollectionViewCell()
-        
-        
-        if intSelectedTab == 1 {
-        
-            let cell: MatchCCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MatchCCell", for: indexPath) as! MatchCCell
+        if collectionView != cvEmojiCollection
+        {
             
-            cell.ivChallenge.isHidden = true
-            cell.lblStatusIcon.isHidden = true
-            
-            let gameDetail = arrList[indexPath.row]
-            
-            
-            
-            
-            
-            cell.lblScore1.text = gameDetail.strTeam1Score
-            cell.lblScore2.text = gameDetail.strTeam2Score
-            
-            cell.lblTime.text = "VS\n\(gameDetail.strTime)"
-            
-            cell.lblFirstNameTeam1.text = gameDetail.strTeam1FirstName
-            cell.lblLastNameTeam1.text = gameDetail.strTeam1LastName
-            cell.lblFirstNameTeam2.text = gameDetail.strTeam2FirstName
-            cell.lblLastNameTeam2.text = gameDetail.strTeam2LastName
-            
-            
-            
-            if gameDetail.strMatchTpe == "football" {
-                cell.ivImage.image = UIImage(named: "Game_image1")
-            }
-            else if gameDetail.strMatchTpe == "baseball" {
-                cell.ivImage.image = UIImage(named: "Game_image2")
-            }
-            else if gameDetail.strMatchTpe == "bsktbl" {
-                cell.ivImage.image = UIImage(named: "Game_image3")
-            }
-            else if gameDetail.strMatchTpe == "hockey" {
-                cell.ivImage.image = UIImage(named: "Game_image0")
-            }
-            else
-            {
-                cell.ivImage.image = UIImage(named: "Game_image0")
-            }
-            //        if(indexPath.row == 0) {
-            //            cell.ivChallenge.isHidden = false
-            //            cell.lblStatusIcon.isHidden = false
-            //        }
-            //        else {
-            //            cell.ivChallenge.isHidden = true
-            //            cell.lblStatusIcon.isHidden = true
-            //        }
-            
-            //cell.ivImage.image = UIImage(named: "Game_image\(0)")
-            
-            
-            mainCell = cell
-            
-        }
-        else if intSelectedTab == 0 {
-            let cell: TimelineCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimelineCell", for: indexPath) as! TimelineCell
-            
-            let dict : NSDictionary = arrTimelineData.object(at: indexPath.row) as! NSDictionary
-            
-            cell.lblTime.text = dict.value(forKey: "created_at") as! String
-            //cell.imgGameType.image = UIImage(named: "sball3")
-            cell.lblVenue.text = dict.value(forKey: "description") as! String
-            
-            //cell.lblVenue.sizeToFit()
-            
-            
-            let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
-            
-            
-            let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
-            
-            //For Like
-            if intLikeCount > 0 {
-                cell.btnLike.setTitle("\(intLikeCount) Likes", for: .normal)
-            }
-            else {
-                cell.btnLike.setTitle("Like", for: .normal)
-            }
-            
-            
-            cell.btnLike.addTarget(self, action: #selector(self.btnLikeClicked(sender:)), for: .touchUpInside)
-            
-            //For Comment
-            if intCommentCount > 0 {
-                cell.btnComment.setTitle("\(intCommentCount) Comments", for: .normal)
-            }
-            else
-            {
-                 cell.btnComment.setTitle("Comment", for: .normal)
-            }
-            
-            cell.btnComment.addTarget(self, action: #selector(self.btnCommentClicked(sender:)), for: .touchUpInside)
-            
-            /*
-            let intCategory : Int = dict.value(forKey: "postCategory") as! Int
-            if intCategory == 1 {
-                //Hockey
-                //sball2 - Hockey
-                cell.imgGameType.image = UIImage(named: "sball2")
-            }
-            else if intCategory == 2 {
-                //Soccer
-                //sBall1
-                cell.imgGameType.image = UIImage(named: "sball1")
-            }
-            else if intCategory == 3 {
-                //Football
-                //sball4 - Football
-                cell.imgGameType.image = UIImage(named: "sball4")
-            }
-            else if intCategory == 4 {
-                //Basketball
-                //sball2 - Basketball
-                cell.imgGameType.image = UIImage(named: "sball2")
-            }
-            else if intCategory == 5 {
-                //baseball
-                //sball3- Baseball
-                cell.imgGameType.image = UIImage(named: "sball3")
-            }
-            */
-            cell.imgGameType.image = UIImage(named: "sball0")
-            
-            if let intIsLiked = dict.value(forKey: "is_liked") {
-                if "\(intIsLiked)" == "0" {
-                    cell.btnLike.backgroundColor = UIColor.white
-                    cell.btnLike.setTitleColor(#colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1), for: .normal)
+            if intSelectedTab == 1 {
+                
+                let cell: MatchCCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MatchCCell", for: indexPath) as! MatchCCell
+                
+                cell.ivChallenge.isHidden = true
+                cell.lblStatusIcon.isHidden = true
+                
+                let gameDetail = arrList[indexPath.row]
+                
+                
+                
+                
+                
+                cell.lblScore1.text = gameDetail.strTeam1Score
+                cell.lblScore2.text = gameDetail.strTeam2Score
+                
+                cell.lblTime.text = "VS\n\(gameDetail.strTime)"
+                
+                cell.lblFirstNameTeam1.text = gameDetail.strTeam1FirstName
+                cell.lblLastNameTeam1.text = gameDetail.strTeam1LastName
+                cell.lblFirstNameTeam2.text = gameDetail.strTeam2FirstName
+                cell.lblLastNameTeam2.text = gameDetail.strTeam2LastName
+                
+                
+                
+                if gameDetail.strMatchTpe == "football" {
+                    cell.ivImage.image = UIImage(named: "Game_image1")
+                }
+                else if gameDetail.strMatchTpe == "baseball" {
+                    cell.ivImage.image = UIImage(named: "Game_image2")
+                }
+                else if gameDetail.strMatchTpe == "bsktbl" {
+                    cell.ivImage.image = UIImage(named: "Game_image3")
+                }
+                else if gameDetail.strMatchTpe == "hockey" {
+                    cell.ivImage.image = UIImage(named: "Game_image0")
                 }
                 else
                 {
-                    cell.btnLike.backgroundColor = #colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1)
-                    cell.btnLike.setTitleColor(UIColor.white, for: .normal)
+                    cell.ivImage.image = UIImage(named: "Game_image0")
                 }
+                //        if(indexPath.row == 0) {
+                //            cell.ivChallenge.isHidden = false
+                //            cell.lblStatusIcon.isHidden = false
+                //        }
+                //        else {
+                //            cell.ivChallenge.isHidden = true
+                //            cell.lblStatusIcon.isHidden = true
+                //        }
+                
+                //cell.ivImage.image = UIImage(named: "Game_image\(0)")
+                
+                
+                mainCell = cell
+                
             }
-            let strImg = dict.value(forKey: "image") as! String
-            if strImg == "" {
-                cell.heightLayout.constant = 0
-                //return CGSize(width: (screenWidth*304)/320, height: 125)
+            else if intSelectedTab == 0 {
+                let cell: TimelineCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimelineCell", for: indexPath) as! TimelineCell
+                
+                let dict : NSDictionary = arrTimelineData.object(at: indexPath.row) as! NSDictionary
+                
+                cell.lblTime.text = dict.value(forKey: "created_at") as! String
+                //cell.imgGameType.image = UIImage(named: "sball3")
+                cell.lblVenue.text = dict.value(forKey: "description") as! String
+                
+                //cell.lblVenue.sizeToFit()
+                
+                
+                let intLikeCount : Int = dict.value(forKey: "postLikeCount") as! Int
+                
+                
+                let intCommentCount : Int = dict.value(forKey: "postCommentCount") as! Int
+                
+                //For Like
+                if intLikeCount > 0 {
+                    cell.btnLike.setTitle("\(intLikeCount) Likes", for: .normal)
+                }
+                else {
+                    cell.btnLike.setTitle("Like", for: .normal)
+                }
+                
+                
+                cell.btnLike.addTarget(self, action: #selector(self.btnLikeClicked(sender:)), for: .touchUpInside)
+                
+                //For Comment
+                if intCommentCount > 0 {
+                    cell.btnComment.setTitle("\(intCommentCount) Comments", for: .normal)
+                }
+                else
+                {
+                    cell.btnComment.setTitle("Comment", for: .normal)
+                }
+                
+                cell.btnComment.addTarget(self, action: #selector(self.btnCommentClicked(sender:)), for: .touchUpInside)
+                
+                /*
+                 let intCategory : Int = dict.value(forKey: "postCategory") as! Int
+                 if intCategory == 1 {
+                 //Hockey
+                 //sball2 - Hockey
+                 cell.imgGameType.image = UIImage(named: "sball2")
+                 }
+                 else if intCategory == 2 {
+                 //Soccer
+                 //sBall1
+                 cell.imgGameType.image = UIImage(named: "sball1")
+                 }
+                 else if intCategory == 3 {
+                 //Football
+                 //sball4 - Football
+                 cell.imgGameType.image = UIImage(named: "sball4")
+                 }
+                 else if intCategory == 4 {
+                 //Basketball
+                 //sball2 - Basketball
+                 cell.imgGameType.image = UIImage(named: "sball2")
+                 }
+                 else if intCategory == 5 {
+                 //baseball
+                 //sball3- Baseball
+                 cell.imgGameType.image = UIImage(named: "sball3")
+                 }
+                 */
+                cell.imgGameType.image = UIImage(named: "sball0")
+                
+                if let intIsLiked = dict.value(forKey: "is_liked") {
+                    if "\(intIsLiked)" == "0" {
+                        cell.btnLike.backgroundColor = UIColor.white
+                        cell.btnLike.setTitleColor(#colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1), for: .normal)
+                    }
+                    else
+                    {
+                        cell.btnLike.backgroundColor = #colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1)
+                        cell.btnLike.setTitleColor(UIColor.white, for: .normal)
+                    }
+                }
+                let strImg = dict.value(forKey: "image") as! String
+                if strImg == "" {
+                    cell.heightLayout.constant = 0
+                    //return CGSize(width: (screenWidth*304)/320, height: 125)
+                }
+                else
+                {
+                    cell.heightLayout.constant = 128
+                    cell.imgPost.tag = indexPath.row
+                    let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
+                    cell.imgPost.addGestureRecognizer(gesture)
+                    
+                    let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                    let url2 = URL(string: strURL)
+                    if url2 != nil {
+                        cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
+                    }
+                    
+                    //cell.imgPost.downloadImage(from: strImg)
+                    //return CGSize(width: (screenWidth*304)/320, height: 250)
+                }
+                
+                /*
+                 HOCKEY = 1;
+                 SOCCER = 2;
+                 FOOTBALL = 3;
+                 BASKETBALL = 4;
+                 BASEBALL = 5;
+                 */
+                
+                
+                let intHt : CGFloat = 30
+                let intTotalItems : Int = 5
+                let intDifference : CGFloat = intHt - 5.0
+                
+                
+                //cell.vwPerson.subviews.removeAll()
+                /*
+                 for i in (0...intTotalItems).reversed() {
+                 //print(i) // prints 10 through 1
+                 let img1 = UIImageView(frame: CGRect(x: (CGFloat(i)*intDifference), y: 0, width: intHt, height: intHt))
+                 
+                 img1.layer.shadowColor = UIColor.gray.cgColor
+                 img1.layer.shadowOffset = CGSize(width: 0, height: 1)
+                 img1.layer.shadowOpacity = 1
+                 img1.layer.shadowRadius = 1.0
+                 
+                 
+                 img1.layer.cornerRadius = intHt/2
+                 img1.layer.borderWidth = 1
+                 img1.layer.borderColor = #colorLiteral(red: 0.7079399824, green: 0.7501713037, blue: 0.703009069, alpha: 1).cgColor
+                 
+                 cell.vwPerson.addSubview(img1)
+                 }
+                 */
+                mainCell = cell
+            }
+            
+        }
+        else
+        {
+            let identifier = "cell"
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier,for:indexPath) as! EmojiCell
+            let interestdata =  self.arrEmojiGIFData[indexPath.row] as! NSDictionary
+            
+            cell.imgview.layer.cornerRadius = 5.0
+            cell.imgview.layer.masksToBounds = true
+            if self.arrSelectedEmoji.count > 0
+            {
+                if self.arrSelectedEmoji.contains(interestdata.value(forKey: "gif_Id")!)
+                {
+                    cell.btnCheck.isSelected = true
+                }
+                else
+                {
+                    cell.btnCheck.isSelected = false
+                }
             }
             else
             {
-                cell.heightLayout.constant = 128
-                cell.imgPost.tag = indexPath.row
-                let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
-                cell.imgPost.addGestureRecognizer(gesture)
-                
-                let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
-                let url2 = URL(string: strURL)
-                if url2 != nil {
-                    cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
-                }
-                
-                //cell.imgPost.downloadImage(from: strImg)
-                //return CGSize(width: (screenWidth*304)/320, height: 250)
+                cell.btnCheck.isSelected = false
             }
             
-            /*
-            HOCKEY = 1;
-            SOCCER = 2;
-            FOOTBALL = 3;
-            BASKETBALL = 4;
-            BASEBALL = 5;
-            */
+            cell.btnCheck.tag = indexPath.row
+            cell.btnCheck.addTarget(self, action: #selector(btnCheckUnCheck(sender:)), for: .touchUpInside)
             
-            
-            let intHt : CGFloat = 30
-            let intTotalItems : Int = 5
-            let intDifference : CGFloat = intHt - 5.0
-            
-            
-            //cell.vwPerson.subviews.removeAll()
-            /*
-            for i in (0...intTotalItems).reversed() {
-                //print(i) // prints 10 through 1
-                let img1 = UIImageView(frame: CGRect(x: (CGFloat(i)*intDifference), y: 0, width: intHt, height: intHt))
-
-                img1.layer.shadowColor = UIColor.gray.cgColor
-                img1.layer.shadowOffset = CGSize(width: 0, height: 1)
-                img1.layer.shadowOpacity = 1
-                img1.layer.shadowRadius = 1.0
-                
-                
-                img1.layer.cornerRadius = intHt/2
-                img1.layer.borderWidth = 1
-                img1.layer.borderColor = #colorLiteral(red: 0.7079399824, green: 0.7501713037, blue: 0.703009069, alpha: 1).cgColor
-                
-                cell.vwPerson.addSubview(img1)
+            if let url = interestdata["gif_Image"]
+            {
+                cell.imgview.sd_setImage(with:URL(string: url as! String), placeholderImage:nil)
             }
-            */
+            else
+            {
+                cell.imgview.image = UIImage(named: "")
+            }
+            
             mainCell = cell
+
         }
-        
-        
         return mainCell
     }
     
@@ -1081,21 +1214,24 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         self.navigationController?.pushViewController(gameDetailVC, animated: true)
         */
-        if intSelectedTab == 1 {
-            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
-            tagDetailVC.arrList = arrList
-            
-            
-            self.navigationController?.pushViewController(tagDetailVC, animated: true)
-            
-        }
-        else
+        if collectionView != cvEmojiCollection
         {
-            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let tagDetailVC: CommentViewController = cameraStoryboard.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
-            tagDetailVC.dictPost = arrTimelineData.object(at: indexPath.row) as! NSDictionary
-            self.navigationController?.pushViewController(tagDetailVC, animated: true)
+            if intSelectedTab == 1 {
+                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let tagDetailVC: TagGameVC = cameraStoryboard.instantiateViewController(withIdentifier: "TagGameVC") as! TagGameVC
+                tagDetailVC.arrList = arrList
+                
+                
+                self.navigationController?.pushViewController(tagDetailVC, animated: true)
+                
+            }
+            else
+            {
+                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let tagDetailVC: CommentViewController = cameraStoryboard.instantiateViewController(withIdentifier: "CommentViewController") as! CommentViewController
+                tagDetailVC.dictPost = arrTimelineData.object(at: indexPath.row) as! NSDictionary
+                self.navigationController?.pushViewController(tagDetailVC, animated: true)
+            }
         }
         
     }
@@ -1163,9 +1299,53 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")
         }
-        
-        
     }
+
+    //MARK: Emoji Selection
+    func btnEmojiAction(sender:UIButton)
+    {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.cvMatchList)
+        let indexPath = self.tblMatch.indexPathForRow(at: buttonPosition)
+        let intRow = sender.tag
+        EmojiPostID = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "id") as! Int
+        
+        
+        var strURL = String("")!
+        strURL = "\(base_Url)sporty-gifs"
+        MainReqeustClass.BaseRequestSharedInstance.getData(showLoader: true, url: strURL, parameter: nil, success: { (response:Dictionary<String, AnyObject>) in
+            //self.strMatchTpe = strMatchType
+            let arrData = response as NSDictionary
+            print("Data is \(arrData)")
+            
+            self.vwEmojiView.isHidden = false
+            
+            self.arrEmojiGIFData = NSArray()
+            self.arrSelectedEmoji = NSMutableArray()
+            self.arrEmojiGIFData =  arrData.value(forKey: "data") as! NSArray
+            self.cvEmojiCollection.reloadData()
+            
+        }) { (response:String!) in
+            print("Response is not proper")
+        }
+    }
+    
+    @IBAction func btnCheckUnCheck(sender: UIButton)
+    {
+        let interestdata =  self.arrEmojiGIFData[sender.tag] as! NSDictionary
+        
+        if !self.arrSelectedEmoji.contains(interestdata.value(forKey: "gif_Id")!)
+        {
+            self.arrSelectedEmoji = NSMutableArray()
+            self.arrSelectedEmoji.add(interestdata.value(forKey: "gif_Id")!)
+        }
+        else
+        {
+            self.arrSelectedEmoji.remove(interestdata.value(forKey: "gif_Id")!)
+        }
+        self.cvEmojiCollection.reloadData()
+    }
+
+    
     
     func btnCommentClicked(sender:UIButton) {
         //let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.cvMatchList)
@@ -1184,6 +1364,72 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         //self.navigationController?.pushViewController(tagDetailVC, animated: true)
         
+    }
+    
+    @IBAction func btnCloseEmojiAction(sender:UIButton)
+    {
+        vwEmojiView.isHidden = true
+    }
+    
+    @IBAction func btnPostEmojiAction(_ sender: UIButton)
+    {
+        var strUrl = String()
+        strUrl = "posts/add-comment"
+        var params : [String:AnyObject]
+        
+        if arrSelectedEmoji.count > 0
+        {
+            params = ["post_id": "\(EmojiPostID)" as AnyObject , "gif_id": "\(arrSelectedEmoji[0])" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                
+                self.vwEmojiView.isHidden = true
+                print("Response \(response as NSDictionary)")
+                let strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                self.changeTab()
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+        else
+        {
+            showAlert(strMsg: "Please select Emoji", vc: self)
+        }
+    }
+    
+    //MARK: Delete Post
+    func btnDeleteAction(sender:UIButton)
+    {
+        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.cvMatchList)
+        let intRow = sender.tag
+        let iDeleteId : Int = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "id") as! Int
+        
+        let alertView = UIAlertController(title: AppName, message: "Are you sure want to delete post?", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Yes", style: .default)
+        { (action) in
+            
+            var strUrl = String()
+            strUrl = "posts/delete"
+            var params : [String:AnyObject]
+            
+            params = ["post_id": "\(iDeleteId)" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+                self.changeTab()
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+        alertView.addAction(OKAction)
+        let CancelAction = UIAlertAction(title: "No", style: .default)
+        {
+            (action) in
+        }
+        alertView.addAction(CancelAction)
+        self.present(alertView, animated: true, completion: nil)
     }
     
     //MARK: Play Clicked
@@ -1235,9 +1481,18 @@ class timelineCell: UITableViewCell {
     @IBOutlet weak var wvheightLayout: NSLayoutConstraint?
     @IBOutlet weak var webvwVideo: UIWebView?
     @IBOutlet weak var btnPlay: UIButton?
+    @IBOutlet weak var btnEmoji: UIButton?
+    @IBOutlet weak var btnDelete: UIButton?
+    @IBOutlet weak var btnDeleteWidthLayout: NSLayoutConstraint?
     
-    
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
+        btnDelete?.layer.cornerRadius = 5
+
+        btnEmoji?.layer.cornerRadius = 5
+        btnEmoji?.layer.borderWidth = 1
+        btnEmoji?.layer.borderColor = #colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1).cgColor
+
         btnLike.layer.cornerRadius = 5
         btnLike.layer.borderWidth = 1
         btnLike.layer.borderColor = #colorLiteral(red: 0.1251283586, green: 0.6060261726, blue: 1, alpha: 1).cgColor
@@ -1265,6 +1520,20 @@ class matchCell: UITableViewCell {
         //setCornurRedius(idObject: lblStatusIcon, radius: lblStatusIcon.frame.size.height/2)
     }
 }
+
+
+class EmojiCell: UICollectionViewCell {
+    
+    @IBOutlet weak var imgview: UIImageView!
+    @IBOutlet weak var btnCheck: UIButton!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
+    }
+}
+
 
 extension Date {
     @nonobjc static var localFormatter: DateFormatter = {

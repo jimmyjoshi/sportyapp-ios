@@ -28,5 +28,6 @@ let kWowzaUrlForGetStream = "https://api.cloud.wowza.com/api/v1/live_streams"
 
 
 
+let kkeyLocationDateTime = "LocationDateTime"
 
 

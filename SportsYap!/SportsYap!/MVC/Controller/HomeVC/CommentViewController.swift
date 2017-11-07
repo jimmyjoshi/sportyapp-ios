@@ -232,5 +232,8 @@ class commentCell: UITableViewCell {
     @IBOutlet weak var lblUserName: UILabel!
     @IBOutlet weak var lblComment: UILabel!
     @IBOutlet weak var lblTime: UILabel!
+    
+    @IBOutlet weak var imgGIF: UIImageView?
+    @IBOutlet weak var imgGIFheightLayout: NSLayoutConstraint?
 }
 

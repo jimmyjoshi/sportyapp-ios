@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3CCE53F1FB165FD006BE784 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */; };
 		D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */; };
 		D57A11381F38E7B0006F79E0 /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11261F38E7B0006F79E0 /* IQBarButtonItem.swift */; };
 		D57A11391F38E7B0006F79E0 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D57A11271F38E7B0006F79E0 /* IQKeyboardManager.bundle */; };
@@ -105,6 +106,7 @@
 /* Begin PBXFileReference section */
 		B0463FB46228D7D025E35ECD /* Pods-SportsYap!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsYap!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SportsYap!/Pods-SportsYap!.debug.xcconfig"; sourceTree = "<group>"; };
 		BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsYap_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+RoundedCorner.swift"; sourceTree = "<group>"; };
 		D57A11261F38E7B0006F79E0 /* IQBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQBarButtonItem.swift; sourceTree = "<group>"; };
 		D57A11271F38E7B0006F79E0 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3CCE53F1FB165FD006BE784 /* CoreLocation.framework in Frameworks */,
 				D5849E5B1F55DFEB0009D063 /* WowzaGoCoderSDK.framework in Frameworks */,
 				D57E89981F5145BE009A9E72 /* WowzaGoCoderSDK.framework in Frameworks */,
 				E0B3EEA0F1A84FCF65AC3B55 /* Pods_SportsYap_.framework in Frameworks */,
@@ -219,6 +222,7 @@
 		526C700E9BD87F33A2E95EA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */,
 				BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */,
 			);
 			name = Frameworks;
@@ -595,6 +599,11 @@
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 6NCD3R96G3;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -819,8 +828,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: tamara latta (42C43UCKDN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: tamara latta (42C43UCKDN)";
 				DEVELOPMENT_TEAM = 6NCD3R96G3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -831,8 +840,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SportsYap.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "56ddbbb2-ea9d-4613-847d-0f78e5e9b6ba";
-				PROVISIONING_PROFILE_SPECIFIER = "Dist SportsYap";
+				PROVISIONING_PROFILE = "b77918bf-e211-4b0a-9e95-dffb42d03e65";
+				PROVISIONING_PROFILE_SPECIFIER = SportyDev;
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/SportsYap!-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -943,8 +952,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: tamara latta (42C43UCKDN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: tamara latta (42C43UCKDN)";
 				DEVELOPMENT_TEAM = 6NCD3R96G3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -955,8 +964,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SportsYap.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "56ddbbb2-ea9d-4613-847d-0f78e5e9b6ba";
-				PROVISIONING_PROFILE_SPECIFIER = "Dist SportsYap";
+				PROVISIONING_PROFILE = "b77918bf-e211-4b0a-9e95-dffb42d03e65";
+				PROVISIONING_PROFILE_SPECIFIER = SportyDev;
 				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/SportsYap!-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
@@ -968,7 +977,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: tamara latta (42C43UCKDN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Sports Yap/, LLC (6NCD3R96G3)";
 				DEVELOPMENT_TEAM = 6NCD3R96G3;
 				FRAMEWORK_SEARCH_PATHS = (

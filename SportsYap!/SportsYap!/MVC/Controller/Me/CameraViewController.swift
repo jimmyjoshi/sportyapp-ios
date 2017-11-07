@@ -10,25 +10,29 @@ import UIKit
 import AVFoundation
 
 @available(iOS 10.0, *)
-class CameraViewController: UIViewController,AVCapturePhotoCaptureDelegate {
+class CameraViewController: UIViewController,AVCapturePhotoCaptureDelegate
+{
     var img : UIImage?
     var captureSession: AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var videoDeviceInput: AVCaptureDeviceInput!
     let photoOutput = AVCapturePhotoOutput()
     @IBOutlet weak var previewView: UIView!
-    override func viewDidLoad() {
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-        
-        
-        do {
+        do
+        {
             let input = try AVCaptureDeviceInput(device: captureDevice)
             captureSession = AVCaptureSession()
             captureSession?.addInput(input)
-        } catch {
+        }
+        catch
+        {
             print(error)
         }
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -52,11 +56,19 @@ class CameraViewController: UIViewController,AVCapturePhotoCaptureDelegate {
         
     }
     
-    @IBAction func btnCaptureClicked(sender: UIButton) {
+    //MARK: - IBAction Methods
+    @IBAction func btnCancelPress(_ : UIButton)
+    {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
+
+    @IBAction func btnCaptureClicked(sender: UIButton)
+    {
         if #available(iOS 10.0, *) {
             let photoSettings = AVCapturePhotoSettings()
             photoSettings.isHighResolutionPhotoEnabled = true
-            if self.videoDeviceInput.device.isFlashAvailable {
+            if self.videoDeviceInput.device.isFlashAvailable
+            {
                 photoSettings.flashMode = .auto
             }
             if !photoSettings.availablePreviewPhotoPixelFormatTypes.isEmpty {
@@ -81,12 +93,16 @@ class CameraViewController: UIViewController,AVCapturePhotoCaptureDelegate {
     }
     func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
         
-        if let error = error {
+        if let error = error
+        {
             print("Error capturing photo: \(error)")
-        } else {
+        }
+        else
+        {
             if let sampleBuffer = photoSampleBuffer, let previewBuffer = previewPhotoSampleBuffer, let dataImage = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: sampleBuffer, previewPhotoSampleBuffer: previewBuffer) {
                 
-                if let image = UIImage(data: dataImage) {
+                if let image = UIImage(data: dataImage)
+                {
                     self.img = image
                 }
             }
