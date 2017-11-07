@@ -29,10 +29,15 @@ class ChallengePostListViewController: UIViewController {
     var arrSelectedEmoji = NSMutableArray()
     @IBOutlet weak var btnPostEmoji: UIButton!
     var EmojiPostID = Int()
+    var bfromGameTimeline = Bool()
+    @IBOutlet weak var lblScreenTitle: UILabel!
 
-    
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        lblScreenTitle.text =  "\(currentGameObject.strTeam1FirstName) \(currentGameObject.strTeam1LastName) vs \(currentGameObject.strTeam2FirstName) \(currentGameObject.strTeam2LastName)"
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -48,7 +53,15 @@ class ChallengePostListViewController: UIViewController {
         self.tblMatch.reloadData()
         let dictParameter : [String:AnyObject]  = ["gameId": currentGameObject.strMatchId as AnyObject, "homeTeamId": currentGameObject.strHomeMatchId as AnyObject, "awayTeamId": currentGameObject.strAwayMatchId as AnyObject]
         var strURL = String("")!
-        strURL = "\(base_Url)sporty-fans-challenge/get-posts"
+        
+        if bfromGameTimeline == true
+        {
+            strURL = "\(base_Url)posts/get-game-timeline"
+        }
+        else
+        {
+            strURL = "\(base_Url)sporty-fans-challenge/get-posts"
+        }
         
         MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strURL, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
             let arrData = response as NSDictionary

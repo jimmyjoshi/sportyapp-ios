@@ -355,6 +355,7 @@ class GameDetailVC: UIViewController {
                 let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
                 postVC.currentGameObject = self.currentGameObject
+                postVC.bfromGameTimeline = false
                 self.navigationController?.pushViewController(postVC, animated: true)
             }
             else

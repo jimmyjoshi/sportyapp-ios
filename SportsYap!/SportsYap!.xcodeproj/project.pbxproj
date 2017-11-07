@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D3CCE53F1FB165FD006BE784 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */; };
+		D3F1FA361FB223FF000D2BB5 /* GameTimeLinePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */; };
 		D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */; };
 		D57A11381F38E7B0006F79E0 /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11261F38E7B0006F79E0 /* IQBarButtonItem.swift */; };
 		D57A11391F38E7B0006F79E0 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D57A11271F38E7B0006F79E0 /* IQKeyboardManager.bundle */; };
@@ -107,6 +108,7 @@
 		B0463FB46228D7D025E35ECD /* Pods-SportsYap!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsYap!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SportsYap!/Pods-SportsYap!.debug.xcconfig"; sourceTree = "<group>"; };
 		BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsYap_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTimeLinePostVC.swift; sourceTree = "<group>"; };
 		D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+RoundedCorner.swift"; sourceTree = "<group>"; };
 		D57A11261F38E7B0006F79E0 /* IQBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQBarButtonItem.swift; sourceTree = "<group>"; };
 		D57A11271F38E7B0006F79E0 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 				F55BA2341ED7D0F300886877 /* EditProfileVC.swift */,
 				F55BA2361ED7DA0900886877 /* AddTeamVC.swift */,
 				D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */,
+				D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -758,6 +761,7 @@
 				D57A11421F38E7B0006F79E0 /* IQToolbar.swift in Sources */,
 				F5E07E941EAE6489000E46F8 /* KpTabBarController.m in Sources */,
 				F5E07E951EAE6489000E46F8 /* KpTabBarItem.m in Sources */,
+				D3F1FA361FB223FF000D2BB5 /* GameTimeLinePostVC.swift in Sources */,
 				F55BA2351ED7D0F300886877 /* EditProfileVC.swift in Sources */,
 				D5D351E71F233C0C001C6F84 /* TimelineCell.swift in Sources */,
 				F50BA66A1EBEF8300044593E /* WSConstant.swift in Sources */,

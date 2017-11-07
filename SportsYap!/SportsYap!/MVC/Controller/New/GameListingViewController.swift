@@ -38,6 +38,7 @@ class GameListingViewController: UIViewController {
     var intMaxComment : Int = 2
     
     @IBOutlet weak var vwPostView: UIView!
+    var intSelectedGame : Int = -1
 
     
     override func viewDidLoad() {
@@ -327,24 +328,27 @@ class GameListingViewController: UIViewController {
         self.navigationController?.pushViewController(postVC, animated: true)*/
         
         
-        if #available(iOS 10.0, *) {
-            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let postVC: CameraViewController = cameraStoryboard.instantiateViewController(withIdentifier: "CameraViewController") as! CameraViewController
-            self.navigationController?.pushViewController(postVC, animated: true)
-        } else {
-            // Fallback on earlier versions
-        }
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
+        postVC.selectedGame = arrList[intSelectedGame]
+        postVC.isImageUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
         //postVC.isImageUploaded = true
-        
     }
     
     @IBAction func btnCreateVideoPostClicked(sender: UIButton)
     {
         vwPostView.isHidden = true
+//        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+//        postVC.isVideoUploaded = true
+//        self.navigationController?.pushViewController(postVC, animated: true)
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
+        postVC.selectedGame = arrList[intSelectedGame]
         postVC.isVideoUploaded = true
         self.navigationController?.pushViewController(postVC, animated: true)
+
     }
     @IBAction func btnCreateliveStreamingClicked(sender: UIButton)
     {
@@ -378,10 +382,14 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        tableView.deselectRow(at: indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
+            intSelectedGame = indexPath.row
+            self.callCheckFanChallenge()
         
-        view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        vwPostView.isHidden = false
+        //        tableView.deselectRow(at: indexPath, animated: true)
+//        
+//        view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+//        vwPostView.isHidden = false
 
        /* let uiAlert = UIAlertController(title: AppName, message: "Select Option:", preferredStyle: UIAlertControllerStyle.alert)
         uiAlert.addAction(UIAlertAction(title: "Live Streaming", style: .default, handler: { action in
@@ -402,6 +410,45 @@ extension GameListingViewController: UITableViewDataSource,UITableViewDelegate {
          self.navigationController?.pushViewController(tagDetailVC, animated: true)*/
         
     }
+    func callCheckFanChallenge()
+    {
+        if intSelectedGame != -1
+        {
+            let gameObj : GameClass =  arrList[intSelectedGame]
+            let dictParameter : [String:AnyObject]  = ["gameId": gameObj.strMatchId as AnyObject, "homeTeamId": gameObj.strHomeMatchId as AnyObject, "awayTeamId": gameObj.strAwayMatchId as AnyObject]
+            //let dictParameter : [String:AnyObject]  = ["gameId": 1 as AnyObject, "homeTeamId": 1699 as AnyObject, "awayTeamId": 1701 as AnyObject]
+            var strUrl = String("")!
+            strUrl = "\(base_Url)posts/check-game-timeline"
+            MainReqeustClass.BaseRequestSharedInstance.postRequest(showLoader: true, url: strUrl, parameter: dictParameter, header: getHeaderData(), success: { (response:Dictionary<String,AnyObject>) in
+                let dicData : NSDictionary = (response as NSDictionary).value(forKey: "data")! as! NSDictionary
+                
+                let intFanFound : Int = dicData.value(forKey: "postFound")! as! Int
+                
+                if intFanFound == 1
+                {
+                    let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+                    postVC.currentGameObject = gameObj
+                    postVC.bfromGameTimeline = true
+                    self.navigationController?.pushViewController(postVC, animated: true)
+                }
+                else
+                {
+                    //Call function to create fan challenge
+                    self.view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+                    self.vwPostView.isHidden = false
+                }
+                //showAlert(strMsg: "\(dicData.value(forKey: "message")!)", vc: self)
+                print("\(dicData)")
+            })
+            {
+                (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+        }
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : matchCell = tableView.dequeueReusableCell(withIdentifier: "matchCell", for: indexPath) as! matchCell
         let gameDetail = arrList[indexPath.row]
