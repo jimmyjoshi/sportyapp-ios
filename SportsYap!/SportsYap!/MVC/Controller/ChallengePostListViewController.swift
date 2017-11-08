@@ -2,7 +2,7 @@
 //  ChallengePostListViewController.swift
 //  SportsYap!
 //
-//  Created by Sagar Jagajeev on 29/10/17.
+//  Created by Ravi Panicker on 29/10/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 
