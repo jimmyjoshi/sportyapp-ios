@@ -772,7 +772,7 @@
                                     <constraint firstItem="88n-S8-zTy" firstAttribute="top" secondItem="05S-wJ-92z" secondAttribute="top" constant="20" id="xbw-Iq-MHb"/>
                                 </constraints>
                             </view>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rm6-Vb-g28">
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rm6-Vb-g28">
                                 <rect key="frame" x="0.0" y="72" width="320" height="496"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>

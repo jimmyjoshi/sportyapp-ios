@@ -8,6 +8,8 @@
 
 import UIKit
 import MobileCoreServices
+import AVFoundation
+
 
 class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @IBOutlet var txtPost : UITextView!
@@ -81,7 +83,9 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         return true
     }
     
-    func callPostApi() {
+    func callPostApi()
+    {
+        txtPost.resignFirstResponder()
         var strUrl = String("")!
         var params : [String:AnyObject]
         if isCreateFanChallengeScreen {
@@ -107,13 +111,20 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                     , success: { (response:Dictionary<String, AnyObject>) in
                         
                         print("video posted")
-                        var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
-                        
-                        showAlert(strMsg: strMes, vc: self)
-                        self.isImageUploaded = false
-                        self.htImg.constant = 0
-                        self.btnCancel.isHidden = true
-                        self.txtPost.text = ""
+                        if let mes = (response as NSDictionary).value(forKey: "message")
+                        {
+                            let strMes : String = "\(mes)"
+                            
+                            showAlert(strMsg: strMes, vc: self)
+                            self.isImageUploaded = false
+                            self.htImg.constant = 0
+                            self.btnCancel.isHidden = true
+                            self.txtPost.text = ""
+                        }
+                        else
+                        {
+                            
+                        }
                         //self.parsingLoginData(responseReq: response as NSDictionary)
                         //success(response)
                         
@@ -199,6 +210,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                 {
                     self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                     self.imagePicker.allowsEditing = false
+                    self.imagePicker.videoMaximumDuration = 120.0
                 }
                 else
                 {
@@ -224,6 +236,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             {
                 self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                 self.imagePicker.allowsEditing = false
+                self.imagePicker.videoMaximumDuration = 120.0
             }
             else
             {
@@ -278,13 +291,36 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             lblVideoText.isHidden = false
             btnRemoveVideo.isHidden = false
 
+            var uploadUrl = NSURL.fileURL(withPath: NSTemporaryDirectory().appending("\(NSDate())").appending(".mov"))
+
+            self.compressVideo(inputURL: selectedVideoURL! as NSURL, outputURL: uploadUrl as NSURL, handler: { (handler) -> Void in
+                
+                if handler.status == AVAssetExportSessionStatus.completed
+                {
+                    
+                    do {
+                        self.videoData = try Data(contentsOf: uploadUrl)
+                        // do something with data
+                        // if the call fails, the catch block is executed
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+                else if handler.status == AVAssetExportSessionStatus.failed
+                {
+                    showAlert(strMsg: "There was a problem compressing the video maybe you can try again later. Error: \(handler.error?.localizedDescription ?? "")", vc: self)
+                }
+            })
+
+            /*
             do {
                 videoData = try Data(contentsOf: selectedVideoURL!)
                 // do something with data
                 // if the call fails, the catch block is executed
             } catch {
                 print(error.localizedDescription)
-            }
+            }*/
         }
         else
         {
@@ -303,5 +339,21 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             }
         }
         self.dismiss(animated:true, completion: nil)
+    }
+    func compressVideo(inputURL: NSURL, outputURL: NSURL, handler:@escaping (_ session: AVAssetExportSession)-> Void)
+    {
+        let urlAsset = AVURLAsset(url: inputURL as URL, options: nil)
+        
+        let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality)
+        
+        exportSession?.outputURL = outputURL as URL
+        
+        exportSession?.outputFileType = AVFileTypeQuickTimeMovie
+        
+        exportSession?.shouldOptimizeForNetworkUse = true
+        
+        exportSession?.exportAsynchronously { () -> Void in
+            handler(exportSession!)
+        }
     }
 }
