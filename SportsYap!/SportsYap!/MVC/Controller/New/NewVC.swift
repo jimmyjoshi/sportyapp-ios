@@ -210,7 +210,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                 {
                     self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                     self.imagePicker.allowsEditing = false
-                    self.imagePicker.videoMaximumDuration = 120.0
+                    self.imagePicker.videoMaximumDuration = 60.0
                 }
                 else
                 {
@@ -236,7 +236,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             {
                 self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                 self.imagePicker.allowsEditing = false
-                self.imagePicker.videoMaximumDuration = 120.0
+                self.imagePicker.videoMaximumDuration = 60.0
             }
             else
             {
