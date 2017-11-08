@@ -177,6 +177,8 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
                 {
                     self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                     self.imagePicker.allowsEditing = false
+                    self.imagePicker.videoMaximumDuration = 60.0
+
                 }
                 else
                 {
@@ -202,6 +204,8 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
             {
                 self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                 self.imagePicker.allowsEditing = false
+                self.imagePicker.videoMaximumDuration = 60.0
+
             }
             else
             {
@@ -256,13 +260,35 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
             lblVideoText.isHidden = false
             btnRemoveVideo.isHidden = false
             
-            do {
+            var uploadUrl = NSURL.fileURL(withPath: NSTemporaryDirectory().appending("\(NSDate())").appending(".mov"))
+            
+            self.compressVideo(inputURL: selectedVideoURL! as NSURL, outputURL: uploadUrl as NSURL, handler: { (handler) -> Void in
+                
+                if handler.status == AVAssetExportSessionStatus.completed
+                {
+                    
+                    do {
+                        self.videoData = try Data(contentsOf: uploadUrl)
+                        // do something with data
+                        // if the call fails, the catch block is executed
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+                else if handler.status == AVAssetExportSessionStatus.failed
+                {
+                    showAlert(strMsg: "There was a problem compressing the video maybe you can try again later. Error: \(handler.error?.localizedDescription ?? "")", vc: self)
+                }
+            })
+
+          /*  do {
                 videoData = try Data(contentsOf: selectedVideoURL!)
                 // do something with data
                 // if the call fails, the catch block is executed
             } catch {
                 print(error.localizedDescription)
-            }
+            }*/
         }
         else
         {
@@ -281,6 +307,22 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
             }
         }
         self.dismiss(animated:true, completion: nil)
+    }
+    func compressVideo(inputURL: NSURL, outputURL: NSURL, handler:@escaping (_ session: AVAssetExportSession)-> Void)
+    {
+        let urlAsset = AVURLAsset(url: inputURL as URL, options: nil)
+        
+        let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality)
+        
+        exportSession?.outputURL = outputURL as URL
+        
+        exportSession?.outputFileType = AVFileTypeQuickTimeMovie
+        
+        exportSession?.shouldOptimizeForNetworkUse = true
+        
+        exportSession?.exportAsynchronously { () -> Void in
+            handler(exportSession!)
+        }
     }
 
 }
