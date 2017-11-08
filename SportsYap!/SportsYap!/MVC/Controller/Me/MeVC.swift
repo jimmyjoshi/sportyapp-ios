@@ -108,8 +108,8 @@ class MeVC: UIViewController {
         
         if(isOtherProfile == true) {
             
-            //lblUserName.text = userDetail.strUserName
-            lblUserName.text = userDetail.strName
+            lblUserName.text = userDetail.strUserName
+            //lblUserName.text = userDetail.strName
             btnProfile.sd_setImage(with: userDetail.urlProfile, for: .normal)
             lblName.text = userDetail.strName
             lblLocation.text = userDetail.strLocation
@@ -127,8 +127,8 @@ class MeVC: UIViewController {
         }
         else {
             btnFollowHeight.constant = 0
-            //lblUserName.text = UserClass.sharedInstance.strUserName
-            lblUserName.text = UserClass.sharedInstance.strName
+            lblUserName.text = UserClass.sharedInstance.strUserName
+            //lblUserName.text = UserClass.sharedInstance.strName
             btnProfile.sd_setImage(with: UserClass.sharedInstance.urlProfile, for: .normal)
             lblName.text = UserClass.sharedInstance.strName
             lblLocation.text = UserClass.sharedInstance.strLocation
@@ -139,7 +139,31 @@ class MeVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    //MARK:- Method for Logg off
+    @IBAction func btnLogOff(sender: UIButton){
+        
+        let alertView = UIAlertController(title: AppName, message: "Do you want to log off?", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "Yes", style: .default)
+        { (action) in
+            if let win = appDelegate.window {
+                let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+                let logVC : LoginOptionVC = mainStoryBoard.instantiateViewController(withIdentifier: "LoginOptionVC") as! LoginOptionVC
+                AppUserDefaults.removeAllValues()
+                win.rootViewController = logVC
+            }
+        }
+        alertView.addAction(OKAction)
+        let CancelAction = UIAlertAction(title: "No", style: .default)
+        {
+            (action) in
+        }
+        alertView.addAction(CancelAction)
+        self.present(alertView, animated: true, completion: nil)
     
+        
+        
+        
+    }
     
     //MARK:- API Call for getting profile details
     func getProfile() {

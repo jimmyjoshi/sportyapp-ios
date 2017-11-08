@@ -118,6 +118,7 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
         
         var dictComment = NSMutableDictionary()
         dictComment.setValue(UserClass.sharedInstance.strName, forKey: "name")
+        dictComment.setValue(UserClass.sharedInstance.strUserName, forKey: "username")
         dictComment.setValue(txtPost.text, forKey: "commentText")
         dictComment.setValue(strDate, forKey: "commentCreatedAt")
         dictComment.setValue(UserClass.sharedInstance.urlProfile, forKey: "image")
@@ -187,7 +188,8 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
         
         var dictComment : NSDictionary = arrComment.object(at: indexPath.row) as! NSDictionary
         
-        let strUserName : String = dictComment.value(forKey: "name") as! String
+        //let strUserName : String = dictComment.value(forKey: "name") as! String
+        let strUserName : String = dictComment.value(forKey: "username") as! String
         let strComment : String = dictComment.value(forKey: "commentText") as! String
         let usernameFont = UIFont.boldSystemFont(ofSize:  17.0)
         var attrUserNameString = NSMutableAttributedString(

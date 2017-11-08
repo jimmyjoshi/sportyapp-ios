@@ -443,8 +443,8 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             //cell.lblTime.text = dict.value(forKey: "created_at") as! String
             
             if let dictUser = dict.value(forKey: "postCreator") {
-                cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "name") as! String?
-                
+                //cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "name") as! String?
+                cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "username") as! String?
                 //cell.lblName.text = "\(dictUser)"
                 if let userImage = (dictUser as! NSDictionary).value(forKey: "image")
                 {

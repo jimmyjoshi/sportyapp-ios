@@ -394,7 +394,8 @@ extension DiscoverVC: UITableViewDataSource,UITableViewDelegate {
             //cell.lblTime.text = dict.value(forKey: "created_at") as! String
             
             if let dictUser = dict.value(forKey: "postCreator") {
-                cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "name") as! String?
+                //cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "name") as! String?
+                cell.lblName.text = (dictUser as! NSDictionary).value(forKey: "username") as! String?
                 if let userImage = (dictUser as! NSDictionary).value(forKey: "image")
                 {
                     setImage(img: cell.imgUser, strUrl: "\(userImage)")
@@ -504,8 +505,8 @@ extension DiscoverVC: UITableViewDataSource,UITableViewDelegate {
             total = total - 1
             let dictComment : NSDictionary = arrComment.object(at: total) as! NSDictionary
             
-            let strUserName : String = dictComment.value(forKey: "name") as! String
-            
+            //let strUserName : String = dictComment.value(forKey: "name") as! String
+            let strUserName : String = dictComment.value(forKey: "username") as! String
             let strComment : String = dictComment.value(forKey: "commentText") as! String
             
             
