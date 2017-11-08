@@ -2,7 +2,7 @@
 //  CameraViewController.swift
 //  SportsYap!
 //
-//  Created by Sagar Jagajeev on 06/11/17.
+//  Created by Ravi Panicker on 06/11/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 
