@@ -100,11 +100,22 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
                         print("video posted")
                         var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
                         
-                        showAlert(strMsg: strMes, vc: self)
-                        self.isImageUploaded = false
-                        self.htImg.constant = 0
-                        self.btnCancel.isHidden = true
-                        self.txtPost.text = ""
+//                        showAlert(strMsg: strMes, vc: self)
+
+                        let alertView = UIAlertController(title: AppName, message: strMes, preferredStyle: .alert)
+                        let OKAction = UIAlertAction(title: "Ok", style: .default)
+                        { (action) in
+                            
+                            self.isImageUploaded = false
+                            self.htImg.constant = 0
+                            self.btnCancel.isHidden = true
+                            self.txtPost.text = ""
+                            self.navigationController?.popViewController(animated: true)
+
+                        }
+                        alertView.addAction(OKAction)
+                        self.present(alertView, animated: true, completion: nil)
+
                         //self.parsingLoginData(responseReq: response as NSDictionary)
                         //success(response)
                         
@@ -124,8 +135,21 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
                     print("Response \(response as NSDictionary)")
                     var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
                     
-                    showAlert(strMsg: strMes, vc: self)
-                    self.txtPost.text = ""
+//                    showAlert(strMsg: strMes, vc: self)
+//                    self.txtPost.text = ""
+                    let alertView = UIAlertController(title: AppName, message: strMes, preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "Ok", style: .default)
+                    { (action) in
+                        
+                        self.txtPost.text = ""
+                        self.navigationController?.popViewController(animated: true)
+                        
+                    }
+                    alertView.addAction(OKAction)
+                    self.present(alertView, animated: true, completion: nil)
+
+                    
+                    
                 }) { (response:String!) in
                     //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
                     
@@ -142,14 +166,28 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
             MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequest(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, img: imgPost.image
                 , success: { (response:Dictionary<String, AnyObject>) in
                     
-                    print("image posted")
                     var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
+                    print("image posted")
+
+                    let alertView = UIAlertController(title: AppName, message: strMes, preferredStyle: .alert)
+                    let OKAction = UIAlertAction(title: "Ok", style: .default)
+                    { (action) in
+                        
+                        self.isImageUploaded = false
+                        self.htImg.constant = 0
+                        self.btnCancel.isHidden = true
+                        self.txtPost.text = ""
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    alertView.addAction(OKAction)
+                    self.present(alertView, animated: true, completion: nil)
+
                     
-                    showAlert(strMsg: strMes, vc: self)
-                    self.isImageUploaded = false
-                    self.htImg.constant = 0
-                    self.btnCancel.isHidden = true
-                    self.txtPost.text = ""
+//                    showAlert(strMsg: strMes, vc: self)
+//                    self.isImageUploaded = false
+//                    self.htImg.constant = 0
+//                    self.btnCancel.isHidden = true
+//                    self.txtPost.text = ""
             }) { (response:String!) in
                 //var strMes : String = "\((response as NSDictionary).value(forKey: "message")!)"
                 

@@ -45,6 +45,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
     var goCoderRegistrationChecked = false
     var receivedGoCoderEventCodes = Array<WZEvent>()
     var blackAndWhiteVideoEffect = false
+    var strwowzapostId = String()
 
     
     //var error : Error = nil
@@ -210,6 +211,10 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
             
             MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
                 print("Response \(response as NSDictionary)")
+                
+                self.strwowzapostId = "\((response as NSDictionary).value(forKey: "postId")!)"
+                print("self.strwowzapostId is \(self.strwowzapostId)")
+
             }) { (response:String!) in
                 print("Error is \(response)")
             }
@@ -310,6 +315,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
             let dictData = (response as NSDictionary)
             print("Dict Data \(dictData)")
             
+            MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: true)
             self.getStreamState()
 
             
@@ -320,11 +326,26 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
     }
     
     
-    func callEndStreamingApi() {
+    func callEndStreamingApi()
+    {
         let url : String = "https://api.cloud.wowza.com/api/v1/live_streams/\(strStreamId)/stop"
         MainReqeustClass.BaseRequestSharedInstance.putRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             print("Dict Data \(dictData)")
+            
+            var strUrl = String()
+            strUrl = "posts/delete"
+            var params : [String:AnyObject]
+            
+            params = ["post_id": "\(self.strwowzapostId)" as AnyObject]
+            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                print("Response \(response as NSDictionary)")
+            })
+            { (response:String!) in
+                showAlert(strMsg: response, vc: self)
+                print("Error is \(response)")
+            }
+            
             
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
@@ -340,7 +361,7 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
         //"https://api.cloud.wowza.com/api/v1/live_streams/[live_stream_id]/stats"
         let url : String = "https://api.cloud.wowza.com/api/v1/live_streams/\(strStreamId)/state"
 
-        MainReqeustClass.BaseRequestSharedInstance.getRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
+        MainReqeustClass.BaseRequestSharedInstance.getWowzaRequest(showLoader: true, url: url, parameter: nil, header: getWowzaHeader(), success: { (response:Dictionary<String,AnyObject>) in
             let dictData = (response as NSDictionary)
             let strState : String = (dictData.value(forKey: "live_stream") as! NSDictionary).value(forKey: "state") as! String
             if strState == "starting" {
@@ -350,14 +371,15 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
                 self.perform(#selector(self.getStreamState), with: nil, afterDelay: 0.8)
                 //self.getStreamState()
             }
-            else if strState == "started" {
+            else if strState == "started"
+            {
+                MainReqeustClass.HideActivityIndicatorInStatusBar()
                 print("Stream started")
                 self.perform(#selector(self.configueLicenceKey), with: nil, afterDelay: 1.2)
             }
             
-            
-            
         }) { (response:String!) in
+            MainReqeustClass.HideActivityIndicatorInStatusBar()
             showAlert(strMsg: response, vc: self)
             print("Error is \(response)")
         }

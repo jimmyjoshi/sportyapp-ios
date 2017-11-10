@@ -9,70 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Model/MainReqeustClass.swift"
-            timestampString = "531858443.778205"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "putRequest(showLoader:url:parameter:header:success:failed:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
-            timestampString = "531754962.294511"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
-            landmarkName = "callStartStreamApi()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsYap_.PostToGameViewController.callStartStreamApi () -&gt; ()"
-                  moduleName = "SportsYap!"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Projects/Anuj%20Projects/SportyApp/GitCode/SportsYap!/SportsYap!/SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
-                  timestampString = "531860998.516935"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "309"
-                  endingLineNumber = "309"
-                  offsetFromSymbolStart = "237">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SportsYap_.PostToGameViewController.(callStartStreamApi () -&gt; ()).(closure #1)"
-                  moduleName = "SportsYap!"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Projects/Anuj%20Projects/SportyApp/GitCode/SportsYap!/SportsYap!/SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
-                  timestampString = "531860998.520388"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "310"
-                  endingLineNumber = "310"
-                  offsetFromSymbolStart = "19">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "SportsYap!/MVC/Controller/New/NewVC.swift"
             timestampString = "531859790.136435"
             startingColumnNumber = "9223372036854775807"
@@ -89,13 +25,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/ChallengePostListViewController.swift"
-            timestampString = "531861290.917804"
+            filePath = "SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
+            timestampString = "532025543.123791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "getFeedsList()"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "btnClicked(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
+            timestampString = "532027535.26625"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
+            landmarkName = "callEndStreamingApi()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
+            timestampString = "532027603.993731"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "callEndStreamingApi()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SportsYap!/MVC/Controller/New/PostToGameViewController.swift"
+            timestampString = "532027637.073148"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "btnClicked(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

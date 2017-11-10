@@ -127,6 +127,40 @@ class MainReqeustClass: NSObject {
         }
     }
     
+    func getWowzaRequest(showLoader: Bool, url:String, parameter:[String : AnyObject]?,header:[String : String]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
+        if(isInternetConnection()) {
+            
+            
+            print("----------------------\n\n\n\nURL: \(url)")
+            print("I/P PARAMS: \(parameter)")
+            
+            Alamofire.request(url, method: .get, parameters: parameter, encoding: URLEncoding.default, headers: header).responseJSON { (response:DataResponse<Any>) in
+                switch(response.result) {
+                case .success(_):
+                    print("Response: \(response.result.value as AnyObject!)")
+                    var dict = JSON(response.result.value ?? "").dictionaryValue
+                    
+                    if(dict["code"]?.intValue == 500) {
+                        failed((dict["message"]?.stringValue)!)
+                    }
+                    else {
+                        let dictData = response.result.value as! NSDictionary
+                        success(dictData as! Dictionary<String, AnyObject>)
+                    }
+                    
+                    break
+                    
+                case .failure(_):
+                    print("Response: \(response.result.error as AnyObject!)")
+                    failed("The network connection was lost please try again.")
+                    break
+                    
+                }
+            }
+        }
+    }
+
+    
     
     func putRequest(showLoader: Bool, url:String, parameter:[String : AnyObject]?,header:[String : String]?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String) -> Void) {
         if(isInternetConnection()) {
