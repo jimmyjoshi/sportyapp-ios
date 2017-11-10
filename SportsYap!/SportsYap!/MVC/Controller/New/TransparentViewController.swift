@@ -150,6 +150,10 @@ class TransparentViewController: UIViewController {
     {
         vwPostView.isHidden = true
         self.getLiveStream()
+        
+        self.removeFromParentViewController()
+        self.view.removeFromSuperview()
+
     }
 
     
