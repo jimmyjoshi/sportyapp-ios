@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZVideoSink {
 
@@ -212,7 +213,10 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
             MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
                 print("Response \(response as NSDictionary)")
                 
-                self.strwowzapostId = "\((response as NSDictionary).value(forKey: "postId")!)"
+                var dict = JSON(response).dictionaryValue
+                print("dict is \(dict)")
+                
+                self.strwowzapostId = "\((dict["data"]?["postId"].stringValue)!)"
                 print("self.strwowzapostId is \(self.strwowzapostId)")
 
             }) { (response:String!) in
@@ -246,6 +250,13 @@ class PostToGameViewController: UIViewController,WZStatusCallback,WZAudioSink,WZ
             
             MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params, success: { (response:Dictionary<String, AnyObject>) in
                 print("Response \(response as NSDictionary)")
+                
+                var dict = JSON(response).dictionaryValue
+                print("dict is \(dict)")
+
+                self.strwowzapostId = "\((dict["data"]?["postId"].stringValue)!)"
+                print("self.strwowzapostId is \(self.strwowzapostId)")
+
             }) { (response:String!) in
                 print("Error is \(response)")
             }

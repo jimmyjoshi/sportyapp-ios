@@ -151,9 +151,6 @@ class TransparentViewController: UIViewController {
         vwPostView.isHidden = true
         self.getLiveStream()
         
-        self.removeFromParentViewController()
-        self.view.removeFromSuperview()
-
     }
 
     
@@ -240,19 +237,24 @@ class TransparentViewController: UIViewController {
                 }
                 else
                 {
-                    self.intStreamChecked = self.intStreamChecked + 1
+//                    self.intStreamChecked = self.intStreamChecked + 1
+                    self.getStreamInformation()
+
                 }
                 
                 
             }) { (response:String!) in
                 showAlert(strMsg: response, vc: self)
                 print("Error is \(response)")
+                self.removeFromParentViewController()
+                self.view.removeFromSuperview()
             }
             
         }
         else
         {
-            
+            self.removeFromParentViewController()
+            self.view.removeFromSuperview()
         }
     }
     func getStreamInformation() {
@@ -272,6 +274,10 @@ class TransparentViewController: UIViewController {
         postVC.strhosted_page_url = "\(dictLiveStream.value(forKey: "hosted_page_url")!)"
         
         self.navigationController?.pushViewController(postVC, animated: true)
+        self.removeFromParentViewController()
+        self.view.removeFromSuperview()
+        
+
     }
     
     func getWowzaHeader() -> Dictionary<String, String> {
@@ -304,6 +310,10 @@ class TransparentViewController: UIViewController {
                 let postVC: PostToGameViewController = cameraStoryboard.instantiateViewController(withIdentifier: "PostToGameViewController") as! PostToGameViewController
                 
                 self.navigationController?.pushViewController(postVC, animated: true)
+                self.removeFromParentViewController()
+                self.view.removeFromSuperview()
+                
+
             }
             else if let dictTmp = dictResponse.value(forKey: "meta") {
                 let strMessage : String = ((dictTmp as! NSDictionary).value(forKey: "message") as! String)
