@@ -63,6 +63,7 @@ class TagGameVC: UIViewController {
             let intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
             let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+            postVC.bfromGameTimeline = true
             postVC.currentGameObject = self.arrList[0]
             self.navigationController?.pushViewController(postVC, animated: true)
             

@@ -355,7 +355,7 @@ class GameDetailVC: UIViewController {
                 let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
                 postVC.currentGameObject = self.currentGameObject
-                postVC.bfromGameTimeline = false
+                postVC.bfromGameTimeline = true
                 self.navigationController?.pushViewController(postVC, animated: true)
             }
             else
@@ -433,7 +433,7 @@ extension GameDetailVC: UITableViewDelegate, UITableViewDataSource {
                 return "     FRONT ROW"
             }
             else {
-                return "     BUDDIES AT THE GAME"
+                return "     FANS AT THE GAME"
             }
         }
         else {
