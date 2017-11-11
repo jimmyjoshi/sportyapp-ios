@@ -23,7 +23,8 @@ class AddFanChallengePostView: UIViewController, UINavigationControllerDelegate,
     @IBOutlet var vwVideo: UIView!
     @IBOutlet var lblVideoText: UILabel!
     @IBOutlet var btnRemoveVideo: UIButton!
-    
+    var videoThumbnailImage = UIImage()
+
     
     
     override func viewDidLoad()
@@ -89,7 +90,7 @@ class AddFanChallengePostView: UIViewController, UINavigationControllerDelegate,
             {
                 params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
                 
-                MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequestVideo(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, data: videoData
+                MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequestVideo(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, data: videoData, img: videoThumbnailImage
                     , success: { (response:Dictionary<String, AnyObject>) in
                         
                         print("video posted")
@@ -254,13 +255,40 @@ class AddFanChallengePostView: UIViewController, UINavigationControllerDelegate,
             lblVideoText.isHidden = false
             btnRemoveVideo.isHidden = false
             
-            do {
+            var uploadUrl = NSURL.fileURL(withPath: NSTemporaryDirectory().appending("\(NSDate())").appending(".mov"))
+            
+            if let videoimag = self.getThumbnailFrom(path: selectedVideoURL!)
+            {
+                videoThumbnailImage = self.getThumbnailFrom(path: selectedVideoURL!)!
+            }
+            
+            self.compressVideo(inputURL: selectedVideoURL! as NSURL, outputURL: uploadUrl as NSURL, handler: { (handler) -> Void in
+                
+                if handler.status == AVAssetExportSessionStatus.completed
+                {
+                    
+                    do {
+                        self.videoData = try Data(contentsOf: uploadUrl)
+                        // do something with data
+                        // if the call fails, the catch block is executed
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+                else if handler.status == AVAssetExportSessionStatus.failed
+                {
+                    showAlert(strMsg: "There was a problem compressing the video maybe you can try again later. Error: \(handler.error?.localizedDescription ?? "")", vc: self)
+                }
+            })
+
+           /* do {
                 videoData = try Data(contentsOf: selectedVideoURL!)
                 // do something with data
                 // if the call fails, the catch block is executed
             } catch {
                 print(error.localizedDescription)
-            }
+            }*/
         }
         else
         {
@@ -280,4 +308,40 @@ class AddFanChallengePostView: UIViewController, UINavigationControllerDelegate,
         }
         self.dismiss(animated:true, completion: nil)
     }
+    
+    func compressVideo(inputURL: NSURL, outputURL: NSURL, handler:@escaping (_ session: AVAssetExportSession)-> Void)
+    {
+        let urlAsset = AVURLAsset(url: inputURL as URL, options: nil)
+        
+        let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality)
+        
+        exportSession?.outputURL = outputURL as URL
+        
+        exportSession?.outputFileType = AVFileTypeQuickTimeMovie
+        
+        exportSession?.shouldOptimizeForNetworkUse = true
+        
+        exportSession?.exportAsynchronously { () -> Void in
+            handler(exportSession!)
+        }
+    }
+    
+    func getThumbnailFrom(path: URL) -> UIImage?
+    {
+        do
+        {
+            let asset = AVURLAsset(url: path , options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+            let thumbnail = UIImage(cgImage: cgImage)
+            return thumbnail
+        }
+        catch let error
+        {
+            print("*** Error generating thumbnail: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
 }

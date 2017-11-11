@@ -496,7 +496,7 @@ class MainReqeustClass: NSObject {
         }*/
     }
     
-    func POSTMultipartRequestVideo(showLoader: Bool, url:String, parameter:[String : AnyObject]?, data : Data?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String!) -> Void)
+    func POSTMultipartRequestVideo(showLoader: Bool, url:String, parameter:[String : AnyObject]?, data : Data?,img : UIImage?, success:@escaping (Dictionary<String, AnyObject>) -> Void, failed:@escaping (String!) -> Void)
     {
         
         MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: showLoader)
@@ -511,7 +511,10 @@ class MainReqeustClass: NSObject {
                 multipartFormData.append(data!, withName: "image", fileName: "video.mp4", mimeType: "video/quicktime")
             }
             
-            
+            if img != nil {
+                multipartFormData.append(UIImageJPEGRepresentation(img!, 0.5)!, withName: "video_image", fileName: "image.jpeg", mimeType: "image/jpeg")
+            }
+
             
             for (key, value) in parameter! {
                 multipartFormData.append(value.data(using: String.Encoding.utf8.rawValue)!, withName: key)

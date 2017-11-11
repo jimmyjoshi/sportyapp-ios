@@ -27,8 +27,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     @IBOutlet var vwVideo: UIView!
     @IBOutlet var lblVideoText: UILabel!
     @IBOutlet var btnRemoveVideo: UIButton!
-
-    
+    var videoThumbnailImage = UIImage()
     
     override func viewDidLoad()
     {
@@ -107,7 +106,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
                 }
                 //params = ["description": txtPost.text as AnyObject,"is_image" : 0 as AnyObject]
 
-                MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequestVideo(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, data: videoData
+                MainReqeustClass.BaseRequestSharedInstance.POSTMultipartRequestVideo(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, data: videoData, img: videoThumbnailImage
                     , success: { (response:Dictionary<String, AnyObject>) in
                         
                         print("video posted")
@@ -292,6 +291,11 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             btnRemoveVideo.isHidden = false
 
             var uploadUrl = NSURL.fileURL(withPath: NSTemporaryDirectory().appending("\(NSDate())").appending(".mov"))
+            
+            if let videoimag = self.getThumbnailFrom(path: selectedVideoURL!)
+            {
+                videoThumbnailImage = self.getThumbnailFrom(path: selectedVideoURL!)!
+            }
 
             self.compressVideo(inputURL: selectedVideoURL! as NSURL, outputURL: uploadUrl as NSURL, handler: { (handler) -> Void in
                 
@@ -356,4 +360,23 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             handler(exportSession!)
         }
     }
+    
+    func getThumbnailFrom(path: URL) -> UIImage?
+    {
+        do
+        {
+            let asset = AVURLAsset(url: path , options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+            let thumbnail = UIImage(cgImage: cgImage)
+            return thumbnail
+        }
+        catch let error
+        {
+            print("*** Error generating thumbnail: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
 }
