@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class ChallengePostListViewController: UIViewController {
     @IBOutlet weak var tblMatch: UITableView!
@@ -33,6 +35,7 @@ class ChallengePostListViewController: UIViewController {
     @IBOutlet weak var lblScreenTitle: UILabel!
 
     @IBOutlet weak var vwPostView: UIView!
+    var bfromVideoPlayer = Bool()
 
     override func viewDidLoad()
     {
@@ -40,11 +43,20 @@ class ChallengePostListViewController: UIViewController {
         
         lblScreenTitle.text =  "\(currentGameObject.strTeam1FirstName) \(currentGameObject.strTeam1LastName) vs \(currentGameObject.strTeam2FirstName) \(currentGameObject.strTeam2LastName)"
     }
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(false)
         self.tblMatch.estimatedRowHeight = 82.0
         self.tblMatch.rowHeight = UITableViewAutomaticDimension
-        getFeedsList()
+        
+        if bfromVideoPlayer == true
+        {
+            bfromVideoPlayer = false
+        }
+        else
+        {
+            getFeedsList()
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -341,11 +353,21 @@ class ChallengePostListViewController: UIViewController {
         let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
         //This is video
         let strVideoLink : String = dic.value(forKey: "video") as! String
+        
+        bfromVideoPlayer = true
+        let videoURL = URL(string: strVideoLink)
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
-        
         videoVC.strLink = strVideoLink
-        self.navigationController?.pushViewController(videoVC, animated: true)
+        self.navigationController?.pushViewController(videoVC, animated: true)*/
     }
 
 }
@@ -721,8 +743,8 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             {
                 if iImageGIF as! Int == 1
                 {
-                    cell.imgGIFheightLayout?.constant = 100
-                    cell.imgGIFWidthLayout?.constant = 100
+                    cell.imgGIFheightLayout?.constant = 200
+                    cell.imgGIFWidthLayout?.constant = 200
                     
                     let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                     let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")

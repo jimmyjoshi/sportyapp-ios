@@ -8,15 +8,44 @@
 
 import UIKit
 
-class VideoViewController: UIViewController {
+class VideoViewController: UIViewController,UIWebViewDelegate
+{
     @IBOutlet private weak var webVwMain: UIWebView!
     var strLink = String()
-    override func viewDidLoad() {
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
-        
+        MainReqeustClass.ShowActivityIndicatorInStatusBar(shouldShowHUD: true)
+
+        webVwMain.delegate = self
+        webVwMain.isOpaque = false
+        webVwMain.backgroundColor = UIColor.clear
         webVwMain.loadRequest(URLRequest(url: URL(string: strLink)!))
-        //webVwMain.loadRequest(NSURLRequest(URL: NSURL(string: "strLink") as! URL) as URLRequest)
+    }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
+    {
+        webVwMain.isHidden = true
+        return true;
+    }
+    
+    func webViewDidStartLoad(_ webView: UIWebView)
+    {
+        webVwMain.isHidden = false
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView)
+    {
+        MainReqeustClass.HideActivityIndicatorInStatusBar()
+        webVwMain.isHidden = false
+        print("Webview did finish load")
+    }
+    
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
+    {
+        MainReqeustClass.HideActivityIndicatorInStatusBar()
     }
 
     override func didReceiveMemoryWarning() {

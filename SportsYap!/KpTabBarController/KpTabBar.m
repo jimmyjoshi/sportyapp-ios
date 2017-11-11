@@ -109,7 +109,8 @@
             lblTitle.textColor = [UIColor blackColor];
         }
         else if(index == 1) {
-            lblTitle.text = @"Discover";
+//            lblTitle.text = @"Discover";
+            lblTitle.text = @"Famed";
         }
         else if(index == 2) {
             lblTitle.text = @"Me";

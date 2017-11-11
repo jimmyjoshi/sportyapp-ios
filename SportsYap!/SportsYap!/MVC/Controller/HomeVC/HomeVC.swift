@@ -8,7 +8,8 @@
 
 import UIKit
 import SwiftyJSON
-
+import AVKit
+import AVFoundation
 
 extension Date {
     func dayOfWeek() -> String? {
@@ -50,12 +51,17 @@ class HomeVC: UIViewController {
     var intSelectedTab : Int = 1
     
     var intMaxComment : Int = 2
+    var bfromVideoPlayer = Bool()
     
-    override func viewDidLoad() {
+    
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         
-        
+        btnNext.isEnabled = false
+
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
@@ -107,11 +113,16 @@ class HomeVC: UIViewController {
         //self.tblMatch.sectionHeaderHeight = 0//UITableViewAutomaticDimension
         //self.tblMatch.estimatedSectionHeaderHeight = 400
         
-        self.tblMatch.estimatedRowHeight = 82.0
-        self.tblMatch.rowHeight = UITableViewAutomaticDimension
-        
-        changeTab()
-        
+        if bfromVideoPlayer == true
+        {
+            bfromVideoPlayer = false
+        }
+        else
+        {
+            self.tblMatch.estimatedRowHeight = 82.0
+            self.tblMatch.rowHeight = UITableViewAutomaticDimension
+            changeTab()
+        }
     }
     
     func pullToRefresh(_ refreshControl: UIRefreshControl)
@@ -242,12 +253,45 @@ class HomeVC: UIViewController {
         let tagDetailVC: BuddiesViewController = cameraStoryboard.instantiateViewController(withIdentifier: "BuddiesViewController") as! BuddiesViewController
         self.navigationController?.pushViewController(tagDetailVC, animated: true)
     }
-    @IBAction func getNextDate(btnSender: UIButton) {
-        self.getDate(isNext: true, isPrevious: false)
-        self.getFootballGameData()
+    @IBAction func getNextDate(btnSender: UIButton)
+    {
+        let date1 = Calendar.current.date(byAdding: .day, value: 1, to: date)!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        let strDatenew = formatter.string(from: Date())
+        let myDate = formatter.date(from: strDatenew)!
+        let date2 = myDate
+        
+        if date1 == date2
+        {
+            btnNext.isEnabled = false
+            self.getDate(isNext: true, isPrevious: false)
+            self.getFootballGameData()
+        }
+        else if date1 > date2
+        {
+            btnNext.isEnabled = true
+            
+            self.getDate(isNext: true, isPrevious: false)
+            self.getFootballGameData()
+        }
+        else if date1 < date2
+        {
+            btnNext.isEnabled = true
+            self.getDate(isNext: true, isPrevious: false)
+            self.getFootballGameData()
+        }
+        else
+        {
+            btnNext.isEnabled = true
+            self.getDate(isNext: true, isPrevious: false)
+            self.getFootballGameData()
+        }
     }
     
-    @IBAction func getPreviousDate(btnSender: UIButton) {
+    @IBAction func getPreviousDate(btnSender: UIButton)
+    {
+        btnNext.isEnabled = true
         self.getDate(isNext: false, isPrevious: true)
         self.getFootballGameData()
     }
@@ -1360,13 +1404,25 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let strImgLink : String = dic.value(forKey: "image") as! String
         
         //This is video
-        if strImgLink == "" {
-            let strVideoLink : String = dic.value(forKey: "video") as! String
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
-            
-            videoVC.strLink = strVideoLink
-            self.navigationController?.pushViewController(videoVC, animated: true)
+        if strImgLink == ""
+        {
+            if let strVideoLink : String = dic.value(forKey: "video") as? String
+            {
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+//                videoVC.strLink = strVideoLink
+//                self.navigationController?.pushViewController(videoVC, animated: true)
+
+                
+                bfromVideoPlayer = true
+                let videoURL = URL(string: strVideoLink)
+                let player = AVPlayer(url: videoURL!)
+                let playerViewController = AVPlayerViewController()
+                playerViewController.player = player
+                self.present(playerViewController, animated: true) {
+                    playerViewController.player!.play()
+                }
+            }
         }
         else
         {
@@ -1585,11 +1641,22 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
         //This is video
         let strVideoLink : String = dic.value(forKey: "video") as! String
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
         
         videoVC.strLink = strVideoLink
-        self.navigationController?.pushViewController(videoVC, animated: true)
+        self.navigationController?.pushViewController(videoVC, animated: true)*/
+        
+        bfromVideoPlayer = true
+        let videoURL = URL(string: strVideoLink)
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+
     }
     
     //MARK:- Creating function that will add custom button to the tab

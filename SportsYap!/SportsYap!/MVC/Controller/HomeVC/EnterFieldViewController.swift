@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class EnterFieldViewController: UIViewController {
     @IBOutlet weak var tblMatch: UITableView!
@@ -15,6 +17,8 @@ class EnterFieldViewController: UIViewController {
     var arrTimelineData = NSArray()
     var strTitle = String()
     var intMaxComment : Int = 2
+    var bfromVideoPlayer = Bool()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -120,11 +124,23 @@ class EnterFieldViewController: UIViewController {
         let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
         //This is video
         let strVideoLink : String = dic.value(forKey: "video") as! String
+        
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
-        
         videoVC.strLink = strVideoLink
-        self.navigationController?.pushViewController(videoVC, animated: true)
+        self.navigationController?.pushViewController(videoVC, animated: true)*/
+        
+        
+        bfromVideoPlayer = true
+        let videoURL = URL(string: strVideoLink)
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+
     }
 }
 extension EnterFieldViewController: UITableViewDataSource,UITableViewDelegate {

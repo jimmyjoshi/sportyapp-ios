@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 
 
@@ -34,7 +36,7 @@ class DiscoverVC: UIViewController {
     var arrSelectedEmoji = NSMutableArray()
     @IBOutlet weak var btnPostEmoji: UIButton!
     var EmojiPostID = Int()
-    
+    var bfromVideoPlayer = Bool()
 
     
     
@@ -291,11 +293,23 @@ class DiscoverVC: UIViewController {
         let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
         //This is video
         let strVideoLink : String = dic.value(forKey: "video") as! String
+        
+        
+        
+        bfromVideoPlayer = true
+        let videoURL = URL(string: strVideoLink)
+        let player = AVPlayer(url: videoURL!)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
-        
         videoVC.strLink = strVideoLink
-        self.navigationController?.pushViewController(videoVC, animated: true)
+        self.navigationController?.pushViewController(videoVC, animated: true)*/
     }
 
 }
@@ -593,8 +607,8 @@ extension DiscoverVC: UITableViewDataSource,UITableViewDelegate {
                 {
 //                    cell.imgGIFheightLayout?.constant = 60
 
-                    cell.imgGIFheightLayout?.constant = 100
-                    cell.imgGIFWidthLayout?.constant = 100
+                    cell.imgGIFheightLayout?.constant = 200
+                    cell.imgGIFWidthLayout?.constant = 200
 
                     let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                     let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")

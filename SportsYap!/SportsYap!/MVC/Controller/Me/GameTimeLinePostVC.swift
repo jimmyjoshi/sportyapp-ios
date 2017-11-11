@@ -356,7 +356,7 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
     {
         let urlAsset = AVURLAsset(url: inputURL as URL, options: nil)
         
-        let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality)
+        let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetMediumQuality)
         
         exportSession?.outputURL = outputURL as URL
         

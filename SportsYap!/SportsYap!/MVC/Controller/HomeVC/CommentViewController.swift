@@ -220,8 +220,8 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             if iImageGIF as! Int == 1
             {
 //                cell.imgGIFheightLayout?.constant = 60
-                cell.imgGIFheightLayout?.constant = 100
-                cell.imgGIFWidthLayout?.constant = 100
+                cell.imgGIFheightLayout?.constant = 200
+                cell.imgGIFWidthLayout?.constant = 200
 
                 let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                 let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")

@@ -64,7 +64,8 @@ class MeVC: UIViewController {
     @IBOutlet weak var btnFollow: UIButton!
     @IBOutlet weak var btnFollowHeight: NSLayoutConstraint!
     @IBOutlet weak var ivFollow: UIImageView!
-    
+    @IBOutlet weak var btnLogout: UIButton!
+
     var userDetail: DiscoverClass!
     var isOtherProfile: Bool!
     
@@ -115,6 +116,7 @@ class MeVC: UIViewController {
             lblLocation.text = userDetail.strLocation
             btnSettings.isHidden = true
             btnBack.isHidden = false
+            btnLogout.isHidden = true
             
             if(userDetail.isFollow == true) {
                 ivFollow.isHidden = false
@@ -384,6 +386,20 @@ class MeVC: UIViewController {
         
     }
     
+    //MARK: Get Follower List
+    @IBAction func btnBuddiesClicked(sender: UIButton)
+    {
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tagDetailVC: BuddiesViewController = cameraStoryboard.instantiateViewController(withIdentifier: "BuddiesViewController") as! BuddiesViewController
+        self.navigationController?.pushViewController(tagDetailVC, animated: true)
+    }
+    
+    @IBAction func btnFollowingsVCClicked(sender: UIButton)
+    {
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tagDetailVC: FollowingsVC = cameraStoryboard.instantiateViewController(withIdentifier: "FollowingsVC") as! FollowingsVC
+        self.navigationController?.pushViewController(tagDetailVC, animated: true)
+    }
 }
 extension MeVC: UITableViewDataSource,UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
