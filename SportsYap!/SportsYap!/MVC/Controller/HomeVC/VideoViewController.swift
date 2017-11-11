@@ -27,20 +27,16 @@ class VideoViewController: UIViewController,UIWebViewDelegate
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
-        webVwMain.isHidden = true
         return true;
     }
     
     func webViewDidStartLoad(_ webView: UIWebView)
     {
-        webVwMain.isHidden = false
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView)
     {
         MainReqeustClass.HideActivityIndicatorInStatusBar()
-        webVwMain.isHidden = false
-        print("Webview did finish load")
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error)

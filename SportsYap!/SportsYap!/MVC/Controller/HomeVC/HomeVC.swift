@@ -1640,21 +1640,51 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     {
         let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
         //This is video
-        let strVideoLink : String = dic.value(forKey: "video") as! String
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
-        
-        videoVC.strLink = strVideoLink
-        self.navigationController?.pushViewController(videoVC, animated: true)*/
-        
-        bfromVideoPlayer = true
-        let videoURL = URL(string: strVideoLink)
-        let player = AVPlayer(url: videoURL!)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            playerViewController.player!.play()
+        if let strVideoLink : String = dic.value(forKey: "video") as? String
+        {
+            if let iwowza = dic.value(forKey: "is_wowza")
+            {
+                if iwowza as! Int == 1
+                {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+                    
+                    videoVC.strLink = strVideoLink
+                    self.navigationController?.pushViewController(videoVC, animated: true)
+                }
+                else
+                {
+                    bfromVideoPlayer = true
+                    let videoURL = URL(string: strVideoLink)
+                    let player = AVPlayer(url: videoURL!)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    self.present(playerViewController, animated: true) {
+                        playerViewController.player!.play()
+                    }
+
+                }
+            }
+            else
+            {
+                bfromVideoPlayer = true
+                let videoURL = URL(string: strVideoLink)
+                let player = AVPlayer(url: videoURL!)
+                let playerViewController = AVPlayerViewController()
+                playerViewController.player = player
+                self.present(playerViewController, animated: true) {
+                    playerViewController.player!.play()
+                }
+
+            }
+
+            /*
+             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+             let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+             
+             videoVC.strLink = strVideoLink
+             self.navigationController?.pushViewController(videoVC, animated: true)*/
+            
         }
 
     }
