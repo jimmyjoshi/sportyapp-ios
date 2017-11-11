@@ -335,6 +335,19 @@ class ChallengePostListViewController: UIViewController {
         self.view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
         self.vwPostView.isHidden = false
     }
+    //MARK: Play Clicked
+    func btnPlayClicked(sender:UIButton)
+    {
+        let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
+        //This is video
+        let strVideoLink : String = dic.value(forKey: "video") as! String
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+        
+        videoVC.strLink = strVideoLink
+        self.navigationController?.pushViewController(videoVC, animated: true)
+    }
+
 }
 
 extension ChallengePostListViewController: UITableViewDataSource,UITableViewDelegate {
@@ -392,6 +405,64 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                 cell.btnLike.setTitleColor(UIColor.white, for: .normal)
             }
         }
+        
+        
+        let strImg = dict.value(forKey: "image") as! NSString
+        let strvideo = dict.value(forKey: "video") as! String
+        let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
+        
+        if strImg == ""  && strvideo == "" && strVideoThumbUrl == ""
+        {
+            cell.heightLayout.constant = 0
+            cell.btnPlay?.isHidden = true
+        }
+        else
+        {
+            if strImg.length > 0
+            {
+                cell.btnPlay?.isHidden = true
+            }
+            else
+            {
+                cell.btnPlay?.isHidden = false
+            }
+            
+            cell.heightLayout.constant = screenWidth
+            //cell.imgPost.layer.cornerRadius = 10.0
+            //cell.imgPost.clipsToBounds = true
+            cell.imgPost.tag = section
+            let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
+            cell.imgPost.addGestureRecognizer(gesture)
+            
+            cell.btnPlay?.tag = section
+            cell.btnPlay?.addTarget(self, action: #selector(self.btnPlayClicked(sender:)), for: .touchUpInside)
+            
+            
+            
+            var strURL = String("")!
+            //Video thumbnai is to be displayed
+            if strImg == ""
+            {
+                strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
+                /*let imgVw : UIImageView = UIImageView(frame: CGRect(x: (screenWidth - 50)/2, y: (screenWidth - 50)/2, width: 50, height: 50))
+                 imgVw.image = UIImage(named: "nogameIcon")
+                 
+                 cell.imgPost.addSubview(imgVw)*/
+                
+            }
+            else
+            {
+                strURL = strImg.replacingOccurrences(of: " ", with: "%20")
+            }
+            
+            //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+            let url2 = URL(string: strURL)
+            if url2 != nil {
+                cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
+            }
+        }
+
+        /*
         let strImg = dict.value(forKey: "image") as! String
         if strImg == "" {
             cell.heightLayout.constant = 0
@@ -410,7 +481,7 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             if url2 != nil {
                 cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
             }
-        }
+        }*/
         return cell.contentView
     }
     
@@ -517,6 +588,62 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             }
             
             
+            let strImg = dict.value(forKey: "image") as! NSString
+            let strvideo = dict.value(forKey: "video") as! String
+            let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
+            
+            if strImg == ""  && strvideo == "" && strVideoThumbUrl == ""
+            {
+                cell.heightLayout.constant = 0
+                cell.btnPlay?.isHidden = true
+            }
+            else
+            {
+                if strImg.length > 0
+                {
+                    cell.btnPlay?.isHidden = true
+                }
+                else
+                {
+                    cell.btnPlay?.isHidden = false
+                }
+                
+                cell.heightLayout.constant = screenWidth
+                //cell.imgPost.layer.cornerRadius = 10.0
+                //cell.imgPost.clipsToBounds = true
+                cell.imgPost.tag = indexPath.section
+                let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
+                cell.imgPost.addGestureRecognizer(gesture)
+                
+                cell.btnPlay?.tag = indexPath.section
+                cell.btnPlay?.addTarget(self, action: #selector(self.btnPlayClicked(sender:)), for: .touchUpInside)
+                
+                
+                
+                var strURL = String("")!
+                //Video thumbnai is to be displayed
+                if strImg == ""
+                {
+                    strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
+                    /*let imgVw : UIImageView = UIImageView(frame: CGRect(x: (screenWidth - 50)/2, y: (screenWidth - 50)/2, width: 50, height: 50))
+                     imgVw.image = UIImage(named: "nogameIcon")
+                     
+                     cell.imgPost.addSubview(imgVw)*/
+                    
+                }
+                else
+                {
+                    strURL = strImg.replacingOccurrences(of: " ", with: "%20")
+                }
+                
+                //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                let url2 = URL(string: strURL)
+                if url2 != nil {
+                    cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
+                }
+            }
+
+            /*
             let strImg = dict.value(forKey: "image") as! String
             let strvideo = dict.value(forKey: "video") as! String
             if strImg == ""  && strvideo == "" {
@@ -552,7 +679,7 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                 if url2 != nil {
                     cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
                 }
-            }
+            }*/
             mainCell = cell
         }
         else
@@ -594,7 +721,9 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             {
                 if iImageGIF as! Int == 1
                 {
-                    cell.imgGIFheightLayout?.constant = 60
+                    cell.imgGIFheightLayout?.constant = 100
+                    cell.imgGIFWidthLayout?.constant = 100
+                    
                     let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                     let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
                     let url2 = URL(string: strURL)

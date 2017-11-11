@@ -113,6 +113,19 @@ class EnterFieldViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: Play Clicked
+    func btnPlayClicked(sender:UIButton)
+    {
+        let dic : NSDictionary = arrTimelineData.object(at: sender.tag) as! NSDictionary
+        //This is video
+        let strVideoLink : String = dic.value(forKey: "video") as! String
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let videoVC = storyboard.instantiateViewController(withIdentifier: "VideoViewController") as! VideoViewController
+        
+        videoVC.strLink = strVideoLink
+        self.navigationController?.pushViewController(videoVC, animated: true)
+    }
 }
 extension EnterFieldViewController: UITableViewDataSource,UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -266,6 +279,63 @@ extension EnterFieldViewController: UITableViewDataSource,UITableViewDelegate {
                     cell.btnLike.setTitleColor(UIColor.white, for: .normal)
                 }
             }
+            
+            let strImg = dict.value(forKey: "image") as! NSString
+            let strvideo = dict.value(forKey: "video") as! String
+            let strVideoThumbUrl = dict.value(forKey: "videoImg") as! String
+            
+            if strImg == ""  && strvideo == "" && strVideoThumbUrl == ""
+            {
+                cell.heightLayout.constant = 0
+                cell.btnPlay?.isHidden = true
+            }
+            else
+            {
+                if strImg.length > 0
+                {
+                    cell.btnPlay?.isHidden = true
+                }
+                else
+                {
+                    cell.btnPlay?.isHidden = false
+                }
+                
+                cell.heightLayout.constant = screenWidth
+                //cell.imgPost.layer.cornerRadius = 10.0
+                //cell.imgPost.clipsToBounds = true
+                cell.imgPost.tag = indexPath.section
+                let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.imgTapped(sender:)))
+                cell.imgPost.addGestureRecognizer(gesture)
+                
+                cell.btnPlay?.tag = indexPath.section
+                cell.btnPlay?.addTarget(self, action: #selector(self.btnPlayClicked(sender:)), for: .touchUpInside)
+                
+                
+                
+                var strURL = String("")!
+                //Video thumbnai is to be displayed
+                if strImg == ""
+                {
+                    strURL = strVideoThumbUrl.replacingOccurrences(of: " ", with: "%20")
+                    /*let imgVw : UIImageView = UIImageView(frame: CGRect(x: (screenWidth - 50)/2, y: (screenWidth - 50)/2, width: 50, height: 50))
+                     imgVw.image = UIImage(named: "nogameIcon")
+                     
+                     cell.imgPost.addSubview(imgVw)*/
+                    
+                }
+                else
+                {
+                    strURL = strImg.replacingOccurrences(of: " ", with: "%20")
+                }
+                
+                //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
+                let url2 = URL(string: strURL)
+                if url2 != nil {
+                    cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
+                }
+            }
+
+            /*
             let strImg = dict.value(forKey: "image") as! String
             if strImg == "" {
                 cell.heightLayout.constant = 0
@@ -284,7 +354,7 @@ extension EnterFieldViewController: UITableViewDataSource,UITableViewDelegate {
                 if url2 != nil {
                     cell.imgPost.sd_setImage(with: url2, placeholderImage: UIImage(named: "TimeLinePlaceholder"))
                 }
-            }
+            }*/
             mainCell = cell
         }
         else
