@@ -4284,8 +4284,8 @@
                                                 <constraint firstAttribute="height" constant="1" id="Q4r-ws-Ktt"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCN-6x-vkf">
-                                            <rect key="frame" x="102.5" y="220" width="65" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCN-6x-vkf">
+                                            <rect key="frame" x="92.5" y="220" width="65" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="2YP-jX-Wbf"/>
                                                 <constraint firstAttribute="width" constant="65" id="IlM-ZM-idG"/>
@@ -4299,8 +4299,8 @@
                                                 <action selector="btnFansPress:" destination="vuU-ye-Ug5" eventType="touchUpInside" id="Cg7-a6-d5Z"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CR-9m-t0B">
-                                            <rect key="frame" x="169.5" y="220" width="65" height="30"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0CR-9m-t0B">
+                                            <rect key="frame" x="167.5" y="220" width="65" height="30"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <state key="normal" title="News">
                                                 <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -4322,12 +4322,12 @@
                                         <constraint firstItem="CAy-pn-783" firstAttribute="leading" secondItem="4oS-AS-kWH" secondAttribute="leading" constant="8" id="5us-rg-VVv"/>
                                         <constraint firstAttribute="bottom" secondItem="xuh-1p-347" secondAttribute="bottom" id="Czb-Sf-13T"/>
                                         <constraint firstItem="QNj-vK-dWb" firstAttribute="centerX" secondItem="4oS-AS-kWH" secondAttribute="centerX" id="EBQ-RB-lbK"/>
-                                        <constraint firstItem="NCN-6x-vkf" firstAttribute="centerX" secondItem="Cou-dP-P3G" secondAttribute="centerX" constant="-25" id="K37-j0-a6t"/>
+                                        <constraint firstItem="NCN-6x-vkf" firstAttribute="centerX" secondItem="Cou-dP-P3G" secondAttribute="centerX" constant="-35" id="K37-j0-a6t"/>
                                         <constraint firstItem="Cou-dP-P3G" firstAttribute="leading" secondItem="4oS-AS-kWH" secondAttribute="leading" id="L5H-DY-DBF"/>
                                         <constraint firstItem="puU-cl-8RC" firstAttribute="centerX" secondItem="4oS-AS-kWH" secondAttribute="centerX" id="M7B-e1-plY"/>
                                         <constraint firstItem="QNj-vK-dWb" firstAttribute="top" secondItem="4oS-AS-kWH" secondAttribute="top" constant="31" id="OTc-oz-Fnq"/>
                                         <constraint firstItem="puU-cl-8RC" firstAttribute="top" secondItem="4oS-AS-kWH" secondAttribute="top" constant="79" id="Vuu-F0-hxY"/>
-                                        <constraint firstItem="0CR-9m-t0B" firstAttribute="leading" secondItem="NCN-6x-vkf" secondAttribute="trailing" constant="2" id="Wsb-cb-xtc"/>
+                                        <constraint firstItem="0CR-9m-t0B" firstAttribute="leading" secondItem="NCN-6x-vkf" secondAttribute="trailing" constant="10" id="Wsb-cb-xtc"/>
                                         <constraint firstItem="Cou-dP-P3G" firstAttribute="top" secondItem="CAy-pn-783" secondAttribute="bottom" constant="19" id="WyW-uS-3m4"/>
                                         <constraint firstItem="0CR-9m-t0B" firstAttribute="centerY" secondItem="NCN-6x-vkf" secondAttribute="centerY" id="aR7-32-dvk"/>
                                         <constraint firstItem="0CR-9m-t0B" firstAttribute="height" secondItem="NCN-6x-vkf" secondAttribute="height" id="cIS-ov-Hoe"/>

@@ -54,6 +54,13 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        tblMatch.addSubview(refreshControl)
+
         self.addBtnToTab()
     }
     
@@ -106,6 +113,14 @@ class HomeVC: UIViewController {
         changeTab()
         
     }
+    
+    func pullToRefresh(_ refreshControl: UIRefreshControl)
+    {
+        // Update your conntent here
+        self.changeTab()
+        refreshControl.endRefreshing()
+    }
+
     
     func settingCurrentDate() {
         let dat = Date()
@@ -421,6 +436,95 @@ class HomeVC: UIViewController {
                 self.arrList.append(response[i])
             }
 
+            self.getfbsGameData()
+            /*
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else
+            {
+                self.vwNoGame.isHidden = true
+            }
+            self.tblMatch.reloadData()
+            self.activity.isHidden = true*/
+            
+//            self.getSoccerGameData()
+            
+        }, failed: { (responser) in
+            
+            self.getfbsGameData()
+
+            /*
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else
+            {
+                self.vwNoGame.isHidden = true
+            }
+            self.tblMatch.reloadData()
+            self.activity.isHidden = true*/
+//            showAlert(strMsg: responser as String, vc: self)
+//            self.getSoccerGameData()
+            
+        })
+        
+    }
+    private func getfbsGameData()
+    {
+        //http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/fbs-scores?json=1
+        
+        let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/football/fbs-scores?date=\(strDate)&json=1"
+        
+        gameObj.getGameListFor(showLoader: true, strFullURL:strURL, strMatchType: "football", strDate: "15.01.2017", success: { (response) in
+            
+            
+            for i in 0..<response.count {
+                self.arrList.append(response[i])
+            }
+            
+            self.getncaaGameData()
+            /*
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else
+            {
+                self.vwNoGame.isHidden = true
+            }
+            self.tblMatch.reloadData()
+            self.activity.isHidden = true*/
+            
+        }, failed: { (responser) in
+            
+            self.getncaaGameData()
+            /*
+            if self.arrList.count == 0 {
+                self.vwNoGame.isHidden = false
+            }
+            else
+            {
+                self.vwNoGame.isHidden = true
+            }
+            self.tblMatch.reloadData()
+            self.activity.isHidden = true*/
+            
+        })
+        
+    }
+    private func getncaaGameData()
+    {
+        //http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/bsktbl/ncaa-scores?json=1
+        
+        let strURL = "http://www.goalserve.com/getfeed/596fc07949d14d3c8c5684dcb8712ce8/bsktbl/ncaa-scores?date=\(strDate)&json=1"
+        
+        gameObj.getGameListFor(showLoader: true, strFullURL:strURL, strMatchType: "bsktbl", strDate: "15.01.2017", success: { (response) in
+            
+            for i in 0..<response.count
+            {
+                self.arrList.append(response[i])
+            }
+            
             if self.arrList.count == 0 {
                 self.vwNoGame.isHidden = false
             }
@@ -430,8 +534,6 @@ class HomeVC: UIViewController {
             }
             self.tblMatch.reloadData()
             self.activity.isHidden = true
-            
-//            self.getSoccerGameData()
             
         }, failed: { (responser) in
             if self.arrList.count == 0 {
@@ -443,12 +545,9 @@ class HomeVC: UIViewController {
             }
             self.tblMatch.reloadData()
             self.activity.isHidden = true
-//            showAlert(strMsg: responser as String, vc: self)
-//            self.getSoccerGameData()
-            
         })
-        
     }
+
     
     private func getSoccerGameData() {
         
@@ -876,8 +975,8 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                     if iImageGIF as! Int == 1
                     {
 //                        cell.imgGIFheightLayout?.constant = 60
-                        cell.imgGIFheightLayout?.constant = 100
-                        cell.imgGIFWidthLayout?.constant = 100
+                        cell.imgGIFheightLayout?.constant = 200
+                        cell.imgGIFWidthLayout?.constant = 200
 
                         let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                         let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")

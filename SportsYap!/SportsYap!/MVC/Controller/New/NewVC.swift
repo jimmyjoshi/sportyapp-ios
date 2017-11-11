@@ -347,15 +347,10 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     func compressVideo(inputURL: NSURL, outputURL: NSURL, handler:@escaping (_ session: AVAssetExportSession)-> Void)
     {
         let urlAsset = AVURLAsset(url: inputURL as URL, options: nil)
-        
         let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetLowQuality)
-        
         exportSession?.outputURL = outputURL as URL
-        
         exportSession?.outputFileType = AVFileTypeQuickTimeMovie
-        
         exportSession?.shouldOptimizeForNetworkUse = true
-        
         exportSession?.exportAsynchronously { () -> Void in
             handler(exportSession!)
         }

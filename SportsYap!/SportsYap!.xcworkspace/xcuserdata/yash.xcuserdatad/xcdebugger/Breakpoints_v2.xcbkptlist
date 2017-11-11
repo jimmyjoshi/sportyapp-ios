@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/New/NewVC.swift"
-            timestampString = "532078379.412761"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "callPostApi()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "SportsYap!/MVC/Controller/Discover/DiscoverVC.swift"
             timestampString = "532071579.148655"
             startingColumnNumber = "9223372036854775807"
@@ -41,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/New/NewVC.swift"
-            timestampString = "532078899.632816"
+            filePath = "SportsYap!/MVC/Controller/HomeVC/HomeVC.swift"
+            timestampString = "532085737.000675"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
-            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/New/NewVC.swift"
-            timestampString = "532078379.41318"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
-            landmarkName = "getThumbnailFrom(path:)"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
+            landmarkName = "getfbsGameData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
