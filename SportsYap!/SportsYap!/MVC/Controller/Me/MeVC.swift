@@ -400,6 +400,14 @@ class MeVC: UIViewController {
         let tagDetailVC: FollowingsVC = cameraStoryboard.instantiateViewController(withIdentifier: "FollowingsVC") as! FollowingsVC
         self.navigationController?.pushViewController(tagDetailVC, animated: true)
     }
+    
+    @IBAction func btnShotsVCClicked(sender: UIButton)
+    {
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tagDetailVC: ShotsVC = cameraStoryboard.instantiateViewController(withIdentifier: "ShotsVC") as! ShotsVC
+        self.navigationController?.pushViewController(tagDetailVC, animated: true)
+    }
+
 }
 extension MeVC: UITableViewDataSource,UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {

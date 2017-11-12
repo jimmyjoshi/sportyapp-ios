@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D387FDBF1FB775220048FD87 /* FollowingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D387FDBE1FB775220048FD87 /* FollowingsVC.swift */; };
+		D3C9AEE41FB809EF00AC9B17 /* ShotsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */; };
 		D3CCE53F1FB165FD006BE784 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */; };
 		D3F1FA361FB223FF000D2BB5 /* GameTimeLinePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */; };
 		D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */; };
@@ -109,6 +110,7 @@
 		B0463FB46228D7D025E35ECD /* Pods-SportsYap!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsYap!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SportsYap!/Pods-SportsYap!.debug.xcconfig"; sourceTree = "<group>"; };
 		BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsYap_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D387FDBE1FB775220048FD87 /* FollowingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingsVC.swift; sourceTree = "<group>"; };
+		D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotsVC.swift; sourceTree = "<group>"; };
 		D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTimeLinePostVC.swift; sourceTree = "<group>"; };
 		D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+RoundedCorner.swift"; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 				F55BA2361ED7DA0900886877 /* AddTeamVC.swift */,
 				D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */,
 				D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */,
+				D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */,
 			);
 			path = Me;
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				D57A114A1F38F120006F79E0 /* ZoomImageViewController.swift in Sources */,
 				F5C2918B1EA29BD9007FA995 /* ForgotPassVC.swift in Sources */,
 				D387FDBF1FB775220048FD87 /* FollowingsVC.swift in Sources */,
+				D3C9AEE41FB809EF00AC9B17 /* ShotsVC.swift in Sources */,
 				D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */,
 				F5E07E921EAE6489000E46F8 /* KpTabBar.m in Sources */,
 				D599BC221F58777400056046 /* GameListingViewController.swift in Sources */,

@@ -235,35 +235,72 @@ class ChallengePostListViewController: UIViewController {
     //MARK: Delete Post
     func btnDeleteAction(sender:UIButton)
     {
-        let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tblMatch)
         let intRow = sender.tag
         let iDeleteId : Int = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "id") as! Int
         
-        let alertView = UIAlertController(title: AppName, message: "Are you sure want to delete post?", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "Yes", style: .default)
-        { (action) in
-            
-            var strUrl = String()
-            strUrl = "posts/delete"
-            var params : [String:AnyObject]
-            
-            params = ["post_id": "\(iDeleteId)" as AnyObject]
-            MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
-                print("Response \(response as NSDictionary)")
-                self.getFeedsList()
-            })
-            { (response:String!) in
-                showAlert(strMsg: response, vc: self)
-                print("Error is \(response)")
-            }
-        }
-        alertView.addAction(OKAction)
-        let CancelAction = UIAlertAction(title: "No", style: .default)
+        if let iImageGIF = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "can_delete")
         {
-            (action) in
+            if iImageGIF as! Int == 1
+            {
+                let alertView = UIAlertController(title: AppName, message: "Are you sure want to delete post?", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "Yes", style: .default)
+                { (action) in
+                    
+                    var strUrl = String()
+                    strUrl = "posts/delete"
+                    var params : [String:AnyObject]
+                    
+                    params = ["post_id": "\(iDeleteId)" as AnyObject]
+                    MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                        print("Response \(response as NSDictionary)")
+                        self.getFeedsList()
+                    })
+                    { (response:String!) in
+                        showAlert(strMsg: response, vc: self)
+                        print("Error is \(response)")
+                    }
+                }
+                alertView.addAction(OKAction)
+                let CancelAction = UIAlertAction(title: "No", style: .default)
+                {
+                    (action) in
+                }
+                alertView.addAction(CancelAction)
+                self.present(alertView, animated: true, completion: nil)
+            }
+            else
+            {
+                let intRow = sender.tag
+                let iDeleteId : Int = (arrTimelineData.object(at: intRow) as! NSDictionary).value(forKey: "id") as! Int
+                
+                let alertView = UIAlertController(title: AppName, message: "Are you sure want to report post?", preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "Yes", style: .default)
+                { (action) in
+                    
+                    var strUrl = String()
+                    strUrl = "report-post"
+                    var params : [String:AnyObject]
+                    
+                    params = ["post_id": "\(iDeleteId)" as AnyObject]
+                    MainReqeustClass.BaseRequestSharedInstance.PostRequset(showLoader: true, url: strUrl, parameter: params as [String : AnyObject]?, success: { (response:Dictionary<String, AnyObject>) in
+                        print("Response \(response as NSDictionary)")
+                        self.getFeedsList()
+                    })
+                    { (response:String!) in
+                        showAlert(strMsg: response, vc: self)
+                        print("Error is \(response)")
+                    }
+                }
+                alertView.addAction(OKAction)
+                let CancelAction = UIAlertAction(title: "No", style: .default)
+                {
+                    (action) in
+                }
+                alertView.addAction(CancelAction)
+                self.present(alertView, animated: true, completion: nil)
+            }
+
         }
-        alertView.addAction(CancelAction)
-        self.present(alertView, animated: true, completion: nil)
     }
 
     //MARK:- Delete Comment
@@ -581,10 +618,13 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                 if iImageGIF as! Int == 1
                 {
                     cell.btnDeleteWidthLayout?.constant = 46
+                    cell.btnDelete?.setTitle("Delete", for: .normal)
+
                 }
                 else
                 {
                     cell.btnDeleteWidthLayout?.constant = 0
+                    cell.btnDelete?.setTitle("Report", for: .normal)
                 }
             }
             else

@@ -16,7 +16,8 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
     var objHomeVc : HomeVC?
     var objDiscoverVc : DiscoverVC?
     var objChallengeVc : ChallengePostListViewController?
-    
+    var objShotsVC : ShotsVC?
+
     var strFromScreen = String("")!
     var dictPost = NSDictionary()
     var arrComment = NSMutableArray()
@@ -149,6 +150,10 @@ class CommentViewController: UIViewController,UITextFieldDelegate {
                 }
                 else if self.strFromScreen == "3" {
                     self.objChallengeVc?.getFeedsList()
+                }
+                else if self.strFromScreen == "4"
+                {
+                     self.objShotsVC?.getFeedsList()
                 }
                 /*
                 if self.objHomeVc == nil
@@ -292,6 +297,10 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 else if self.strFromScreen == "3" {
                     self.objChallengeVc?.getFeedsList()
+                }
+                else if self.strFromScreen == "4"
+                {
+                    self.objShotsVC?.getFeedsList()
                 }
 
                 UIView.animate(withDuration: 0.3, animations: {
