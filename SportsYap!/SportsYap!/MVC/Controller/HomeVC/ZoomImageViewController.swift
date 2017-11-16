@@ -16,7 +16,9 @@ class ZoomImageViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var vwBg: UIView!
     @IBOutlet weak var scrollvw: UIScrollView!
     var strLink = String()
-    override func viewDidLoad() {
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         webVw.loadRequest(URLRequest(url: URL(string: strLink)!))

@@ -93,10 +93,13 @@ class EnterFieldViewController: UIViewController {
         
     }
     
-    func imgTapped(sender : UITapGestureRecognizer) {
+    func imgTapped(sender : UITapGestureRecognizer)
+    {
         let imgVw : UIImageView = sender.view as! UIImageView
         let dic : NSDictionary = arrTimelineData.object(at: imgVw.tag) as! NSDictionary
         let strImgLink : String = dic.value(forKey: "image") as! String
+        
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
         imageVC.strLink = strImgLink

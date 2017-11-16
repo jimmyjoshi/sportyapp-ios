@@ -8,6 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		D387FDBF1FB775220048FD87 /* FollowingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D387FDBE1FB775220048FD87 /* FollowingsVC.swift */; };
+		D39B79291FBB55750004AC19 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79111FBB55750004AC19 /* DACircularProgressView.m */; };
+		D39B792A1FBB55750004AC19 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79131FBB55750004AC19 /* DALabeledCircularProgressView.m */; };
+		D39B792B1FBB55750004AC19 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79151FBB55750004AC19 /* MWCaptionView.m */; };
+		D39B792C1FBB55750004AC19 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79181FBB55750004AC19 /* MWGridCell.m */; };
+		D39B792D1FBB55750004AC19 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B791A1FBB55750004AC19 /* MWGridViewController.m */; };
+		D39B792E1FBB55750004AC19 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B791C1FBB55750004AC19 /* MWPhoto.m */; };
+		D39B792F1FBB55750004AC19 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B791E1FBB55750004AC19 /* MWPhotoBrowser.m */; };
+		D39B79301FBB55750004AC19 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79221FBB55750004AC19 /* MWTapDetectingImageView.m */; };
+		D39B79311FBB55750004AC19 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79241FBB55750004AC19 /* MWTapDetectingView.m */; };
+		D39B79321FBB55750004AC19 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79261FBB55750004AC19 /* MWZoomingScrollView.m */; };
+		D39B79331FBB55750004AC19 /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79281FBB55750004AC19 /* UIImage+MWPhotoBrowser.m */; };
+		D3A6FA4A1FBBFECA00FCA1BE /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = D3A6FA471FBBFECA00FCA1BE /* ImageError.png */; };
+		D3A6FA4B1FBBFECA00FCA1BE /* ImageError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3A6FA481FBBFECA00FCA1BE /* ImageError@2x.png */; };
+		D3A6FA4C1FBBFECA00FCA1BE /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3A6FA491FBBFECA00FCA1BE /* ImageError@3x.png */; };
 		D3C9AEE41FB809EF00AC9B17 /* ShotsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */; };
 		D3CCE53F1FB165FD006BE784 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */; };
 		D3F1FA361FB223FF000D2BB5 /* GameTimeLinePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */; };
@@ -110,6 +124,34 @@
 		B0463FB46228D7D025E35ECD /* Pods-SportsYap!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsYap!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SportsYap!/Pods-SportsYap!.debug.xcconfig"; sourceTree = "<group>"; };
 		BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsYap_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D387FDBE1FB775220048FD87 /* FollowingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingsVC.swift; sourceTree = "<group>"; };
+		D39B79101FBB55750004AC19 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		D39B79111FBB55750004AC19 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		D39B79121FBB55750004AC19 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
+		D39B79131FBB55750004AC19 /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
+		D39B79141FBB55750004AC19 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
+		D39B79151FBB55750004AC19 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
+		D39B79161FBB55750004AC19 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
+		D39B79171FBB55750004AC19 /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
+		D39B79181FBB55750004AC19 /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
+		D39B79191FBB55750004AC19 /* MWGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridViewController.h; sourceTree = "<group>"; };
+		D39B791A1FBB55750004AC19 /* MWGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridViewController.m; sourceTree = "<group>"; };
+		D39B791B1FBB55750004AC19 /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
+		D39B791C1FBB55750004AC19 /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
+		D39B791D1FBB55750004AC19 /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
+		D39B791E1FBB55750004AC19 /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
+		D39B791F1FBB55750004AC19 /* MWPhotoBrowserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowserPrivate.h; sourceTree = "<group>"; };
+		D39B79201FBB55750004AC19 /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
+		D39B79211FBB55750004AC19 /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
+		D39B79221FBB55750004AC19 /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
+		D39B79231FBB55750004AC19 /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
+		D39B79241FBB55750004AC19 /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
+		D39B79251FBB55750004AC19 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
+		D39B79261FBB55750004AC19 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
+		D39B79271FBB55750004AC19 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
+		D39B79281FBB55750004AC19 /* UIImage+MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MWPhotoBrowser.m"; sourceTree = "<group>"; };
+		D3A6FA471FBBFECA00FCA1BE /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
+		D3A6FA481FBBFECA00FCA1BE /* ImageError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@2x.png"; sourceTree = "<group>"; };
+		D3A6FA491FBBFECA00FCA1BE /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
 		D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotsVC.swift; sourceTree = "<group>"; };
 		D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTimeLinePostVC.swift; sourceTree = "<group>"; };
@@ -232,6 +274,41 @@
 				BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D39B790F1FBB55750004AC19 /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				D3A6FA471FBBFECA00FCA1BE /* ImageError.png */,
+				D3A6FA481FBBFECA00FCA1BE /* ImageError@2x.png */,
+				D3A6FA491FBBFECA00FCA1BE /* ImageError@3x.png */,
+				D39B79101FBB55750004AC19 /* DACircularProgressView.h */,
+				D39B79111FBB55750004AC19 /* DACircularProgressView.m */,
+				D39B79121FBB55750004AC19 /* DALabeledCircularProgressView.h */,
+				D39B79131FBB55750004AC19 /* DALabeledCircularProgressView.m */,
+				D39B79141FBB55750004AC19 /* MWCaptionView.h */,
+				D39B79151FBB55750004AC19 /* MWCaptionView.m */,
+				D39B79161FBB55750004AC19 /* MWCommon.h */,
+				D39B79171FBB55750004AC19 /* MWGridCell.h */,
+				D39B79181FBB55750004AC19 /* MWGridCell.m */,
+				D39B79191FBB55750004AC19 /* MWGridViewController.h */,
+				D39B791A1FBB55750004AC19 /* MWGridViewController.m */,
+				D39B791B1FBB55750004AC19 /* MWPhoto.h */,
+				D39B791C1FBB55750004AC19 /* MWPhoto.m */,
+				D39B791D1FBB55750004AC19 /* MWPhotoBrowser.h */,
+				D39B791E1FBB55750004AC19 /* MWPhotoBrowser.m */,
+				D39B791F1FBB55750004AC19 /* MWPhotoBrowserPrivate.h */,
+				D39B79201FBB55750004AC19 /* MWPhotoProtocol.h */,
+				D39B79211FBB55750004AC19 /* MWTapDetectingImageView.h */,
+				D39B79221FBB55750004AC19 /* MWTapDetectingImageView.m */,
+				D39B79231FBB55750004AC19 /* MWTapDetectingView.h */,
+				D39B79241FBB55750004AC19 /* MWTapDetectingView.m */,
+				D39B79251FBB55750004AC19 /* MWZoomingScrollView.h */,
+				D39B79261FBB55750004AC19 /* MWZoomingScrollView.m */,
+				D39B79271FBB55750004AC19 /* UIImage+MWPhotoBrowser.h */,
+				D39B79281FBB55750004AC19 /* UIImage+MWPhotoBrowser.m */,
+			);
+			path = MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
 		D57A11251F38E7B0006F79E0 /* IQKeyboard */ = {
@@ -391,6 +468,7 @@
 		F5C2915B1EA29B8D007FA995 = {
 			isa = PBXGroup;
 			children = (
+				D39B790F1FBB55750004AC19 /* MWPhotoBrowser */,
 				D57E89961F5145AD009A9E72 /* Wowza Framwork */,
 				F5E07E961EAE6578000E46F8 /* SportsYap!-Bridging-Header.h */,
 				F5E07E881EAE6489000E46F8 /* KpTabBarController */,
@@ -645,6 +723,9 @@
 				F5C2916F1EA29B8D007FA995 /* Assets.xcassets in Resources */,
 				D57A11391F38E7B0006F79E0 /* IQKeyboardManager.bundle in Resources */,
 				F5C2918F1EA29BD9007FA995 /* LaunchScreen.storyboard in Resources */,
+				D3A6FA4B1FBBFECA00FCA1BE /* ImageError@2x.png in Resources */,
+				D3A6FA4A1FBBFECA00FCA1BE /* ImageError.png in Resources */,
+				D3A6FA4C1FBBFECA00FCA1BE /* ImageError@3x.png in Resources */,
 				F56DDD401ED497A200D86300 /* MatchCCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,6 +789,7 @@
 				D587442B1F5F1DF80074C2E6 /* Toast.swift in Sources */,
 				F5D364AB1ED05C2700142DDA /* TutorialVC.swift in Sources */,
 				F56DDD431ED49B6400D86300 /* MatchSmallCCell.swift in Sources */,
+				D39B792E1FBB55750004AC19 /* MWPhoto.m in Sources */,
 				F55BA2371ED7DA0900886877 /* AddTeamVC.swift in Sources */,
 				D57A113E1F38E7B0006F79E0 /* IQNSArray+Sort.swift in Sources */,
 				F566CB691EA36A51007E0A2E /* SignUpVC.swift in Sources */,
@@ -717,6 +799,7 @@
 				D57A114A1F38F120006F79E0 /* ZoomImageViewController.swift in Sources */,
 				F5C2918B1EA29BD9007FA995 /* ForgotPassVC.swift in Sources */,
 				D387FDBF1FB775220048FD87 /* FollowingsVC.swift in Sources */,
+				D39B79291FBB55750004AC19 /* DACircularProgressView.m in Sources */,
 				D3C9AEE41FB809EF00AC9B17 /* ShotsVC.swift in Sources */,
 				D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */,
 				F5E07E921EAE6489000E46F8 /* KpTabBar.m in Sources */,
@@ -724,10 +807,13 @@
 				F5C2918E1EA29BD9007FA995 /* Constant.swift in Sources */,
 				F509027E1EAD294600404EC7 /* HomeVC.swift in Sources */,
 				D5976ECD1FAB980700B248B2 /* BuddiesViewController.swift in Sources */,
+				D39B792C1FBB55750004AC19 /* MWGridCell.m in Sources */,
 				D57A113B1F38E7B0006F79E0 /* IQKeyboardManagerConstants.swift in Sources */,
 				D57A11481F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift in Sources */,
 				D5C970B81F38399B00729AAA /* TransparentViewController.swift in Sources */,
+				D39B79311FBB55750004AC19 /* MWTapDetectingView.m in Sources */,
 				F56DDD3F1ED497A200D86300 /* MatchCCell.swift in Sources */,
+				D39B792D1FBB55750004AC19 /* MWGridViewController.m in Sources */,
 				D57A11441F38E7B0006F79E0 /* IQUITextFieldView+Additions.swift in Sources */,
 				F566CB621EA3429A007E0A2E /* RoundedButton.swift in Sources */,
 				F5441C6B1EF8BD7000F52E4A /* GameClass.swift in Sources */,
@@ -739,12 +825,15 @@
 				D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */,
 				F5C2918A1EA29BD9007FA995 /* AppDelegate.swift in Sources */,
 				D57A113C1F38E7B0006F79E0 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
+				D39B792A1FBB55750004AC19 /* DALabeledCircularProgressView.m in Sources */,
+				D39B792B1FBB55750004AC19 /* MWCaptionView.m in Sources */,
 				D57E4B171FA49856001C46A7 /* AddFanChallengePostView.swift in Sources */,
 				F50BA66F1EBF04290044593E /* FacebookClass.swift in Sources */,
 				F5E07E931EAE6489000E46F8 /* KpTabBarBadge.m in Sources */,
 				F5C291931EA29C18007FA995 /* LoginOptionVC.swift in Sources */,
 				D5C0F3F71FB0CF28002B7A8F /* CameraViewController.swift in Sources */,
 				F5E07E9E1EAE67EB000E46F8 /* MeVC.swift in Sources */,
+				D39B79321FBB55750004AC19 /* MWZoomingScrollView.m in Sources */,
 				F5F0CD581EDD08B2009E95B0 /* GameDetailVC.swift in Sources */,
 				F50BA6631EBEF7370044593E /* Validation.swift in Sources */,
 				F50BA6621EBEF7370044593E /* AppUtiles.swift in Sources */,
@@ -755,6 +844,9 @@
 				D57A11471F38E7B0006F79E0 /* IQUIViewController+Additions.swift in Sources */,
 				D57A113D1F38E7B0006F79E0 /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				D57A11381F38E7B0006F79E0 /* IQBarButtonItem.swift in Sources */,
+				D39B79301FBB55750004AC19 /* MWTapDetectingImageView.m in Sources */,
+				D39B792F1FBB55750004AC19 /* MWPhotoBrowser.m in Sources */,
+				D39B79331FBB55750004AC19 /* UIImage+MWPhotoBrowser.m in Sources */,
 				D57A11431F38E7B0006F79E0 /* IQUIScrollView+Additions.swift in Sources */,
 				F505223E1EDE60BA005507F5 /* MoreVC.swift in Sources */,
 				D57E4B151FA48E6D001C46A7 /* FanChallengeGameListViewController.swift in Sources */,

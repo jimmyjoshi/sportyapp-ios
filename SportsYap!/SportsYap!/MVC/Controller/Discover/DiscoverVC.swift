@@ -24,7 +24,8 @@ class SportsTypeDiscoverCell: UICollectionViewCell {
     }
     
 }
-class DiscoverVC: UIViewController {
+class DiscoverVC: UIViewController, MWPhotoBrowserDelegate
+{
     var intMaxComment : Int = 2
     @IBOutlet weak var tblPostList: UITableView!
     var arrTimelineData = NSArray()
@@ -38,7 +39,10 @@ class DiscoverVC: UIViewController {
     var EmojiPostID = Int()
     var bfromVideoPlayer = Bool()
 
-    
+    //MWPhotoBrowser
+    var photos = NSMutableArray()
+    let windowButton: UIButton = UIButton(type: UIButtonType.custom)
+    var browser:MWPhotoBrowser? // declared outside functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,18 +62,69 @@ class DiscoverVC: UIViewController {
         let discoverUserVC = homeStoryboard.instantiateViewController(withIdentifier: "DiscoverUserVC")
         self.navigationController?.pushViewController(discoverUserVC, animated: true)
     }
-    func imgTapped(sender : UITapGestureRecognizer) {
+    func imgTapped(sender : UITapGestureRecognizer)
+    {
         let imgVw : UIImageView = sender.view as! UIImageView
         let dic : NSDictionary = arrTimelineData.object(at: imgVw.tag) as! NSDictionary
         let strImgLink : String = dic.value(forKey: "image") as! String
+        
+        let photo:MWPhoto = MWPhoto(url: URL(string:strImgLink))
+        photo.caption = dic.value(forKey: "description") as? String
+        self.photos = [photo]
+        
+        browser = MWPhotoBrowser(delegate: self)
+        
+        browser?.displayActionButton = true
+        browser?.displayNavArrows = true
+        browser?.displaySelectionButtons = false
+        browser?.zoomPhotosToFill = true
+        browser?.alwaysShowControls = true
+        browser?.enableGrid = false
+        browser?.startOnGrid = false
+        browser?.enableSwipeToDismiss = true
+        browser?.setCurrentPhotoIndex(0)
+        
+        self.present(browser!, animated: true, completion: {
+            self.windowButton.frame = CGRect(x: 10, y: 20, width: 44, height: 44)
+            self.windowButton.setImage(UIImage(named: "backIcon"), for: .normal)
+            self.windowButton.addTarget(self, action: #selector(self.dismissFunc), for: UIControlEvents.touchDown)
+            if let window:UIWindow = (UIApplication.shared.delegate?.window)! {
+                window.addSubview(self.windowButton)
+            }
+        })
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
         imageVC.strLink = strImgLink
         self.view.addSubview(imageVC.view)
-        self.addChildViewController(imageVC)
+        self.addChildViewController(imageVC)*/
         
     }
+    //MARK: MWphotoBrowser
+    func photoBrowser(_ photoBrowser: MWPhotoBrowser!, photoAt index: UInt) -> MWPhotoProtocol!
+    {
+        if Int(index) < self.photos.count
+        {
+            return photos.object(at: Int(index)) as! MWPhoto
+        }
+        return nil
+    }
     
+    func photoBrowserDidFinishModalPresentation(_ photoBrowser:MWPhotoBrowser)
+    {
+        self.dismiss(animated: true, completion:nil)
+    }
+    func numberOfPhotos(in photoBrowser: MWPhotoBrowser!) -> UInt {
+        return UInt(self.photos.count)
+        
+    }
+    func dismissFunc()
+    {
+        self.windowButton.removeFromSuperview()
+        self.browser?.dismiss(animated: true, completion: {
+        })
+    }
+
     func btnLikeClicked(sender:UIButton){
         let buttonPosition:CGPoint = sender.convert(CGPoint.zero, to:self.tblPostList)
         let indexPath = self.tblPostList.indexPathForRow(at: buttonPosition)

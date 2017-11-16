@@ -9,3 +9,6 @@
 
 #import "KpTabBarController.h"
 #import <WowzaGoCoderSDK/WowzaGoCoderSDK.h>
+#import "MWPhotoBrowser.h"
+#import "DACircularProgressView.h"
+#import "MWPhoto.h"
