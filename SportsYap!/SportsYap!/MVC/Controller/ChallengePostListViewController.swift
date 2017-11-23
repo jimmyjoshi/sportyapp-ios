@@ -95,11 +95,13 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
         }
     }
     
-    func imgTapped(sender : UITapGestureRecognizer) {
+    func imgTapped(sender : UITapGestureRecognizer)
+    {
         let imgVw : UIImageView = sender.view as! UIImageView
         let dic : NSDictionary = arrTimelineData.object(at: imgVw.tag) as! NSDictionary
         let strImgLink : String = dic.value(forKey: "image") as! String
         
+        /*
         let photo:MWPhoto = MWPhoto(url: URL(string:strImgLink))
         photo.caption = dic.value(forKey: "description") as? String
         self.photos = [photo]
@@ -123,7 +125,14 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
             if let window:UIWindow = (UIApplication.shared.delegate?.window)! {
                 window.addSubview(self.windowButton)
             }
-        })
+        })*/
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
+        imageVC.strLink = strImgLink
+        imageVC.dictofPost = dic
+        self.navigationController?.pushViewController(imageVC, animated: true)
+
 
         /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

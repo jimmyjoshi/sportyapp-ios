@@ -90,6 +90,14 @@ class ShotsVC: UIViewController, MWPhotoBrowserDelegate
         let dic : NSDictionary = arrTimelineData.object(at: imgVw.tag) as! NSDictionary
         let strImgLink : String = dic.value(forKey: "image") as! String
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
+        imageVC.strLink = strImgLink
+        //            imageVC.strScreenTitle = (dic.value(forKey: "description") as? String)!
+        imageVC.dictofPost = dic
+        self.navigationController?.pushViewController(imageVC, animated: true)
+
+        /*
         let photo:MWPhoto = MWPhoto(url: URL(string:strImgLink))
         photo.caption = dic.value(forKey: "description") as? String
         self.photos = [photo]
@@ -113,7 +121,7 @@ class ShotsVC: UIViewController, MWPhotoBrowserDelegate
             if let window:UIWindow = (UIApplication.shared.delegate?.window)! {
                 window.addSubview(self.windowButton)
             }
-        })
+        })*/
 
         /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

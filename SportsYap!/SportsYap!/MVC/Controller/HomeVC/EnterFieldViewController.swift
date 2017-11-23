@@ -99,12 +99,19 @@ class EnterFieldViewController: UIViewController {
         let dic : NSDictionary = arrTimelineData.object(at: imgVw.tag) as! NSDictionary
         let strImgLink : String = dic.value(forKey: "image") as! String
         
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
+        imageVC.strLink = strImgLink
+        //            imageVC.strScreenTitle = (dic.value(forKey: "description") as? String)!
+        imageVC.dictofPost = dic
+        self.navigationController?.pushViewController(imageVC, animated: true)
+
+        /*
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
         imageVC.strLink = strImgLink
         self.view.addSubview(imageVC.view)
-        self.addChildViewController(imageVC)
+        self.addChildViewController(imageVC)*/
     }
     @IBAction func btnActionBackClicked(sender : UIButton) {
         _ = self.navigationController?.popViewController(animated: true)

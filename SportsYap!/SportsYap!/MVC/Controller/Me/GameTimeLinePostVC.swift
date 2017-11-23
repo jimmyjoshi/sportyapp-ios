@@ -27,6 +27,7 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
     @IBOutlet var lblVideoText: UILabel!
     @IBOutlet var btnRemoveVideo: UIButton!
     var videoThumbnailImage = UIImage()
+    @IBOutlet var btnpic: UIButton!
 
     
     
@@ -37,6 +38,8 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
         imagePicker.allowsEditing = true
         setRoundedCorner()
         // Do any additional setup after loading the view.
+        
+        self.btnUploadPic(btnSender: btnpic)
     }
     
     override func didReceiveMemoryWarning() {

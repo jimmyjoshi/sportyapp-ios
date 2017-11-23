@@ -72,6 +72,8 @@ class HomeVC: UIViewController , MWPhotoBrowserDelegate
         tblMatch.addSubview(refreshControl)
 
         self.addBtnToTab()
+        
+        
     }
     
     
@@ -1457,8 +1459,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         else
         {
-            
-            let photo:MWPhoto = MWPhoto(url: URL(string:strImgLink))
+         /*   let photo:MWPhoto = MWPhoto(url: URL(string:strImgLink))
             photo.caption = dic.value(forKey: "description") as? String
             self.photos = [photo]
             
@@ -1471,10 +1472,11 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             browser?.alwaysShowControls = true
             browser?.enableGrid = false
             browser?.startOnGrid = false
-            browser?.enableSwipeToDismiss = true
+            browser?.enableSwipeToDismiss = false
             browser?.setCurrentPhotoIndex(0)
             
-//            self.present(browser, animated: true, completion: nil)
+
+            //            self.present(browser, animated: true, completion: nil)
 //            self.navigationController?.pushViewController(browser, animated: true)
 
             self.present(browser!, animated: true, completion: {
@@ -1484,13 +1486,14 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 if let window:UIWindow = (UIApplication.shared.delegate?.window)! {
                     window.addSubview(self.windowButton)
                 }
-            })
+            })*/
 
-          /*  let storyboard = UIStoryboard(name: "Main", bundle: nil)
+           let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let imageVC = storyboard.instantiateViewController(withIdentifier: "ZoomImageViewController") as! ZoomImageViewController
             imageVC.strLink = strImgLink
-            self.view.addSubview(imageVC.view)
-            self.addChildViewController(imageVC)*/
+//            imageVC.strScreenTitle = (dic.value(forKey: "description") as? String)!
+            imageVC.dictofPost = dic
+            self.navigationController?.pushViewController(imageVC, animated: true)
         }
         
         
