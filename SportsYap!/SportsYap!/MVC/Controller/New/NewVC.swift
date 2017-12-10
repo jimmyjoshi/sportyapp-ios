@@ -29,6 +29,19 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     @IBOutlet var btnRemoveVideo: UIButton!
     var videoThumbnailImage = UIImage()
     
+    //NEW Camera ClassConfiguration
+    var libraryEnabled: Bool = true
+    var croppingEnabled: Bool = false
+    var allowResizing: Bool = true
+    var allowMoving: Bool = false
+    var minimumSize: CGSize = CGSize(width: 60, height: 60)
+    @IBOutlet var btnUplodImg : UIButton!
+
+    var croppingParameters: CroppingParameters {
+        return CroppingParameters(isEnabled: croppingEnabled, allowResizing: allowResizing, allowMoving: allowMoving, minimumSize: minimumSize)
+    }
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -36,6 +49,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         imagePicker.allowsEditing = true
         setRoundedCorner()
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +71,9 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         txtPost.layer.cornerRadius = 10.0
         txtPost.layer.borderColor = UIColor.gray.cgColor
         txtPost.layer.borderWidth = 1
+        
+        self.btnUploadPic(btnSender: btnUplodImg)
+        
         
         //txtPost.setContentOffset(CGPoint.zero, animated: false)
     }
@@ -195,38 +212,65 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
     @IBAction func btnUploadPic(btnSender: UIButton)
     {
         self.view.endEditing(true)
-        let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
-        self.present(uiAlert, animated: true, completion: nil)
+//        let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+//        self.present(uiAlert, animated: true, completion: nil)
         self.imagePicker.mediaTypes = ["public.image", "public.movie"]
 
-        uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-         
-            if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
-            {
-                self.imagePicker.sourceType = .camera
-
-                if self.isVideoUploaded == true
+        if self.isVideoUploaded == true
+        {
+           let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+            self.present(uiAlert, animated: true, completion: nil)
+            uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+                
+                if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
                 {
+                    self.imagePicker.sourceType = .camera
                     self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                     self.imagePicker.allowsEditing = false
                     self.imagePicker.videoMaximumDuration = 60.0
+                    self.present(self.imagePicker, animated: true, completion: nil)
                 }
                 else
                 {
-                    self.imagePicker.mediaTypes = [kUTTypeImage as NSString as String]
-                    
+                    let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+                    alert.addAction(ok)
+                    self.present(alert, animated: true, completion: nil)
                 }
+                
+            }))
+            
+            uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+                
+                self.imagePicker.sourceType = .savedPhotosAlbum
+                self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
+                self.imagePicker.allowsEditing = false
+                self.imagePicker.videoMaximumDuration = 60.0
                 self.present(self.imagePicker, animated: true, completion: nil)
-            }
-            else
-            {
-                let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-            }
+            }))
+            
+            uiAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            }))
+        }
+        else
+        {
+            let cameraViewController = CameraViewController(croppingParameters: croppingParameters, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
+//                self?.imageView.image = image
+                self?.isImageUploaded = true
+                self?.vwVideo.isHidden = false
+                self?.htVideoView.constant = 105
+                self?.htImg.constant = 105
+                self?.lblVideoText.isHidden = true
+                self?.btnRemoveVideo.isHidden = true
+                self?.imgPost.image = image
+                self?.btnCancel.isHidden = false
 
-        }))
+                self?.dismiss(animated: true, completion: nil)
+            }
+            present(cameraViewController, animated: true, completion: nil)
+        }
+        
+      /*  }))
         
         uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
             
@@ -247,9 +291,8 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
         
         uiAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             
-        }))
+        }))*/
     }
-    
     
     @IBAction func btnCancelClicked(btnSender: UIButton)
     {

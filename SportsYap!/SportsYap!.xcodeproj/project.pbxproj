@@ -24,6 +24,28 @@
 		D3A6FA4C1FBBFECA00FCA1BE /* ImageError@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3A6FA491FBBFECA00FCA1BE /* ImageError@3x.png */; };
 		D3C9AEE41FB809EF00AC9B17 /* ShotsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */; };
 		D3CCE53F1FB165FD006BE784 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */; };
+		D3E0AFDD1FDD161E00E83A1C /* CameraView.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3E0AFC41FDD161E00E83A1C /* CameraView.strings */; };
+		D3E0AFDE1FDD161E00E83A1C /* CameraViewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3E0AFC51FDD161E00E83A1C /* CameraViewAssets.xcassets */; };
+		D3E0AFDF1FDD161E00E83A1C /* CameraGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFC71FDD161E00E83A1C /* CameraGlobals.swift */; };
+		D3E0AFE01FDD161E00E83A1C /* CameraShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFC81FDD161E00E83A1C /* CameraShot.swift */; };
+		D3E0AFE11FDD161E00E83A1C /* CroppingParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFC91FDD161E00E83A1C /* CroppingParameters.swift */; };
+		D3E0AFE21FDD161E00E83A1C /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFCA1FDD161E00E83A1C /* ImageFetcher.swift */; };
+		D3E0AFE31FDD161E00E83A1C /* PhotoLibraryAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFCB1FDD161E00E83A1C /* PhotoLibraryAuthorizer.swift */; };
+		D3E0AFE41FDD161E00E83A1C /* SingleImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFCC1FDD161E00E83A1C /* SingleImageFetcher.swift */; };
+		D3E0AFE51FDD161E00E83A1C /* SingleImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFCD1FDD161E00E83A1C /* SingleImageSaver.swift */; };
+		D3E0AFE61FDD161E00E83A1C /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFCE1FDD161E00E83A1C /* UIButtonExtensions.swift */; };
+		D3E0AFE71FDD161E00E83A1C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFCF1FDD161E00E83A1C /* UIViewExtensions.swift */; };
+		D3E0AFE81FDD161E00E83A1C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD01FDD161E00E83A1C /* Utilities.swift */; };
+		D3E0AFE91FDD161E00E83A1C /* VolumeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD11FDD161E00E83A1C /* VolumeControl.swift */; };
+		D3E0AFEA1FDD161E00E83A1C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD31FDD161E00E83A1C /* CameraViewController.swift */; };
+		D3E0AFEB1FDD161E00E83A1C /* CameraViewControllerConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD41FDD161E00E83A1C /* CameraViewControllerConstraint.swift */; };
+		D3E0AFEC1FDD161E00E83A1C /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD51FDD161E00E83A1C /* ConfirmViewController.swift */; };
+		D3E0AFED1FDD161E00E83A1C /* ConfirmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3E0AFD61FDD161E00E83A1C /* ConfirmViewController.xib */; };
+		D3E0AFEE1FDD161E00E83A1C /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD71FDD161E00E83A1C /* PhotoLibraryViewController.swift */; };
+		D3E0AFEF1FDD161E00E83A1C /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFD91FDD161E00E83A1C /* CameraView.swift */; };
+		D3E0AFF01FDD161E00E83A1C /* CropOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFDA1FDD161E00E83A1C /* CropOverlay.swift */; };
+		D3E0AFF11FDD161E00E83A1C /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFDB1FDD161E00E83A1C /* ImageCell.swift */; };
+		D3E0AFF21FDD161E00E83A1C /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0AFDC1FDD161E00E83A1C /* PermissionsView.swift */; };
 		D3F1FA361FB223FF000D2BB5 /* GameTimeLinePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */; };
 		D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */; };
 		D57A11381F38E7B0006F79E0 /* IQBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11261F38E7B0006F79E0 /* IQBarButtonItem.swift */; };
@@ -45,7 +67,6 @@
 		D57A11481F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11371F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift */; };
 		D57A114A1F38F120006F79E0 /* ZoomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */; };
 		D57E4B151FA48E6D001C46A7 /* FanChallengeGameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E4B141FA48E6D001C46A7 /* FanChallengeGameListViewController.swift */; };
-		D57E4B171FA49856001C46A7 /* AddFanChallengePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E4B161FA49856001C46A7 /* AddFanChallengePostView.swift */; };
 		D57E89981F5145BE009A9E72 /* WowzaGoCoderSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */; };
 		D57E899A1F514662009A9E72 /* PostToGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57E89991F514662009A9E72 /* PostToGameViewController.swift */; };
 		D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5832C431F96791C00B76DFF /* VideoViewController.swift */; };
@@ -59,7 +80,6 @@
 		D597B5D71F15533300EF086D /* TagGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D597B5D61F15533300EF086D /* TagGameVC.swift */; };
 		D599BC221F58777400056046 /* GameListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D599BC211F58777400056046 /* GameListingViewController.swift */; };
 		D5A1AD1D1F358AB2005485E2 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A1AD1C1F358AB2005485E2 /* CommentViewController.swift */; };
-		D5C0F3F71FB0CF28002B7A8F /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */; };
 		D5C84E731F3246B900029EF6 /* UIImageView+DownloadImageURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C84E721F3246B900029EF6 /* UIImageView+DownloadImageURL.swift */; };
 		D5C970B81F38399B00729AAA /* TransparentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C970B71F38399B00729AAA /* TransparentViewController.swift */; };
 		D5D351E51F23369A001C6F84 /* TimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5D351E41F23369A001C6F84 /* TimelineCell.xib */; };
@@ -154,6 +174,28 @@
 		D3A6FA491FBBFECA00FCA1BE /* ImageError@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ImageError@3x.png"; sourceTree = "<group>"; };
 		D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotsVC.swift; sourceTree = "<group>"; };
 		D3CCE53E1FB165FD006BE784 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D3E0AFC41FDD161E00E83A1C /* CameraView.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CameraView.strings; sourceTree = "<group>"; };
+		D3E0AFC51FDD161E00E83A1C /* CameraViewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CameraViewAssets.xcassets; sourceTree = "<group>"; };
+		D3E0AFC71FDD161E00E83A1C /* CameraGlobals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraGlobals.swift; sourceTree = "<group>"; };
+		D3E0AFC81FDD161E00E83A1C /* CameraShot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraShot.swift; sourceTree = "<group>"; };
+		D3E0AFC91FDD161E00E83A1C /* CroppingParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CroppingParameters.swift; sourceTree = "<group>"; };
+		D3E0AFCA1FDD161E00E83A1C /* ImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
+		D3E0AFCB1FDD161E00E83A1C /* PhotoLibraryAuthorizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAuthorizer.swift; sourceTree = "<group>"; };
+		D3E0AFCC1FDD161E00E83A1C /* SingleImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageFetcher.swift; sourceTree = "<group>"; };
+		D3E0AFCD1FDD161E00E83A1C /* SingleImageSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleImageSaver.swift; sourceTree = "<group>"; };
+		D3E0AFCE1FDD161E00E83A1C /* UIButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
+		D3E0AFCF1FDD161E00E83A1C /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		D3E0AFD01FDD161E00E83A1C /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		D3E0AFD11FDD161E00E83A1C /* VolumeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VolumeControl.swift; sourceTree = "<group>"; };
+		D3E0AFD31FDD161E00E83A1C /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		D3E0AFD41FDD161E00E83A1C /* CameraViewControllerConstraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewControllerConstraint.swift; sourceTree = "<group>"; };
+		D3E0AFD51FDD161E00E83A1C /* ConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
+		D3E0AFD61FDD161E00E83A1C /* ConfirmViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmViewController.xib; sourceTree = "<group>"; };
+		D3E0AFD71FDD161E00E83A1C /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
+		D3E0AFD91FDD161E00E83A1C /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		D3E0AFDA1FDD161E00E83A1C /* CropOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropOverlay.swift; sourceTree = "<group>"; };
+		D3E0AFDB1FDD161E00E83A1C /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		D3E0AFDC1FDD161E00E83A1C /* PermissionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
 		D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTimeLinePostVC.swift; sourceTree = "<group>"; };
 		D57A11231F38D874006F79E0 /* UIButton+RoundedCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+RoundedCorner.swift"; sourceTree = "<group>"; };
 		D57A11261F38E7B0006F79E0 /* IQBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IQBarButtonItem.swift; sourceTree = "<group>"; };
@@ -176,7 +218,6 @@
 		D57A11371F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIWindow+Hierarchy.swift"; sourceTree = "<group>"; };
 		D57A11491F38F120006F79E0 /* ZoomImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomImageViewController.swift; sourceTree = "<group>"; };
 		D57E4B141FA48E6D001C46A7 /* FanChallengeGameListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FanChallengeGameListViewController.swift; sourceTree = "<group>"; };
-		D57E4B161FA49856001C46A7 /* AddFanChallengePostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFanChallengePostView.swift; sourceTree = "<group>"; };
 		D57E89971F5145BE009A9E72 /* WowzaGoCoderSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WowzaGoCoderSDK.framework; sourceTree = "<group>"; };
 		D57E89991F514662009A9E72 /* PostToGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostToGameViewController.swift; sourceTree = "<group>"; };
 		D5832C431F96791C00B76DFF /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
@@ -188,7 +229,6 @@
 		D597B5D61F15533300EF086D /* TagGameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagGameVC.swift; sourceTree = "<group>"; };
 		D599BC211F58777400056046 /* GameListingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListingViewController.swift; sourceTree = "<group>"; };
 		D5A1AD1C1F358AB2005485E2 /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
-		D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D5C84E721F3246B900029EF6 /* UIImageView+DownloadImageURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImageURL.swift"; sourceTree = "<group>"; };
 		D5C970B71F38399B00729AAA /* TransparentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentViewController.swift; sourceTree = "<group>"; };
 		D5D351E41F23369A001C6F84 /* TimelineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineCell.xib; sourceTree = "<group>"; };
@@ -311,6 +351,59 @@
 			path = MWPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		D3E0AFC31FDD161E00E83A1C /* ALCameraViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3E0AFC41FDD161E00E83A1C /* CameraView.strings */,
+				D3E0AFC51FDD161E00E83A1C /* CameraViewAssets.xcassets */,
+				D3E0AFC61FDD161E00E83A1C /* Utilities */,
+				D3E0AFD21FDD161E00E83A1C /* ViewController */,
+				D3E0AFD81FDD161E00E83A1C /* Views */,
+			);
+			path = ALCameraViewController;
+			sourceTree = "<group>";
+		};
+		D3E0AFC61FDD161E00E83A1C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D3E0AFC71FDD161E00E83A1C /* CameraGlobals.swift */,
+				D3E0AFC81FDD161E00E83A1C /* CameraShot.swift */,
+				D3E0AFC91FDD161E00E83A1C /* CroppingParameters.swift */,
+				D3E0AFCA1FDD161E00E83A1C /* ImageFetcher.swift */,
+				D3E0AFCB1FDD161E00E83A1C /* PhotoLibraryAuthorizer.swift */,
+				D3E0AFCC1FDD161E00E83A1C /* SingleImageFetcher.swift */,
+				D3E0AFCD1FDD161E00E83A1C /* SingleImageSaver.swift */,
+				D3E0AFCE1FDD161E00E83A1C /* UIButtonExtensions.swift */,
+				D3E0AFCF1FDD161E00E83A1C /* UIViewExtensions.swift */,
+				D3E0AFD01FDD161E00E83A1C /* Utilities.swift */,
+				D3E0AFD11FDD161E00E83A1C /* VolumeControl.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		D3E0AFD21FDD161E00E83A1C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D3E0AFD31FDD161E00E83A1C /* CameraViewController.swift */,
+				D3E0AFD41FDD161E00E83A1C /* CameraViewControllerConstraint.swift */,
+				D3E0AFD51FDD161E00E83A1C /* ConfirmViewController.swift */,
+				D3E0AFD61FDD161E00E83A1C /* ConfirmViewController.xib */,
+				D3E0AFD71FDD161E00E83A1C /* PhotoLibraryViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D3E0AFD81FDD161E00E83A1C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D3E0AFD91FDD161E00E83A1C /* CameraView.swift */,
+				D3E0AFDA1FDD161E00E83A1C /* CropOverlay.swift */,
+				D3E0AFDB1FDD161E00E83A1C /* ImageCell.swift */,
+				D3E0AFDC1FDD161E00E83A1C /* PermissionsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		D57A11251F38E7B0006F79E0 /* IQKeyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,7 +433,6 @@
 			isa = PBXGroup;
 			children = (
 				D57E4B141FA48E6D001C46A7 /* FanChallengeGameListViewController.swift */,
-				D57E4B161FA49856001C46A7 /* AddFanChallengePostView.swift */,
 				D5920EE01FA61CF200A980CB /* ChallengePostListViewController.swift */,
 			);
 			name = "Fan Challenge";
@@ -468,6 +560,7 @@
 		F5C2915B1EA29B8D007FA995 = {
 			isa = PBXGroup;
 			children = (
+				D3E0AFC31FDD161E00E83A1C /* ALCameraViewController */,
 				D39B790F1FBB55750004AC19 /* MWPhotoBrowser */,
 				D57E89961F5145AD009A9E72 /* Wowza Framwork */,
 				F5E07E961EAE6578000E46F8 /* SportsYap!-Bridging-Header.h */,
@@ -623,7 +716,6 @@
 				F5E07E9D1EAE67EB000E46F8 /* MeVC.swift */,
 				F55BA2341ED7D0F300886877 /* EditProfileVC.swift */,
 				F55BA2361ED7DA0900886877 /* AddTeamVC.swift */,
-				D5C0F3F61FB0CF28002B7A8F /* CameraViewController.swift */,
 				D3F1FA351FB223FF000D2BB5 /* GameTimeLinePostVC.swift */,
 				D3C9AEE31FB809EF00AC9B17 /* ShotsVC.swift */,
 			);
@@ -717,9 +809,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3E0AFED1FDD161E00E83A1C /* ConfirmViewController.xib in Resources */,
 				F56DDD441ED49B6400D86300 /* MatchSmallCCell.xib in Resources */,
 				F5C291901EA29BD9007FA995 /* Main.storyboard in Resources */,
 				D5D351E51F23369A001C6F84 /* TimelineCell.xib in Resources */,
+				D3E0AFDD1FDD161E00E83A1C /* CameraView.strings in Resources */,
+				D3E0AFDE1FDD161E00E83A1C /* CameraViewAssets.xcassets in Resources */,
 				F5C2916F1EA29B8D007FA995 /* Assets.xcassets in Resources */,
 				D57A11391F38E7B0006F79E0 /* IQKeyboardManager.bundle in Resources */,
 				F5C2918F1EA29BD9007FA995 /* LaunchScreen.storyboard in Resources */,
@@ -786,12 +881,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C84E731F3246B900029EF6 /* UIImageView+DownloadImageURL.swift in Sources */,
+				D3E0AFE41FDD161E00E83A1C /* SingleImageFetcher.swift in Sources */,
 				D587442B1F5F1DF80074C2E6 /* Toast.swift in Sources */,
+				D3E0AFEC1FDD161E00E83A1C /* ConfirmViewController.swift in Sources */,
 				F5D364AB1ED05C2700142DDA /* TutorialVC.swift in Sources */,
 				F56DDD431ED49B6400D86300 /* MatchSmallCCell.swift in Sources */,
 				D39B792E1FBB55750004AC19 /* MWPhoto.m in Sources */,
 				F55BA2371ED7DA0900886877 /* AddTeamVC.swift in Sources */,
 				D57A113E1F38E7B0006F79E0 /* IQNSArray+Sort.swift in Sources */,
+				D3E0AFF11FDD161E00E83A1C /* ImageCell.swift in Sources */,
 				F566CB691EA36A51007E0A2E /* SignUpVC.swift in Sources */,
 				F5E07E9C1EAE67D9000E46F8 /* DiscoverVC.swift in Sources */,
 				F50BA6691EBEF8300044593E /* MainReqeustClass.swift in Sources */,
@@ -799,6 +897,7 @@
 				D57A114A1F38F120006F79E0 /* ZoomImageViewController.swift in Sources */,
 				F5C2918B1EA29BD9007FA995 /* ForgotPassVC.swift in Sources */,
 				D387FDBF1FB775220048FD87 /* FollowingsVC.swift in Sources */,
+				D3E0AFE61FDD161E00E83A1C /* UIButtonExtensions.swift in Sources */,
 				D39B79291FBB55750004AC19 /* DACircularProgressView.m in Sources */,
 				D3C9AEE41FB809EF00AC9B17 /* ShotsVC.swift in Sources */,
 				D57A11241F38D874006F79E0 /* UIButton+RoundedCorner.swift in Sources */,
@@ -806,36 +905,45 @@
 				D599BC221F58777400056046 /* GameListingViewController.swift in Sources */,
 				F5C2918E1EA29BD9007FA995 /* Constant.swift in Sources */,
 				F509027E1EAD294600404EC7 /* HomeVC.swift in Sources */,
+				D3E0AFF01FDD161E00E83A1C /* CropOverlay.swift in Sources */,
 				D5976ECD1FAB980700B248B2 /* BuddiesViewController.swift in Sources */,
 				D39B792C1FBB55750004AC19 /* MWGridCell.m in Sources */,
 				D57A113B1F38E7B0006F79E0 /* IQKeyboardManagerConstants.swift in Sources */,
 				D57A11481F38E7B0006F79E0 /* IQUIWindow+Hierarchy.swift in Sources */,
 				D5C970B81F38399B00729AAA /* TransparentViewController.swift in Sources */,
 				D39B79311FBB55750004AC19 /* MWTapDetectingView.m in Sources */,
+				D3E0AFE71FDD161E00E83A1C /* UIViewExtensions.swift in Sources */,
 				F56DDD3F1ED497A200D86300 /* MatchCCell.swift in Sources */,
 				D39B792D1FBB55750004AC19 /* MWGridViewController.m in Sources */,
 				D57A11441F38E7B0006F79E0 /* IQUITextFieldView+Additions.swift in Sources */,
+				D3E0AFE31FDD161E00E83A1C /* PhotoLibraryAuthorizer.swift in Sources */,
 				F566CB621EA3429A007E0A2E /* RoundedButton.swift in Sources */,
+				D3E0AFE91FDD161E00E83A1C /* VolumeControl.swift in Sources */,
 				F5441C6B1EF8BD7000F52E4A /* GameClass.swift in Sources */,
 				F5A5AAC71ED52EB20014FA70 /* DiscoverClass.swift in Sources */,
 				F55BA23A1ED7DAD800886877 /* NewVC.swift in Sources */,
 				D57A11401F38E7B0006F79E0 /* IQTextView.swift in Sources */,
+				D3E0AFDF1FDD161E00E83A1C /* CameraGlobals.swift in Sources */,
+				D3E0AFEA1FDD161E00E83A1C /* CameraViewController.swift in Sources */,
 				D57A11451F38E7B0006F79E0 /* IQUIView+Hierarchy.swift in Sources */,
 				D57A113F1F38E7B0006F79E0 /* IQPreviousNextView.swift in Sources */,
 				D5832C441F96791C00B76DFF /* VideoViewController.swift in Sources */,
 				F5C2918A1EA29BD9007FA995 /* AppDelegate.swift in Sources */,
 				D57A113C1F38E7B0006F79E0 /* IQKeyboardManagerConstantsInternal.swift in Sources */,
+				D3E0AFE11FDD161E00E83A1C /* CroppingParameters.swift in Sources */,
 				D39B792A1FBB55750004AC19 /* DALabeledCircularProgressView.m in Sources */,
+				D3E0AFEB1FDD161E00E83A1C /* CameraViewControllerConstraint.swift in Sources */,
 				D39B792B1FBB55750004AC19 /* MWCaptionView.m in Sources */,
-				D57E4B171FA49856001C46A7 /* AddFanChallengePostView.swift in Sources */,
 				F50BA66F1EBF04290044593E /* FacebookClass.swift in Sources */,
 				F5E07E931EAE6489000E46F8 /* KpTabBarBadge.m in Sources */,
 				F5C291931EA29C18007FA995 /* LoginOptionVC.swift in Sources */,
-				D5C0F3F71FB0CF28002B7A8F /* CameraViewController.swift in Sources */,
 				F5E07E9E1EAE67EB000E46F8 /* MeVC.swift in Sources */,
 				D39B79321FBB55750004AC19 /* MWZoomingScrollView.m in Sources */,
 				F5F0CD581EDD08B2009E95B0 /* GameDetailVC.swift in Sources */,
+				D3E0AFE51FDD161E00E83A1C /* SingleImageSaver.swift in Sources */,
 				F50BA6631EBEF7370044593E /* Validation.swift in Sources */,
+				D3E0AFEE1FDD161E00E83A1C /* PhotoLibraryViewController.swift in Sources */,
+				D3E0AFE81FDD161E00E83A1C /* Utilities.swift in Sources */,
 				F50BA6621EBEF7370044593E /* AppUtiles.swift in Sources */,
 				F5C2918C1EA29BD9007FA995 /* LoginVC.swift in Sources */,
 				F5CD062A1ED02A6900B2F4C0 /* TeamClass.swift in Sources */,
@@ -843,13 +951,16 @@
 				F50BA66C1EBEF92A0044593E /* AppUserDefaults.swift in Sources */,
 				D57A11471F38E7B0006F79E0 /* IQUIViewController+Additions.swift in Sources */,
 				D57A113D1F38E7B0006F79E0 /* IQKeyboardReturnKeyHandler.swift in Sources */,
+				D3E0AFEF1FDD161E00E83A1C /* CameraView.swift in Sources */,
 				D57A11381F38E7B0006F79E0 /* IQBarButtonItem.swift in Sources */,
 				D39B79301FBB55750004AC19 /* MWTapDetectingImageView.m in Sources */,
 				D39B792F1FBB55750004AC19 /* MWPhotoBrowser.m in Sources */,
 				D39B79331FBB55750004AC19 /* UIImage+MWPhotoBrowser.m in Sources */,
 				D57A11431F38E7B0006F79E0 /* IQUIScrollView+Additions.swift in Sources */,
+				D3E0AFE21FDD161E00E83A1C /* ImageFetcher.swift in Sources */,
 				F505223E1EDE60BA005507F5 /* MoreVC.swift in Sources */,
 				D57E4B151FA48E6D001C46A7 /* FanChallengeGameListViewController.swift in Sources */,
+				D3E0AFF21FDD161E00E83A1C /* PermissionsView.swift in Sources */,
 				D5920EE11FA61CF200A980CB /* ChallengePostListViewController.swift in Sources */,
 				F5BF178C1EAEF1F70084C5C4 /* DiscoverUserVC.swift in Sources */,
 				D57A113A1F38E7B0006F79E0 /* IQKeyboardManager.swift in Sources */,
@@ -866,6 +977,7 @@
 				D5D351E71F233C0C001C6F84 /* TimelineCell.swift in Sources */,
 				F50BA66A1EBEF8300044593E /* WSConstant.swift in Sources */,
 				D57E899A1F514662009A9E72 /* PostToGameViewController.swift in Sources */,
+				D3E0AFE01FDD161E00E83A1C /* CameraShot.swift in Sources */,
 				D57A11411F38E7B0006F79E0 /* IQTitleBarButtonItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

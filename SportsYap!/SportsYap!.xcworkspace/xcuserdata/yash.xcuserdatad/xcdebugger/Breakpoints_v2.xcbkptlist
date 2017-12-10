@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/New/NewVC.swift"
-            timestampString = "532977916.642997"
+            filePath = "SportsYap!/MVC/Controller/New/TransparentViewController.swift"
+            timestampString = "534578457.811578"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SportsYap!/MVC/Controller/AddFanChallengePostView.swift"
-            timestampString = "532977939.738954"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "getStreamInformation()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
