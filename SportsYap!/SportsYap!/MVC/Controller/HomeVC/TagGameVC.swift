@@ -64,6 +64,7 @@ class TagGameVC: UIViewController {
             let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
             postVC.bfromGameTimeline = true
+            postVC.bfromAddtoShot = true
             postVC.currentGameObject = self.arrList[0]
             self.navigationController?.pushViewController(postVC, animated: true)
             

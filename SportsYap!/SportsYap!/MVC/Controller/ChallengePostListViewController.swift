@@ -16,6 +16,7 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
     @IBOutlet weak var activity: UIActivityIndicatorView!
     
     @IBOutlet weak var vwNoGame: UIView!
+    @IBOutlet weak var  btnCreateNewPost : UIButton!
    
     var arrTimelineData = NSArray()
     var strDate = ""
@@ -42,6 +43,7 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
     var photos = NSMutableArray()
     let windowButton: UIButton = UIButton(type: UIButtonType.custom)
     var browser:MWPhotoBrowser? // declared outside functions
+    var bfromAddtoShot = Bool()
 
 
     override func viewDidLoad()
@@ -49,6 +51,12 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
         super.viewDidLoad()
         
         lblScreenTitle.text =  "\(currentGameObject.strTeam1FirstName) \(currentGameObject.strTeam1LastName) vs \(currentGameObject.strTeam2FirstName) \(currentGameObject.strTeam2LastName)"
+        
+        if(bfromAddtoShot)
+        {
+            bfromAddtoShot = false
+            self.btnCreateNewPostClicked(sender: btnCreateNewPost)
+        }
     }
     override func viewWillAppear(_ animated: Bool)
     {
@@ -581,6 +589,13 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                 strURL = strImg.replacingOccurrences(of: " ", with: "%20")
             }
             
+//            cell.imgPost.contentMode = .scaleAspectFill
+//            cell.imgPost.clipsToBounds = true
+
+             cell.imgPost.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
+             cell.imgPost.contentMode = .scaleAspectFit // OR .scaleAspectFill
+             cell.imgPost.clipsToBounds = true
+
             //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
             let url2 = URL(string: strURL)
             if url2 != nil {
@@ -765,6 +780,13 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                     strURL = strImg.replacingOccurrences(of: " ", with: "%20")
                 }
                 
+//                cell.imgPost.contentMode = .scaleAspectFill
+//                cell.imgPost.clipsToBounds = true
+
+//                cell.imgPost.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
+//                cell.imgPost.contentMode = .scaleAspectFit // OR .scaleAspectFill
+//                cell.imgPost.clipsToBounds = true
+
                 //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
                 let url2 = URL(string: strURL)
                 if url2 != nil {
