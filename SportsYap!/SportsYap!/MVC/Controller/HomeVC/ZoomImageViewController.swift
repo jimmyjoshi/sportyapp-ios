@@ -34,6 +34,9 @@ class ZoomImageViewController: UIViewController,UIScrollViewDelegate, MWPhotoBro
         webVw.isHidden = true
 //        lblScreenTitle.text = strScreenTitle
         
+        imgPost.contentMode = .scaleAspectFit
+        imgPost.clipsToBounds = true
+
         let strURL : String = strLink.replacingOccurrences(of: " ", with: "%20")
         let url2 = URL(string: strURL)
         if url2 != nil {

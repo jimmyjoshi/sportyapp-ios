@@ -988,7 +988,6 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                     cell.btnPlay?.addTarget(self, action: #selector(self.btnPlayClicked(sender:)), for: .touchUpInside)
                     
                     
-                    
                     var strURL = String("")!
                     //Video thumbnai is to be displayed
                     if strImg == ""
@@ -1005,8 +1004,8 @@ extension HomeVC: UITableViewDataSource,UITableViewDelegate {
                         strURL = strImg.replacingOccurrences(of: " ", with: "%20")
                     }
                     
-                    //                    cell.imgPost.contentMode = .scaleAspectFill
-                    //                    cell.imgPost.clipsToBounds = true
+                                        cell.imgPost.contentMode = .scaleAspectFit
+                                        cell.imgPost.clipsToBounds = true
                     //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
                     let url2 = URL(string: strURL)
                     if url2 != nil {

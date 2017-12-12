@@ -598,12 +598,8 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                 strURL = strImg.replacingOccurrences(of: " ", with: "%20")
             }
             
-//            cell.imgPost.contentMode = .scaleAspectFill
-//            cell.imgPost.clipsToBounds = true
-
-             cell.imgPost.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
-             cell.imgPost.contentMode = .scaleAspectFit // OR .scaleAspectFill
-             cell.imgPost.clipsToBounds = true
+            cell.imgPost.contentMode = .scaleAspectFit
+            cell.imgPost.clipsToBounds = true
 
             //let strURL : String = strImg.replacingOccurrences(of: " ", with: "%20")
             let url2 = URL(string: strURL)
@@ -789,8 +785,8 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
                     strURL = strImg.replacingOccurrences(of: " ", with: "%20")
                 }
                 
-//                cell.imgPost.contentMode = .scaleAspectFill
-//                cell.imgPost.clipsToBounds = true
+                cell.imgPost.contentMode = .scaleAspectFit
+                cell.imgPost.clipsToBounds = true
 
 //                cell.imgPost.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
 //                cell.imgPost.contentMode = .scaleAspectFit // OR .scaleAspectFill
