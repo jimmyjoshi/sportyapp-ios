@@ -13,6 +13,11 @@ class TagGameVC: UIViewController {
     @IBOutlet weak var btnAdd: UIButton!
     @IBOutlet weak var tblTagGame: UITableView!
     //First value indicates section i.e 0,1 and second tableview row
+    
+    @IBOutlet weak var vwPostView: UIView!
+    var currentGameObject = GameClass()
+
+    
     var intSelectedValue : (Int,Int) = (-1,-1)
     var arrList = Array<GameClass>()
     override func viewDidLoad() {
@@ -61,12 +66,17 @@ class TagGameVC: UIViewController {
             let dictFanMeter : NSDictionary  = ((response as NSDictionary).value(forKey: "data") as! NSDictionary)
             let intHomeCount : Int = dictFanMeter.value(forKey: "homeCount") as! Int
             let intAwayCount : Int = dictFanMeter.value(forKey: "awayCount") as! Int
+            
+            self.currentGameObject = self.arrList[0]
+            
+            /*
             let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
             postVC.bfromGameTimeline = true
             postVC.bfromAddtoShot = true
             postVC.currentGameObject = self.arrList[0]
-            self.navigationController?.pushViewController(postVC, animated: true)
+            self.navigationController?.pushViewController(postVC, animated: true)*/
+            self.btnCreateNewPostClicked()
             
         }) { (response:String!) in
             showAlert(strMsg: response, vc: self)
@@ -75,6 +85,64 @@ class TagGameVC: UIViewController {
     }
     @IBAction func btnActionBackClicked(sender : UIButton) {
          _ = self.navigationController?.popViewController(animated: true)
+    }
+    //MARK: Post Image or video
+    
+    @IBAction func btnCreateNewPostClicked()
+    {
+        self.view?.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        self.vwPostView.isHidden = false
+    }
+    //MARK: Button Actions
+    @IBAction func btnCreateImagePostClicked(sender: UIButton)
+    {
+        self.view?.backgroundColor = UIColor(white: 1, alpha: 1)
+
+        vwPostView.isHidden = true
+        /*
+         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+         let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+         postVC.isImageUploaded = true
+         self.navigationController?.pushViewController(postVC, animated: true)*/
+        
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
+        postVC.selectedGame = currentGameObject
+        postVC.isImageUploaded = true
+        postVC.isneedtogoahead = true
+        
+        self.navigationController?.pushViewController(postVC, animated: true)
+        //postVC.isImageUploaded = true
+    }
+    
+    @IBAction func btnCreateVideoPostClicked(sender: UIButton)
+    {
+        self.view?.backgroundColor = UIColor(white: 1, alpha: 1)
+
+        vwPostView.isHidden = true
+        //        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        //        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        //        postVC.isVideoUploaded = true
+        //        self.navigationController?.pushViewController(postVC, animated: true)
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
+        postVC.selectedGame = currentGameObject
+        postVC.isVideoUploaded = true
+        postVC.isneedtogoahead = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+        
+    }
+    
+    @IBAction func btnClosePostView(_ :UIButton)
+    {
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            
+        }, completion: {
+            (value: Bool) in
+            
+            self.vwPostView.isHidden = true
+        })
     }
 
 }

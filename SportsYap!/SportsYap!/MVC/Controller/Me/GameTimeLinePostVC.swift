@@ -29,6 +29,9 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
     var videoThumbnailImage = UIImage()
     @IBOutlet var btnpic: UIButton!
 
+    var isneedtogoahead : Bool = false
+
+    
     //NEW Camera ClassConfiguration
     var libraryEnabled: Bool = true
     var croppingEnabled: Bool = false
@@ -123,7 +126,20 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
                             self.htImg.constant = 0
                             self.btnCancel.isHidden = true
                             self.txtPost.text = ""
-                            self.navigationController?.popViewController(animated: true)
+                            
+                            if self.isneedtogoahead == true
+                            {
+                                let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+                                postVC.bfromGameTimeline = true
+                                postVC.currentGameObject = self.selectedGame
+                                postVC.isneedtogobackhome = true
+                                self.navigationController?.pushViewController(postVC, animated: true)
+                            }
+                            else
+                            {
+                                self.navigationController?.popViewController(animated: true)
+                            }
 
                         }
                         alertView.addAction(OKAction)
@@ -155,8 +171,19 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
                     { (action) in
                         
                         self.txtPost.text = ""
-                        self.navigationController?.popViewController(animated: true)
-                        
+                        if self.isneedtogoahead == true
+                        {
+                            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+                            postVC.bfromGameTimeline = true
+                            postVC.currentGameObject = self.selectedGame
+                            postVC.isneedtogobackhome = true
+                            self.navigationController?.pushViewController(postVC, animated: true)
+                        }
+                        else
+                        {
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                     alertView.addAction(OKAction)
                     self.present(alertView, animated: true, completion: nil)
@@ -190,7 +217,20 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
                         self.htImg.constant = 0
                         self.btnCancel.isHidden = true
                         self.txtPost.text = ""
-                        self.navigationController?.popViewController(animated: true)
+                        if self.isneedtogoahead == true
+                        {
+                            let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let postVC: ChallengePostListViewController = cameraStoryboard.instantiateViewController(withIdentifier: "ChallengePostListViewController") as! ChallengePostListViewController
+                            postVC.bfromGameTimeline = true
+                            postVC.currentGameObject = self.selectedGame
+                            postVC.isneedtogobackhome = true
+                            self.navigationController?.pushViewController(postVC, animated: true)
+                        }
+                        else
+                        {
+                            
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                     alertView.addAction(OKAction)
                     self.present(alertView, animated: true, completion: nil)

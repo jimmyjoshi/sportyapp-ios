@@ -45,6 +45,7 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
     var browser:MWPhotoBrowser? // declared outside functions
     var bfromAddtoShot = Bool()
 
+    var isneedtogobackhome : Bool = false
 
     override func viewDidLoad()
     {
@@ -215,8 +216,16 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
         self.present(tagDetailVC, animated: true, completion: nil)
     }
     
-    @IBAction func btnBackClicked(sender: UIButton){
-        _=self.navigationController?.popViewController(animated: true)
+    @IBAction func btnBackClicked(sender: UIButton)
+    {
+        if isneedtogobackhome == true
+        {
+            _=self.navigationController?.popToViewController(navigationController?.viewControllers[1] ?? UIViewController(), animated: true)
+        }
+        else
+        {
+            _=self.navigationController?.popViewController(animated: true)
+        }
     }
     
     //MARK:- Function to set Image
