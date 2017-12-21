@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D387FDBF1FB775220048FD87 /* FollowingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D387FDBE1FB775220048FD87 /* FollowingsVC.swift */; };
+		D39990551FE988FB00BAE84E /* iOSDevCenters+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39990541FE988FB00BAE84E /* iOSDevCenters+GIF.swift */; };
 		D39B79291FBB55750004AC19 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79111FBB55750004AC19 /* DACircularProgressView.m */; };
 		D39B792A1FBB55750004AC19 /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79131FBB55750004AC19 /* DALabeledCircularProgressView.m */; };
 		D39B792B1FBB55750004AC19 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B79151FBB55750004AC19 /* MWCaptionView.m */; };
@@ -144,6 +145,7 @@
 		B0463FB46228D7D025E35ECD /* Pods-SportsYap!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SportsYap!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SportsYap!/Pods-SportsYap!.debug.xcconfig"; sourceTree = "<group>"; };
 		BE570E70277971A4A65FF298 /* Pods_SportsYap_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SportsYap_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D387FDBE1FB775220048FD87 /* FollowingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingsVC.swift; sourceTree = "<group>"; };
+		D39990541FE988FB00BAE84E /* iOSDevCenters+GIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSDevCenters+GIF.swift"; sourceTree = "<group>"; };
 		D39B79101FBB55750004AC19 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		D39B79111FBB55750004AC19 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
 		D39B79121FBB55750004AC19 /* DALabeledCircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DALabeledCircularProgressView.h; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 		F5C291661EA29B8D007FA995 /* SportsYap! */ = {
 			isa = PBXGroup;
 			children = (
+				D39990541FE988FB00BAE84E /* iOSDevCenters+GIF.swift */,
 				D58744291F5F1DEF0074C2E6 /* Toast */,
 				D57A11251F38E7B0006F79E0 /* IQKeyboard */,
 				D5C84E711F3246AF00029EF6 /* Utility */,
@@ -921,6 +924,7 @@
 				D3E0AFE91FDD161E00E83A1C /* VolumeControl.swift in Sources */,
 				F5441C6B1EF8BD7000F52E4A /* GameClass.swift in Sources */,
 				F5A5AAC71ED52EB20014FA70 /* DiscoverClass.swift in Sources */,
+				D39990551FE988FB00BAE84E /* iOSDevCenters+GIF.swift in Sources */,
 				F55BA23A1ED7DAD800886877 /* NewVC.swift in Sources */,
 				D57A11401F38E7B0006F79E0 /* IQTextView.swift in Sources */,
 				D3E0AFDF1FDD161E00E83A1C /* CameraGlobals.swift in Sources */,
@@ -1031,7 +1035,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "a12a5a16-475b-4102-a71d-5773c57603b0";
+				PROVISIONING_PROFILE = "5fa226e4-c0e0-454a-9a84-e571f519e86e";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1109,7 +1113,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "a12a5a16-475b-4102-a71d-5773c57603b0";
+				PROVISIONING_PROFILE = "5fa226e4-c0e0-454a-9a84-e571f519e86e";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1155,7 +1159,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "a12a5a16-475b-4102-a71d-5773c57603b0";
+				PROVISIONING_PROFILE = "5fa226e4-c0e0-454a-9a84-e571f519e86e";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;

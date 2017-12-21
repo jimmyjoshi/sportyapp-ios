@@ -30,6 +30,8 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
     @IBOutlet var btnpic: UIButton!
 
     var isneedtogoahead : Bool = false
+    var bonlyCamera: Bool = false
+    var bolyGallery: Bool = false
 
     
     //NEW Camera ClassConfiguration
@@ -256,82 +258,71 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
         self.view.endEditing(true)
         self.imagePicker.mediaTypes = ["public.image", "public.movie"]
         
-        if self.isVideoUploaded == true
+        if bonlyCamera == true
         {
-            let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
-            self.present(uiAlert, animated: true, completion: nil)
-            uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+            self.openonlycameraforImage()
+        }
+        else if bolyGallery == true
+        {
+            self.openonlyGallery()
+        }
+        else
+        {
+            
+            if self.isVideoUploaded == true
+            {
+                let uiAlert = UIAlertController(title: AppName, message: "", preferredStyle: UIAlertControllerStyle.actionSheet)
+                self.present(uiAlert, animated: true, completion: nil)
+                uiAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+                    
+                    if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
+                    {
+                        self.imagePicker.sourceType = .camera
+                        self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
+                        self.imagePicker.allowsEditing = false
+                        self.imagePicker.videoMaximumDuration = 60.0
+                        self.present(self.imagePicker, animated: true, completion: nil)
+                    }
+                    else
+                    {
+                        let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+                        alert.addAction(ok)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    
+                }))
                 
-                if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
-                {
-                    self.imagePicker.sourceType = .camera
+                uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
+                    
+                    self.imagePicker.sourceType = .savedPhotosAlbum
                     self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
                     self.imagePicker.allowsEditing = false
                     self.imagePicker.videoMaximumDuration = 60.0
                     self.present(self.imagePicker, animated: true, completion: nil)
-                }
-                else
-                {
-                    let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
-                    alert.addAction(ok)
-                    self.present(alert, animated: true, completion: nil)
-                }
+                }))
                 
-            }))
-            
-            uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
-                
-                self.imagePicker.sourceType = .savedPhotosAlbum
-                self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
-                self.imagePicker.allowsEditing = false
-                self.imagePicker.videoMaximumDuration = 60.0
-                self.present(self.imagePicker, animated: true, completion: nil)
-            }))
-            
-            uiAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            }))
-        }
-        else
-        {
-            let cameraViewController = CameraViewController(croppingParameters: croppingParameters, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
-                //                self?.imageView.image = image
-                self?.vwVideo.isHidden = false
-                self?.htVideoView.constant = 105
-                self?.isImageUploaded = true
-                self?.htImg.constant = 105
-                self?.lblVideoText.isHidden = true
-                self?.btnRemoveVideo.isHidden = true
-                self?.imgPost.image = image
-                self?.btnCancel.isHidden = false
-                
-                self?.dismiss(animated: true, completion: nil)
-            }
-            present(cameraViewController, animated: true, completion: nil)
-        }
-       /* }))
-        
-        uiAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { action in
-            
-            self.imagePicker.sourceType = .savedPhotosAlbum
-            if self.isVideoUploaded == true
-            {
-                self.imagePicker.mediaTypes = [kUTTypeMovie as NSString as String]
-                self.imagePicker.allowsEditing = false
-                self.imagePicker.videoMaximumDuration = 60.0
-
+                uiAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                }))
             }
             else
             {
-                self.imagePicker.mediaTypes = [kUTTypeImage as NSString as String]
-                
+                let cameraViewController = CameraViewController(croppingParameters: croppingParameters, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
+                    //                self?.imageView.image = image
+                    self?.vwVideo.isHidden = false
+                    self?.htVideoView.constant = 105
+                    self?.isImageUploaded = true
+                    self?.htImg.constant = 105
+                    self?.lblVideoText.isHidden = true
+                    self?.btnRemoveVideo.isHidden = true
+                    self?.imgPost.image = image
+                    self?.btnCancel.isHidden = false
+                    
+                    self?.dismiss(animated: true, completion: nil)
+                }
+                present(cameraViewController, animated: true, completion: nil)
             }
-            self.present(self.imagePicker, animated: true, completion: nil)
-        }))
-        
-        uiAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            
-        }))*/
+         }
     }
     
     
@@ -352,6 +343,35 @@ class GameTimeLinePostVC: UIViewController,UINavigationControllerDelegate,UIImag
         htVideoView.constant = 0
         vwVideo.isHidden = true
     }
+    
+    //MARK: Open Only Camera and Gallery
+    func openonlycameraforImage()
+    {
+        self.imagePicker.mediaTypes = ["public.image", "public.movie"]
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera))
+        {
+            self.imagePicker.sourceType = .camera
+            self.imagePicker.mediaTypes = [kUTTypeImage as NSString as String]
+            self.imagePicker.allowsEditing = false
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Camera Not Found", message: "This device has no Camera", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    func openonlyGallery()
+    {
+        self.imagePicker.mediaTypes = ["public.image", "public.movie"]
+        self.imagePicker.sourceType = .savedPhotosAlbum
+        self.imagePicker.allowsEditing = false
+        self.imagePicker.videoMaximumDuration = 60.0
+        self.present(self.imagePicker, animated: true, completion: nil)
+    }
+
     
     //MARK:- UIImage picker delegate
     

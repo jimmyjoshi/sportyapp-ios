@@ -225,14 +225,16 @@ extension CommentViewController: UITableViewDelegate, UITableViewDataSource {
             if iImageGIF as! Int == 1
             {
 //                cell.imgGIFheightLayout?.constant = 60
-                cell.imgGIFheightLayout?.constant = 200
-                cell.imgGIFWidthLayout?.constant = 200
+                cell.imgGIFheightLayout?.constant = 100
+                cell.imgGIFWidthLayout?.constant = 180
 
                 let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                 let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
                 let url2 = URL(string: strURL)
                 if url2 != nil {
-                    cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+//                    cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+                    cell.wvGIF?.loadRequest(URLRequest(url: url2!))
+
                 }
             }
             else
@@ -337,6 +339,7 @@ class commentCell: UITableViewCell {
     @IBOutlet weak var imgGIF: UIImageView?
     @IBOutlet weak var imgGIFheightLayout: NSLayoutConstraint?
     @IBOutlet weak var imgGIFWidthLayout: NSLayoutConstraint?
+    @IBOutlet weak var wvGIF: UIWebView?
 
     @IBOutlet weak var btnDelete: UIButton?
 

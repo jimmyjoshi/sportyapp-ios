@@ -432,6 +432,7 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
         let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
         postVC.selectedGame = currentGameObject
         postVC.isImageUploaded = true
+        postVC.bolyGallery = true
         self.navigationController?.pushViewController(postVC, animated: true)
         //postVC.isImageUploaded = true
     }
@@ -449,6 +450,17 @@ class ChallengePostListViewController: UIViewController, MWPhotoBrowserDelegate
         postVC.isVideoUploaded = true
         self.navigationController?.pushViewController(postVC, animated: true)
         
+    }
+    @IBAction func btnCreateCameraPostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.bonlyCamera = true
+        postVC.isImageUploaded = true
+        postVC.selectedGame = currentGameObject
+        self.navigationController?.pushViewController(postVC, animated: true)
     }
 
     @IBAction func btnClosePostView(_ :UIButton)
@@ -877,14 +889,15 @@ extension ChallengePostListViewController: UITableViewDataSource,UITableViewDele
             {
                 if iImageGIF as! Int == 1
                 {
-                    cell.imgGIFheightLayout?.constant = 200
+                    cell.imgGIFheightLayout?.constant = 110
                     cell.imgGIFWidthLayout?.constant = 200
                     
                     let strImgLink : String = "\(dictComment.value(forKey: "commentImage")!)"
                     let strURL : String = strImgLink.replacingOccurrences(of: " ", with: "%20")
                     let url2 = URL(string: strURL)
                     if url2 != nil {
-                        cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+//                        cell.imgGIF?.sd_setImage(with: url2, placeholderImage: UIImage(named: "profile_image"))
+                        cell.wvGIF?.loadRequest(URLRequest(url: url2!))
                     }
                 }
                 else

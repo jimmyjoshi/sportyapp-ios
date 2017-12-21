@@ -332,6 +332,7 @@ class GameListingViewController: UIViewController {
         let postVC: GameTimeLinePostVC = cameraStoryboard.instantiateViewController(withIdentifier: "GameTimeLinePostVC") as! GameTimeLinePostVC
         postVC.selectedGame = arrList[intSelectedGame]
         postVC.isImageUploaded = true
+        postVC.bolyGallery = true
         self.navigationController?.pushViewController(postVC, animated: true)
         //postVC.isImageUploaded = true
     }
@@ -350,6 +351,18 @@ class GameListingViewController: UIViewController {
         self.navigationController?.pushViewController(postVC, animated: true)
 
     }
+    @IBAction func btnCreateCameraPostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.bonlyCamera = true
+        postVC.isImageUploaded = true
+        postVC.selectedGame = arrList[intSelectedGame]
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
+
     @IBAction func btnCreateliveStreamingClicked(sender: UIButton)
     {
         vwPostView.isHidden = true

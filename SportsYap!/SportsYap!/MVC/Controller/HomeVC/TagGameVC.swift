@@ -132,7 +132,18 @@ class TagGameVC: UIViewController {
         self.navigationController?.pushViewController(postVC, animated: true)
         
     }
-    
+    @IBAction func btnCreateCameraPostClicked(sender: UIButton)
+    {
+        vwPostView.isHidden = true
+        self.view?.backgroundColor = UIColor(white: 1, alpha: 1)
+
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.bonlyCamera = true
+        postVC.isImageUploaded = true
+        postVC.selectedGame = currentGameObject
+        self.navigationController?.pushViewController(postVC, animated: true)
+    }
     @IBAction func btnClosePostView(_ :UIButton)
     {
         

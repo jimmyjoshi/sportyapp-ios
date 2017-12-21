@@ -141,7 +141,7 @@ class ZoomImageViewController: UIViewController,UIScrollViewDelegate, MWPhotoBro
     @IBAction func btnopenBigImage(sender: UIButton)
     {
         let photo:MWPhoto = MWPhoto(url: URL(string:strLink))
-        photo.caption = dictofPost.value(forKey: "description") as? String
+//        photo.caption = dictofPost.value(forKey: "description") as? String
         self.photos = [photo]
         
         browser = MWPhotoBrowser(delegate: self)

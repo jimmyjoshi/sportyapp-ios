@@ -129,17 +129,30 @@ class TransparentViewController: UIViewController {
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
         postVC.isImageUploaded = true
+        postVC.bolyGallery = true
         self.navigationController?.pushViewController(postVC, animated: true)
         
         self.removeFromParentViewController()
         self.view.removeFromSuperview()
     }
     
+    @IBAction func btnCreateCameraPostClicked(sender: UIButton)
+    {
+        let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
+        postVC.bonlyCamera = true
+        postVC.isImageUploaded = true
+        self.navigationController?.pushViewController(postVC, animated: true)
+        
+        self.removeFromParentViewController()
+        self.view.removeFromSuperview()
+    }
     @IBAction func btnCreateVideoPostClicked(sender: UIButton)
     {
         let cameraStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let postVC: NewVC = cameraStoryboard.instantiateViewController(withIdentifier: "NewVC") as! NewVC
         postVC.isVideoUploaded = true
+        postVC.bonlyCamera = false
         self.navigationController?.pushViewController(postVC, animated: true)
         
         self.removeFromParentViewController()
