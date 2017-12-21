@@ -381,6 +381,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             let selectedVideoURL: URL? = (info["UIImagePickerControllerMediaURL"] as? URL)
             
             isVideoUploaded = true
+            isImageUploaded = false
             htImg.constant = 0
             lblVideoText.isHidden = false
             btnRemoveVideo.isHidden = false
@@ -429,7 +430,7 @@ class NewVC: UIViewController, UINavigationControllerDelegate, UIImagePickerCont
             lblVideoText.isHidden = true
             btnRemoveVideo.isHidden = true
             
-            if let image = info[UIImagePickerControllerEditedImage] as? UIImage
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
             {
                 imgPost.image = image
                 btnCancel.isHidden = false
