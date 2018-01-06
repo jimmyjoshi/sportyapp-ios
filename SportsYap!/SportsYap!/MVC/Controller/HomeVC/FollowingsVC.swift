@@ -2,7 +2,7 @@
 //  FollowingsVC.swift
 //  SportsYap!
 //
-//  Created by Yash on 11/11/17.
+//  Created by Kevin on 11/11/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 

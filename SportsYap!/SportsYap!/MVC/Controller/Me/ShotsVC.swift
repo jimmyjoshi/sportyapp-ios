@@ -2,7 +2,7 @@
 //  ShotsVC.swift
 //  SportsYap!
 //
-//  Created by Yash on 12/11/17.
+//  Created by Kevin on 12/11/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 

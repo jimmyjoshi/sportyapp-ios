@@ -2,7 +2,7 @@
 //  GameTimeLinePostVC.swift
 //  SportsYap!
 //
-//  Created by Yash on 07/11/17.
+//  Created by Kevin on 07/11/17.
 //  Copyright © 2017 Ketan Patel. All rights reserved.
 //
 
